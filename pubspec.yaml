@@ -31,6 +31,24 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Model Serialization
+  build_runner: ^2.4.13
+  freezed: ^2.5.7
+  freezed_annotation: ^2.4.4
+  json_serializable: ^6.9.0
+  # Bloc State Management Solution
+  flutter_bloc: ^8.1.6
+  # A Package for Handling the UI Design
+  flutter_screenutil: ^5.9.3
+  # Adding svg Images
+  flutter_svg: ^2.0.10+1
+  # Dependency Injection Solution
+  get_it: ^8.0.2
+  # Networking Library
+  http: ^1.2.2
+  # Internet Connectivity Checker
+  connectivity_plus: ^6.1.0
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
