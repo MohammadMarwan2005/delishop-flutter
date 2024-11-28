@@ -36,6 +36,8 @@ dependencies:
   freezed: ^2.5.7
   freezed_annotation: ^2.4.4
   json_serializable: ^6.9.0
+  # Equatable for Building Models with Custom fromJson Function
+  equatable: ^2.0.5
   # Bloc State Management Solution
   flutter_bloc: ^8.1.6
   # A Package for Handling the UI Design
@@ -48,6 +50,8 @@ dependencies:
   http: ^1.2.2
   # Internet Connectivity Checker
   connectivity_plus: ^6.1.0
+  flutter_secure_storage: ^9.2.2
+  shared_preferences: ^2.3.3
 
 
   # The following adds the Cupertino Icons font to your application.
