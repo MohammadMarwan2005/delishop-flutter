@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text("Welcome Back",
-                      style: DelishopTextStyles.font24BlueBold),
+                      style: DelishopTextStyles.font24OrangeBold),
                 ),
                 SizedBox(height: 8.h),
                 Padding(

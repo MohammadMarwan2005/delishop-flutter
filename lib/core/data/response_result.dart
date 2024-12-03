@@ -1,5 +1,5 @@
 
-import 'domain_error_model.dart';
+import 'model/domain_error_model.dart';
 
 sealed class ResponseResult<T> {
   const ResponseResult();

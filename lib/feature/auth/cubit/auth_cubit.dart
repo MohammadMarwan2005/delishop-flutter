@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:delishop/core/data/domain_error_model.dart';
+import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:delishop/core/data/response_result.dart';
 import 'package:delishop/feature/auth/model/auth_response_model.dart';
@@ -36,8 +36,8 @@ class AuthCubit extends Cubit<AuthState> {
     final ResponseResult<AuthResponseModel> result =
         await authRepo.login(requestBody);
     result.when(
-      onSuccess: (authResponseModel) {
-        saveUserData(authResponseModel);
+      onSuccess: (authResponseModel) async {
+        await saveUserData(authResponseModel);
         emit(AuthState.success(authResponseModel));
       },
       onError: (domainErrorModel) {
@@ -57,8 +57,8 @@ class AuthCubit extends Cubit<AuthState> {
     final ResponseResult<AuthResponseModel> result =
         await authRepo.register(requestBody);
     result.when(
-      onSuccess: (authResponseModel) {
-        saveUserData(authResponseModel);
+      onSuccess: (authResponseModel) async {
+        await saveUserData(authResponseModel);
         emit(AuthState.success(authResponseModel));
       },
       onError: (domainErrorModel) {
