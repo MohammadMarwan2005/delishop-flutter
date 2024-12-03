@@ -9,12 +9,12 @@ abstract class DelishopTextStyles {
     fontWeight: FontWeightHelper.bold,
     color: Colors.black,
   );
-  static TextStyle font24BlueBold = TextStyle(
+  static TextStyle font24OrangeBold = TextStyle(
     fontSize: 24,
     fontWeight: FontWeightHelper.bold,
     color: DelishopColors.primary,
   );
-  static TextStyle font32BlueBold = TextStyle(
+  static TextStyle font32OrangeBold = TextStyle(
     fontSize: 32,
     fontWeight: FontWeightHelper.bold,
     color: DelishopColors.primary,
@@ -26,6 +26,11 @@ abstract class DelishopTextStyles {
   );
   static TextStyle font15MediumBlack = const TextStyle(
     fontSize: 15,
+    fontWeight: FontWeightHelper.medium,
+    color: Colors.black,
+  );
+  static TextStyle font12MediumBlack = const TextStyle(
+    fontSize: 12,
     fontWeight: FontWeightHelper.medium,
     color: Colors.black,
   );

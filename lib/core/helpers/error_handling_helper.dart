@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../data/api_consts.dart';
-import '../data/domain_error_model.dart';
+import '../data/model/domain_error_model.dart';
 import '../data/response_result.dart';
-
 
 extension SuccessHelper on http.Response {
   bool isSuccess() => statusCode >= 200 && statusCode <= 300;
@@ -22,8 +21,17 @@ extension SuccessHelper on http.Response {
       final successModel = jsonToModel(jsonDecode(body));
       return Success(successModel);
     } else {
-      final errorModel = DomainErrorModel.fromJson(jsonDecode(body), statusCode);
+      final errorModel =
+          DomainErrorModel.fromJson(jsonDecode(body), statusCode);
       return Error(errorModel);
+    }
+  }
+
+  http.Response getDataResponse() {
+    if (isSuccess()) {
+      return http.Response(jsonEncode(jsonDecode(body)["data"]), statusCode);
+    } else {
+      return this;
     }
   }
 }

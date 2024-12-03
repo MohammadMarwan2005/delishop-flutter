@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import '../data/api_consts.dart';
-import '../data/domain_error_model.dart';
+import '../data/model/domain_error_model.dart';
 import '../data/response_result.dart';
 
 extension InternetCheckHelper on Connectivity {

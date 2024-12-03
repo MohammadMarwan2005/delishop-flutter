@@ -1,12 +1,14 @@
-import 'package:delishop/core/data/domain_error_model.dart';
+import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/helpers/error_handling_helper.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/widgets/delishop_text_button.dart';
+import 'package:delishop/feature/account/cubit/account_cubit.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../home/home_screen.dart';
+import '../../../core/di/di_get_it.dart';
+import '../../account/account_screen.dart';
 import '../widgets/error_details.dart';
 
 class LoginBlocListener extends StatelessWidget {
@@ -19,7 +21,7 @@ class LoginBlocListener extends StatelessWidget {
           state.when(
               initial: () {},
               success: (successResponseModel) {
-                context.pushReplacement(const HomeScreen());
+                context.pushReplacement(BlocProvider<AccountCubit>(create: (context) => getIt(), child: const AccountScreen()));
               },
               error: (error) {
                 setupErrorState(context, error); // this

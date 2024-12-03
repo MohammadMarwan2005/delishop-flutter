@@ -130,7 +130,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     if (value == null ||
                         value.isEmpty ||
                         value != context.read<AuthCubit>().passwordController.text) {
-                      return "Password don't match!";
+                      return "Passwords don't match!";
                     }
                     if (!value.isPasswordValid()) {
                       return "Please enter a valid password";
