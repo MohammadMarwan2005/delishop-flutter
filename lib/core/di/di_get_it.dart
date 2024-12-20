@@ -17,15 +17,15 @@ import '../data/repo/store_repo.dart';
 final getIt = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-  getIt.registerLazySingleton<ApiService>(() => ApiService(
-        httpClient: http.Client(),
-      ));
-  getIt.registerLazySingleton<Connectivity>(() => Connectivity());
-
   final sharedPrefs = await SharedPreferences.getInstance();
   const storage = FlutterSecureStorage();
   getIt.registerLazySingleton<UserDataRepo>(
-      () => UserDataRepo(sharedPrefs: sharedPrefs, storage: storage));
+          () => UserDataRepo(sharedPrefs: sharedPrefs, storage: storage));
+
+  getIt.registerLazySingleton<ApiService>(() => ApiService(
+        httpClient: http.Client(), userDataRepo: getIt(),
+      ));
+  getIt.registerLazySingleton<Connectivity>(() => Connectivity());
 
   // Auth
   getIt.registerLazySingleton<AuthRepo>(

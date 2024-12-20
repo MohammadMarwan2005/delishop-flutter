@@ -48,7 +48,8 @@ class LoginBlocListener extends StatelessWidget {
           details = ["Check you connection"];
         },
         onUnknown: () {
-          title = "Opps!";
+          print(error.toString());
+      title = "Opps!";
           details = ["Unknown Error!"];
         });
     showDialog(

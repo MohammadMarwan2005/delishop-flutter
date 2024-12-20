@@ -9,8 +9,6 @@ class AuthResponseModel with _$AuthResponseModel {
   const factory AuthResponseModel({
     required String message,
     required SuccessAuthData data,
-    required bool status,
-    required int code,
   }) = _AuthResponseModel;
 
   factory AuthResponseModel.fromJson(Map<String, Object?> json) =>

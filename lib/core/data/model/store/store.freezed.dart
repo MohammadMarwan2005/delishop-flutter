@@ -34,6 +34,10 @@ mixin _$Store {
   String get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "updated_at")
   String get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_favorite")
+  bool? get isFavorite => throw _privateConstructorUsedError;
+  @JsonKey(name: "rating")
+  String? get rating => throw _privateConstructorUsedError;
 
   /// Serializes this Store to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,7 +62,9 @@ abstract class $StoreCopyWith<$Res> {
       String location,
       String description,
       @JsonKey(name: "created_at") String createdAt,
-      @JsonKey(name: "updated_at") String updatedAt});
+      @JsonKey(name: "updated_at") String updatedAt,
+      @JsonKey(name: "is_favorite") bool? isFavorite,
+      @JsonKey(name: "rating") String? rating});
 }
 
 /// @nodoc
@@ -85,6 +91,8 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
     Object? description = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? isFavorite = freezed,
+    Object? rating = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -123,6 +131,14 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      isFavorite: freezed == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -143,7 +159,9 @@ abstract class _$$storeImplCopyWith<$Res> implements $StoreCopyWith<$Res> {
       String location,
       String description,
       @JsonKey(name: "created_at") String createdAt,
-      @JsonKey(name: "updated_at") String updatedAt});
+      @JsonKey(name: "updated_at") String updatedAt,
+      @JsonKey(name: "is_favorite") bool? isFavorite,
+      @JsonKey(name: "rating") String? rating});
 }
 
 /// @nodoc
@@ -168,6 +186,8 @@ class __$$storeImplCopyWithImpl<$Res>
     Object? description = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? isFavorite = freezed,
+    Object? rating = freezed,
   }) {
     return _then(_$storeImpl(
       id: null == id
@@ -206,6 +226,14 @@ class __$$storeImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      isFavorite: freezed == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -222,7 +250,9 @@ class _$storeImpl implements _store {
       required this.location,
       required this.description,
       @JsonKey(name: "created_at") required this.createdAt,
-      @JsonKey(name: "updated_at") required this.updatedAt});
+      @JsonKey(name: "updated_at") required this.updatedAt,
+      @JsonKey(name: "is_favorite") required this.isFavorite,
+      @JsonKey(name: "rating") required this.rating});
 
   factory _$storeImpl.fromJson(Map<String, dynamic> json) =>
       _$$storeImplFromJson(json);
@@ -250,10 +280,16 @@ class _$storeImpl implements _store {
   @override
   @JsonKey(name: "updated_at")
   final String updatedAt;
+  @override
+  @JsonKey(name: "is_favorite")
+  final bool? isFavorite;
+  @override
+  @JsonKey(name: "rating")
+  final String? rating;
 
   @override
   String toString() {
-    return 'Store(id: $id, userId: $userId, categoryId: $categoryId, name: $name, storePicture: $storePicture, location: $location, description: $description, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Store(id: $id, userId: $userId, categoryId: $categoryId, name: $name, storePicture: $storePicture, location: $location, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, isFavorite: $isFavorite, rating: $rating)';
   }
 
   @override
@@ -275,13 +311,27 @@ class _$storeImpl implements _store {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite) &&
+            (identical(other.rating, rating) || other.rating == rating));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, categoryId, name,
-      storePicture, location, description, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      userId,
+      categoryId,
+      name,
+      storePicture,
+      location,
+      description,
+      createdAt,
+      updatedAt,
+      isFavorite,
+      rating);
 
   /// Create a copy of Store
   /// with the given fields replaced by the non-null parameter values.
@@ -301,16 +351,17 @@ class _$storeImpl implements _store {
 
 abstract class _store implements Store {
   const factory _store(
-          {required final int id,
-          @JsonKey(name: "user_id") required final int userId,
-          @JsonKey(name: "category_id") required final int categoryId,
-          required final String name,
-          @JsonKey(name: "store_picture") required final String storePicture,
-          required final String location,
-          required final String description,
-          @JsonKey(name: "created_at") required final String createdAt,
-          @JsonKey(name: "updated_at") required final String updatedAt}) =
-      _$storeImpl;
+      {required final int id,
+      @JsonKey(name: "user_id") required final int userId,
+      @JsonKey(name: "category_id") required final int categoryId,
+      required final String name,
+      @JsonKey(name: "store_picture") required final String storePicture,
+      required final String location,
+      required final String description,
+      @JsonKey(name: "created_at") required final String createdAt,
+      @JsonKey(name: "updated_at") required final String updatedAt,
+      @JsonKey(name: "is_favorite") required final bool? isFavorite,
+      @JsonKey(name: "rating") required final String? rating}) = _$storeImpl;
 
   factory _store.fromJson(Map<String, dynamic> json) = _$storeImpl.fromJson;
 
@@ -337,6 +388,12 @@ abstract class _store implements Store {
   @override
   @JsonKey(name: "updated_at")
   String get updatedAt;
+  @override
+  @JsonKey(name: "is_favorite")
+  bool? get isFavorite;
+  @override
+  @JsonKey(name: "rating")
+  String? get rating;
 
   /// Create a copy of Store
   /// with the given fields replaced by the non-null parameter values.

@@ -7,6 +7,8 @@ abstract class ApiConsts {
   static const String storeSearchUrl = "$baseUrl/store/search";
   static const String getStoreByIdUrl = "$baseUrl/store/getStore";
   static const String getAllCategories = "$baseUrl/categories/getCategories";
+  static const String addProductToFavoriteUrl = "$baseUrl/favorite/addToFavorite";
+  static const String removeProductFromFavoriteUrl = "$baseUrl/favorite/removeFromFavorite";
 }
 
 abstract class StatusCodes {
@@ -21,4 +23,11 @@ abstract class CommonConsts {
     'Accept': 'application/json',
     "Content-Type": "application/json",
   };
+
+  static Map<String, String> getTokenHeader(String token) {
+    return {
+      ...CommonConsts.acceptJsonHeader,
+      'Authorization': 'Bearer $token',
+    };
+  }
 }

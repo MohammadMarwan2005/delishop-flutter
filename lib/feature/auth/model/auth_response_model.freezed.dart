@@ -22,8 +22,6 @@ AuthResponseModel _$AuthResponseModelFromJson(Map<String, dynamic> json) {
 mixin _$AuthResponseModel {
   String get message => throw _privateConstructorUsedError;
   SuccessAuthData get data => throw _privateConstructorUsedError;
-  bool get status => throw _privateConstructorUsedError;
-  int get code => throw _privateConstructorUsedError;
 
   /// Serializes this AuthResponseModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +39,7 @@ abstract class $AuthResponseModelCopyWith<$Res> {
           AuthResponseModel value, $Res Function(AuthResponseModel) then) =
       _$AuthResponseModelCopyWithImpl<$Res, AuthResponseModel>;
   @useResult
-  $Res call({String message, SuccessAuthData data, bool status, int code});
+  $Res call({String message, SuccessAuthData data});
 
   $SuccessAuthDataCopyWith<$Res> get data;
 }
@@ -63,8 +61,6 @@ class _$AuthResponseModelCopyWithImpl<$Res, $Val extends AuthResponseModel>
   $Res call({
     Object? message = null,
     Object? data = null,
-    Object? status = null,
-    Object? code = null,
   }) {
     return _then(_value.copyWith(
       message: null == message
@@ -75,14 +71,6 @@ class _$AuthResponseModelCopyWithImpl<$Res, $Val extends AuthResponseModel>
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as SuccessAuthData,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as bool,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as int,
     ) as $Val);
   }
 
@@ -105,7 +93,7 @@ abstract class _$$AuthResponseModelImplCopyWith<$Res>
       __$$AuthResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String message, SuccessAuthData data, bool status, int code});
+  $Res call({String message, SuccessAuthData data});
 
   @override
   $SuccessAuthDataCopyWith<$Res> get data;
@@ -126,8 +114,6 @@ class __$$AuthResponseModelImplCopyWithImpl<$Res>
   $Res call({
     Object? message = null,
     Object? data = null,
-    Object? status = null,
-    Object? code = null,
   }) {
     return _then(_$AuthResponseModelImpl(
       message: null == message
@@ -138,14 +124,6 @@ class __$$AuthResponseModelImplCopyWithImpl<$Res>
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as SuccessAuthData,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as bool,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -153,11 +131,7 @@ class __$$AuthResponseModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$AuthResponseModelImpl implements _AuthResponseModel {
-  const _$AuthResponseModelImpl(
-      {required this.message,
-      required this.data,
-      required this.status,
-      required this.code});
+  const _$AuthResponseModelImpl({required this.message, required this.data});
 
   factory _$AuthResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AuthResponseModelImplFromJson(json);
@@ -166,14 +140,10 @@ class _$AuthResponseModelImpl implements _AuthResponseModel {
   final String message;
   @override
   final SuccessAuthData data;
-  @override
-  final bool status;
-  @override
-  final int code;
 
   @override
   String toString() {
-    return 'AuthResponseModel(message: $message, data: $data, status: $status, code: $code)';
+    return 'AuthResponseModel(message: $message, data: $data)';
   }
 
   @override
@@ -182,14 +152,12 @@ class _$AuthResponseModelImpl implements _AuthResponseModel {
         (other.runtimeType == runtimeType &&
             other is _$AuthResponseModelImpl &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.data, data) || other.data == data) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.code, code) || other.code == code));
+            (identical(other.data, data) || other.data == data));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, message, data, status, code);
+  int get hashCode => Object.hash(runtimeType, message, data);
 
   /// Create a copy of AuthResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -211,9 +179,7 @@ class _$AuthResponseModelImpl implements _AuthResponseModel {
 abstract class _AuthResponseModel implements AuthResponseModel {
   const factory _AuthResponseModel(
       {required final String message,
-      required final SuccessAuthData data,
-      required final bool status,
-      required final int code}) = _$AuthResponseModelImpl;
+      required final SuccessAuthData data}) = _$AuthResponseModelImpl;
 
   factory _AuthResponseModel.fromJson(Map<String, dynamic> json) =
       _$AuthResponseModelImpl.fromJson;
@@ -222,10 +188,6 @@ abstract class _AuthResponseModel implements AuthResponseModel {
   String get message;
   @override
   SuccessAuthData get data;
-  @override
-  bool get status;
-  @override
-  int get code;
 
   /// Create a copy of AuthResponseModel
   /// with the given fields replaced by the non-null parameter values.

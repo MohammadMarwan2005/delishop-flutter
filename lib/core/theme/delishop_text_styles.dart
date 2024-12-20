@@ -19,6 +19,11 @@ abstract class DelishopTextStyles {
     fontWeight: FontWeightHelper.bold,
     color: DelishopColors.primary,
   );
+  static TextStyle font32BlackBold = const TextStyle(
+    fontSize: 32,
+    fontWeight: FontWeightHelper.bold,
+    color: Colors.black,
+  );
   static TextStyle font14RegularGrey = TextStyle(
     fontSize: 14,
     fontWeight: FontWeightHelper.regular,
@@ -44,6 +49,10 @@ abstract class DelishopTextStyles {
     fontWeight: FontWeightHelper.semiBold,
     color: Colors.black,
   );
+  static TextStyle font16SemiBoldGreen = const TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w600,
+  color: Colors.green);
 
   static TextStyle font16RegularGrey = TextStyle(
     fontSize: 16,

@@ -16,6 +16,8 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
       price: json['price'] as String,
       discount: json['discount'] as String,
       quantity: (json['quantity'] as num).toInt(),
+      isFavorite: json['is_favorite'] as bool?,
+      rating: (json['rating'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
@@ -28,4 +30,6 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'price': instance.price,
       'discount': instance.discount,
       'quantity': instance.quantity,
+      'is_favorite': instance.isFavorite,
+      'rating': instance.rating,
     };
