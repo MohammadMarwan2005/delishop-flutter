@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:delishop/core/data/model/category/category_list_response_model.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/data/model/store/store_list_response_model.dart';
+import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:delishop/core/data/response_result.dart';
 import 'package:delishop/core/helpers/error_handling_helper.dart';
 import 'package:delishop/feature/auth/model/auth_response_model.dart';
@@ -15,9 +16,11 @@ import 'model/product/product_list_response_model.dart';
 import 'model/store/store.dart';
 
 class ApiService {
+  final UserDataRepo userDataRepo;
   final http.Client _httpClient;
 
-  ApiService({required http.Client httpClient}) : _httpClient = httpClient;
+  ApiService({required this.userDataRepo, required http.Client httpClient})
+      : _httpClient = httpClient;
 
   Future<ResponseResult<AuthResponseModel>> login(
       LoginRequestModel body) async {
@@ -54,10 +57,11 @@ class ApiService {
   }
 
   Future<ResponseResult<Product>> getProductById(int id) async {
+    final token = await userDataRepo.getToken();
     final http.Response httpResponse = await _httpClient
         .get(
           Uri.parse("${ApiConsts.getProductByIdUrl}/$id"),
-          headers: CommonConsts.acceptJsonHeader,
+          headers: CommonConsts.getTokenHeader(token),
         )
         .then((value) => value.getDataResponse());
     return httpResponse.handle(jsonToModel: (jsonMap) {
@@ -76,10 +80,11 @@ class ApiService {
   }
 
   Future<ResponseResult<Store>> getStoreById(int id) async {
+    final token = await userDataRepo.getToken();
     final http.Response httpResponse = await _httpClient
         .get(
           Uri.parse("${ApiConsts.getStoreByIdUrl}/$id"),
-          headers: CommonConsts.acceptJsonHeader,
+          headers: CommonConsts.getTokenHeader(token),
         )
         .then((value) => value.getDataResponse());
     return httpResponse.handle(jsonToModel: (jsonMap) {
@@ -96,4 +101,12 @@ class ApiService {
       return CategoryListResponseModel.fromJson(jsonMap);
     });
   }
+
+  // Future<void> addProductToFavorite(int productId) async {
+  //   final token = await userDataRepo.getToken();
+  //   final http.Response httpResponse = await _httpClient.post(
+  //       Uri.parse(ApiConsts.addProductToFavoriteUrl),
+  //       headers: CommonConsts.getTokenHeader(token));
+  //       return httpResponse.handle(jsonToModel: )
+  // }
 }

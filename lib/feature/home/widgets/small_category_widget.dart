@@ -13,16 +13,22 @@ class SmallCategoryWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ClipOval(
-          child: category.categoryPicture.isNotNullOrEmpty() ? Image.network(
-            category.categoryPicture!,
-            width: 60, // Adjust size as needed
-            height: 60,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return const BrokenImage();
-            },
-          ) : const BrokenImage(),
+        InkWell(
+          borderRadius: BorderRadius.circular(8.0),
+          onTap: () {
+
+          },
+          child: ClipOval(
+            child: category.categoryPicture.isNotNullOrEmpty() ? Image.network(
+              category.categoryPicture!,
+              width: 60, // Adjust size as needed
+              height: 60,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return const BrokenImage();
+              },
+            ) : const BrokenImage(),
+          ),
         ),
         const SizedBox(height: 8), // Spacing between image and text
         Text(

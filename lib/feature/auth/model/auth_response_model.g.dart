@@ -11,8 +11,6 @@ _$AuthResponseModelImpl _$$AuthResponseModelImplFromJson(
     _$AuthResponseModelImpl(
       message: json['message'] as String,
       data: SuccessAuthData.fromJson(json['data'] as Map<String, dynamic>),
-      status: json['status'] as bool,
-      code: (json['code'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$AuthResponseModelImplToJson(
@@ -20,8 +18,6 @@ Map<String, dynamic> _$$AuthResponseModelImplToJson(
     <String, dynamic>{
       'message': instance.message,
       'data': instance.data,
-      'status': instance.status,
-      'code': instance.code,
     };
 
 _$SuccessAuthDataImpl _$$SuccessAuthDataImplFromJson(

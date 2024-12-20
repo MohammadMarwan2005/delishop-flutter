@@ -30,6 +30,10 @@ mixin _$Product {
   String get price => throw _privateConstructorUsedError;
   String get discount => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_favorite")
+  bool? get isFavorite => throw _privateConstructorUsedError;
+  @JsonKey(name: "rating")
+  double? get rating => throw _privateConstructorUsedError;
 
   /// Serializes this Product to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +57,9 @@ abstract class $ProductCopyWith<$Res> {
       @JsonKey(name: "product_picture") String? productPicture,
       String price,
       String discount,
-      int quantity});
+      int quantity,
+      @JsonKey(name: "is_favorite") bool? isFavorite,
+      @JsonKey(name: "rating") double? rating});
 }
 
 /// @nodoc
@@ -79,6 +85,8 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? price = null,
     Object? discount = null,
     Object? quantity = null,
+    Object? isFavorite = freezed,
+    Object? rating = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -113,6 +121,14 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
+      isFavorite: freezed == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -132,7 +148,9 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       @JsonKey(name: "product_picture") String? productPicture,
       String price,
       String discount,
-      int quantity});
+      int quantity,
+      @JsonKey(name: "is_favorite") bool? isFavorite,
+      @JsonKey(name: "rating") double? rating});
 }
 
 /// @nodoc
@@ -156,6 +174,8 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? price = null,
     Object? discount = null,
     Object? quantity = null,
+    Object? isFavorite = freezed,
+    Object? rating = freezed,
   }) {
     return _then(_$ProductImpl(
       id: null == id
@@ -190,6 +210,14 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
+      isFavorite: freezed == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      rating: freezed == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -205,7 +233,9 @@ class _$ProductImpl implements _Product {
       @JsonKey(name: "product_picture") required this.productPicture,
       required this.price,
       required this.discount,
-      required this.quantity});
+      required this.quantity,
+      @JsonKey(name: "is_favorite") required this.isFavorite,
+      @JsonKey(name: "rating") required this.rating});
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductImplFromJson(json);
@@ -228,10 +258,16 @@ class _$ProductImpl implements _Product {
   final String discount;
   @override
   final int quantity;
+  @override
+  @JsonKey(name: "is_favorite")
+  final bool? isFavorite;
+  @override
+  @JsonKey(name: "rating")
+  final double? rating;
 
   @override
   String toString() {
-    return 'Product(id: $id, storeId: $storeId, name: $name, description: $description, productPicture: $productPicture, price: $price, discount: $discount, quantity: $quantity)';
+    return 'Product(id: $id, storeId: $storeId, name: $name, description: $description, productPicture: $productPicture, price: $price, discount: $discount, quantity: $quantity, isFavorite: $isFavorite, rating: $rating)';
   }
 
   @override
@@ -250,13 +286,16 @@ class _$ProductImpl implements _Product {
             (identical(other.discount, discount) ||
                 other.discount == discount) &&
             (identical(other.quantity, quantity) ||
-                other.quantity == quantity));
+                other.quantity == quantity) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite) &&
+            (identical(other.rating, rating) || other.rating == rating));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, storeId, name, description,
-      productPicture, price, discount, quantity);
+      productPicture, price, discount, quantity, isFavorite, rating);
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.
@@ -283,7 +322,9 @@ abstract class _Product implements Product {
       @JsonKey(name: "product_picture") required final String? productPicture,
       required final String price,
       required final String discount,
-      required final int quantity}) = _$ProductImpl;
+      required final int quantity,
+      @JsonKey(name: "is_favorite") required final bool? isFavorite,
+      @JsonKey(name: "rating") required final double? rating}) = _$ProductImpl;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
 
@@ -305,6 +346,12 @@ abstract class _Product implements Product {
   String get discount;
   @override
   int get quantity;
+  @override
+  @JsonKey(name: "is_favorite")
+  bool? get isFavorite;
+  @override
+  @JsonKey(name: "rating")
+  double? get rating;
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.

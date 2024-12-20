@@ -3,6 +3,8 @@ import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/theme/delishop_text_styles.dart';
 import 'package:delishop/core/widgets/delishop_text_button.dart';
+import 'package:delishop/feature/all_malls/all_stores_screen.dart';
+import 'package:delishop/feature/all_produts/all_products_screen.dart';
 import 'package:delishop/feature/home/home_cubit.dart';
 import 'package:delishop/feature/home/widgets/items_lazy_row.dart';
 import 'package:delishop/feature/home/widgets/small_category_widget.dart';
@@ -17,6 +19,7 @@ import '../../core/widgets/loading_circle.dart';
 import '../../core/widgets/title_and_see_all.dart';
 import '../account/account_screen.dart';
 import '../account/cubit/account_cubit.dart';
+import '../all_categories/all_categories_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -43,9 +46,12 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           TitleAndSeeAll(
                             title: "Categories",
-                            onClick: () {},
+                            onClick: () {
+                              context.push(AllCategoriesScreen(categories: dataList));
+                            },
                           ),
                           ItemsLazyRow<Category>(
+                            size: 100.w,
                             items: dataList,
                             cardBuilder: (item) =>
                                 SmallCategoryWidget(category: item),
@@ -65,7 +71,9 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           TitleAndSeeAll(
                             title: "Malls",
-                            onClick: () {},
+                            onClick: () {
+                              context.push(AllStoresScreen(stores: dataList));
+                            },
                           ),
                           ItemsLazyRow(
                               items: dataList,
@@ -86,7 +94,9 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           TitleAndSeeAll(
                             title: "Products",
-                            onClick: () {},
+                            onClick: () {
+                              context.push(AllProductsScreen(products: dataList));
+                            },
                           ),
                           ItemsLazyRow<Product>(
                             items: dataList,
