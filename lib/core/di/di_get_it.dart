@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/api_service.dart';
 import '../data/repo/auth_repo.dart';
+import '../data/repo/favorite_repo.dart';
 import '../data/repo/product_repo.dart';
 import '../data/repo/store_repo.dart';
 
@@ -45,6 +46,8 @@ Future<void> initializeDependencies() async {
 
   getIt.registerLazySingleton<CategoryRepo>(
       () => CategoryRepo(apiService: getIt(), connectivity: getIt()));
+  getIt.registerLazySingleton<FavoriteRepo>(
+      () => FavoriteRepo(apiService: getIt(), connectivity: getIt()));
 
   // home
   getIt.registerLazySingleton<HomeCubit>(() => HomeCubit(

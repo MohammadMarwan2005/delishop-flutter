@@ -27,4 +27,12 @@ class StoreRepo {
       },
     );
   }
+
+  Future<ResponseResult<StoreListResponseModel>> getStoresByCategoryId(int categoryId) async {
+    return await _connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return _apiService.getStoresByCategoryId(categoryId);
+      },
+    );
+  }
 }

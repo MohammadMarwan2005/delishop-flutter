@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:delishop/core/data/model/category/category_list_response_model.dart';
+import 'package:delishop/core/data/model/favorite/favorite_response.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/data/model/store/store_list_response_model.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
@@ -64,8 +65,20 @@ class ApiService {
           headers: CommonConsts.getTokenHeader(token),
         )
         .then((value) => value.getDataResponse());
+    print('Response: ${httpResponse.body}'); // Print the response for debugging
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return Product.fromJson(jsonMap);
+    });
+  }
+  Future<ResponseResult<ProductListResponseModel>> getProductsByStoreId(int storeId) async {
+    final http.Response httpResponse = await _httpClient
+        .get(
+          Uri.parse("${ApiConsts.getProductsByStoreIdUrl}/$storeId"),
+          headers: CommonConsts.acceptJsonHeader,
+        );
+    print('Response: ${httpResponse.body}'); // Print the response for debugging
+    return httpResponse.handle(jsonToModel: (jsonMap) {
+      return ProductListResponseModel.fromJson(jsonMap);
     });
   }
 
@@ -92,6 +105,17 @@ class ApiService {
     });
   }
 
+
+  Future<ResponseResult<StoreListResponseModel>> getStoresByCategoryId(int categoryId) async {
+    final http.Response httpResponse = await _httpClient.get(
+      Uri.parse("${ApiConsts.getStoresByCategoryId}/$categoryId"),
+      headers: CommonConsts.acceptJsonHeader,
+    );
+    return httpResponse.handle(jsonToModel: (jsonMap) {
+      return StoreListResponseModel.fromJson(jsonMap);
+    });
+  }
+
   Future<ResponseResult<CategoryListResponseModel>> getAllCategories() async {
     final http.Response httpResponse = await _httpClient.get(
       Uri.parse(ApiConsts.getAllCategories),
@@ -102,11 +126,29 @@ class ApiService {
     });
   }
 
-  // Future<void> addProductToFavorite(int productId) async {
-  //   final token = await userDataRepo.getToken();
-  //   final http.Response httpResponse = await _httpClient.post(
-  //       Uri.parse(ApiConsts.addProductToFavoriteUrl),
-  //       headers: CommonConsts.getTokenHeader(token));
-  //       return httpResponse.handle(jsonToModel: )
-  // }
+  Future<ResponseResult<FavoriteResponse>> addProductToFavorite(
+      int productId) async {
+    final token = await userDataRepo.getToken();
+    final http.Response httpResponse = await _httpClient.post(
+        Uri.parse(ApiConsts.addProductToFavoriteUrl),
+        body: jsonEncode({'product_id': productId}),
+        headers: CommonConsts.getTokenHeader(token));
+    return httpResponse.handle(
+      jsonToModel: (jsonMap) => FavoriteResponse.fromJson(jsonMap),
+    );
+  }
+
+
+  Future<ResponseResult<FavoriteResponse>> removeProductFromFavorite(
+      int productId) async {
+    final token = await userDataRepo.getToken();
+    final http.Response httpResponse = await _httpClient.delete(
+        Uri.parse("${ApiConsts.removeProductFromFavoriteUrl}/$productId"),
+        headers: CommonConsts.getTokenHeader(token));
+    print('Response: ${httpResponse.body}'); // Print the response for debugging
+
+    return httpResponse.handle(
+      jsonToModel: (jsonMap) => FavoriteResponse.fromJson(jsonMap),
+    );
+  }
 }

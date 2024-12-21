@@ -15,7 +15,7 @@ class AllCategoriesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        title: const Text("All Malls"),
+        title: const Text("All Categories"),
       ),
       body: SafeArea(
           child: SingleChildScrollView(

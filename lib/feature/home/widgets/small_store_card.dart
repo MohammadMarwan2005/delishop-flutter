@@ -1,7 +1,12 @@
 import 'package:delishop/core/data/model/store/store.dart';
+import 'package:delishop/core/di/di_get_it.dart';
 import 'package:delishop/core/helpers/image_string_helper.dart';
+import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/widgets/broken_image.dart';
+import 'package:delishop/feature/store_full_screen/store_cubit.dart';
+import 'package:delishop/feature/store_full_screen/store_full_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SmallStoreCard extends StatelessWidget {
@@ -13,7 +18,10 @@ class SmallStoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Handle tap if needed
+        context.push(BlocProvider<StoreCubit>(
+          create: (context) => StoreCubit(productRepo: getIt(), storeRepo: getIt(), storeId: store.id),
+          child: const StoreFullScreen(),
+        ));
       },
       child: SizedBox(
         width: 150.w,

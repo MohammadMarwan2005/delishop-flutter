@@ -16,7 +16,6 @@ _$storeImpl _$$storeImplFromJson(Map<String, dynamic> json) => _$storeImpl(
       description: json['description'] as String,
       createdAt: json['created_at'] as String,
       updatedAt: json['updated_at'] as String,
-      isFavorite: json['is_favorite'] as bool?,
       rating: json['rating'] as String?,
     );
 
@@ -31,6 +30,5 @@ Map<String, dynamic> _$$storeImplToJson(_$storeImpl instance) =>
       'description': instance.description,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
-      'is_favorite': instance.isFavorite,
       'rating': instance.rating,
     };

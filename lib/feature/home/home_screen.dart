@@ -1,8 +1,10 @@
+import 'package:delishop/core/data/api_service.dart';
 import 'package:delishop/core/data/model/category/category.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/theme/delishop_text_styles.dart';
 import 'package:delishop/core/widgets/delishop_text_button.dart';
+import 'package:delishop/core/widgets/error_message.dart';
 import 'package:delishop/feature/all_malls/all_stores_screen.dart';
 import 'package:delishop/feature/all_produts/all_products_screen.dart';
 import 'package:delishop/feature/home/home_cubit.dart';
@@ -60,7 +62,9 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     onError: (domainError) {
-                      return Text(domainError.toString());
+                      return ErrorMessage(message: domainError.message, onTryAgain: () {
+                        context.read<HomeCubit>().getAllCategories();
+                      },);
                     },
                   ),
                   SizedBox(height: 8.h),
@@ -83,7 +87,9 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     onError: (domainError) {
-                      return Text(domainError.toString());
+                      return ErrorMessage(message: domainError.message, onTryAgain: () {
+                        context.read<HomeCubit>().getAllStores();
+                      },);
                     },
                   ),
                   SizedBox(height: 8.h),
@@ -107,7 +113,9 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     onError: (domainError) {
-                      return Text(domainError.toString());
+                      return ErrorMessage(message: domainError.message, onTryAgain: () {
+                        context.read<HomeCubit>().getAllProducts();
+                      },);
                     },
                   ),
                   DelishopTextButton(onClick: () {

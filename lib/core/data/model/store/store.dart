@@ -16,7 +16,6 @@ class Store with _$Store {
     required String description,
     @JsonKey(name: "created_at") required String createdAt,
     @JsonKey(name: "updated_at") required String updatedAt,
-    @JsonKey(name: "is_favorite") required bool? isFavorite,
     @JsonKey(name: "rating") required String? rating,
   }) = _store;
 
