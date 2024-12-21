@@ -42,6 +42,8 @@ extension ErrorHandler on DomainErrorModel {
     required T Function() onUnauthorized,
     required T Function() onNoInternet,
     required T Function() onUnknown,
+    T Function()? onConflict,
+    T Function()? onNotFound,
   }) {
     switch (code) {
       case StatusCodes.unprocessableEntity:
@@ -50,6 +52,16 @@ extension ErrorHandler on DomainErrorModel {
         return onUnauthorized();
       case StatusCodes.noInternet:
         return onNoInternet();
+      case StatusCodes.conflict:
+        if (onConflict != null) {
+          return onConflict();
+        }
+        return null as T;
+      case StatusCodes.notFound:
+        if (onNotFound != null) {
+          return onNotFound();
+        }
+        return null as T;
       case StatusCodes.unknown:
         return onUnknown();
       default:

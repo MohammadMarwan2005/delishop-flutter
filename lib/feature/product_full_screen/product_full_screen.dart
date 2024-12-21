@@ -10,11 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/data/model/store/store.dart';
+import '../../core/di/di_get_it.dart';
 import '../../core/widgets/broken_image.dart';
 import '../../core/widgets/delishop_button.dart';
+import '../store_full_screen/store_cubit.dart';
 
 class ProductFullScreen extends StatelessWidget {
-
   const ProductFullScreen({super.key});
 
   @override
@@ -22,147 +23,179 @@ class ProductFullScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: BlocBuilder<ProductCubit, ProductState>(
-            builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  state.productState.when(
-                    onLoading: () => const Loading(),
-                    onSuccess: (product) {
-                      return Column(
-                        children: [
-                          Stack(
+          child: Stack(
+            children: [
+              BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      state.productState.when(
+                        onLoading: () => const Loading(),
+                        onSuccess: (product) {
+                          return Column(
                             children: [
-                              // Product Image
-                              product.productPicture != null
-                                  ? ClipRRect(
-                                      borderRadius: const BorderRadius.vertical(
-                                          bottom: Radius.circular(8.0)),
-                                      child: Image.network(
-                                        product.productPicture!
-                                            .validatePicture(),
-                                        width: double.infinity,
-                                        height: 200,
-                                        fit: BoxFit.cover,
-                                        errorBuilder:
-                                            (context, error, stackTrace) =>
-                                                const BrokenImage(),
+                              Stack(
+                                children: [
+                                  // Product Image
+                                  product.productPicture != null
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              const BorderRadius.vertical(
+                                                  bottom: Radius.circular(8.0)),
+                                          child: Image.network(
+                                            product.productPicture!
+                                                .validatePicture(),
+                                            width: double.infinity,
+                                            height: 200,
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    const BrokenImage(),
+                                          ),
+                                        )
+                                      : const BrokenImage(),
+                                  // Favorite Button
+                                  Positioned(
+                                    top: 16,
+                                    right: 16,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        (product.isFavorite ?? false)
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: (product.isFavorite ?? false)
+                                            ? Colors.red
+                                            : Colors.white,
                                       ),
-                                    )
-                                  : const BrokenImage(),
-                              // Favorite Button
-                              Positioned(
-                                top: 16,
-                                right: 16,
-                                child: IconButton(
-                                  icon: Icon(
-                                    (product.isFavorite ?? false)
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: (product.isFavorite ?? false)
-                                        ? Colors.red
-                                        : Colors.white,
+                                      onPressed: () {
+                                        if (product.isFavorite ?? false) {
+                                          context
+                                              .read<ProductCubit>()
+                                              .removeFromFavorite();
+                                          context.read<ProductCubit>().fetchProductAndStore();
+                                        } else {
+                                          context
+                                              .read<ProductCubit>()
+                                              .addToFavorite();
+                                          context.read<ProductCubit>().fetchProductAndStore();
+                                        }
+                                      },
+                                    ),
                                   ),
-                                  onPressed: () {
-                                    // Handle favorite toggle
-                                  },
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product.name,
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      "\$${product.price}",
+                                      style: DelishopTextStyles
+                                          .font16SemiBoldGreen,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      product.description,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: DelishopColors.grey),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.star,
+                                            color: Colors.amber),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          "${product.rating ?? 5.0}",
+                                          style: DelishopTextStyles
+                                              .font16SemiBoldBlack
+                                              .copyWith(
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    // state.productState.when(onLoading: () {
+                                    //   return CircularProgressIndicator();
+                                    // }, onSuccess: (data) {
+                                    //   return
+                                    // }, onError: (domainError) {
+                                    //   return ErrorMessage(message: domainError.message, onTryAgain: () {
+                                    //     context.read<ProductCubit>().fetchProductAndStore();
+                                    //   },);
+                                    // },),
+                                  ],
                                 ),
                               ),
                             ],
-                          ),
-                          const SizedBox(height: 16),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  product.name,
-                                  style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  "\$${product.price}",
-                                  style: DelishopTextStyles
-                                      .font16SemiBoldGreen,
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  product.description,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: DelishopColors.grey),
-                                ),
-                                const SizedBox(height: 16),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.star,
-                                        color: Colors.amber),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      "${product.rating ?? 5.0}",
-                                      style: DelishopTextStyles
-                                          .font16SemiBoldBlack
-                                          .copyWith(
-                                              fontWeight:
-                                                  FontWeight.normal),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 16),
-                                // state.productState.when(onLoading: () {
-                                //   return CircularProgressIndicator();
-                                // }, onSuccess: (data) {
-                                //   return
-                                // }, onError: (domainError) {
-                                //   return ErrorMessage(message: domainError.message, onTryAgain: () {
-                                //     context.read<ProductCubit>().fetchProductAndStore();
-                                //   },);
-                                // },),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                    onError: (domainError) => ErrorMessage(
-                      message: domainError.message,
-                      onTryAgain: () {},
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: state.storeState.when(
-                      onLoading: () {
-                        return const Loading();
-                      },
-                      onSuccess: (data) {
-                        return StoreInfo(store: data);
-                      },
-                      onError: (domainError) {
-                        return ErrorMessage(
+                          );
+                        },
+                        onError: (domainError) => ErrorMessage(
                           message: domainError.message,
-                          onTryAgain: () {
-                            context
-                                .read<ProductCubit>()
-                                .fetchProductAndStore();
+                          onTryAgain: () {},
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: state.storeState.when(
+                          onLoading: () {
+                            return const Loading();
                           },
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: DelishopButton(onPressed: () {}, text: "Add to Cart"),
-                  ),
-                ],
-              );
-            },
+                          onSuccess: (data) {
+                            return StoreInfo(store: data);
+                          },
+                          onError: (domainError) {
+                            return ErrorMessage(
+                              message: domainError.message,
+                              onTryAgain: () {
+                                context
+                                    .read<ProductCubit>()
+                                    .fetchProductAndStore();
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: DelishopButton(
+                            onPressed: () {}, text: "Add to Cart"),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              // BlocListener<ProductCubit, ProductState>(
+              //   listener: (context, state) {
+              //     state.favoriteState.when(
+              //       onLoading: () {},
+              //       onSuccess: (data) {
+              //         showDialog(context: context, builder: (context) {
+              //           return MyAlertDialog(title: title, details: details, isError: isError)
+              //         },)
+              //       },
+              //       onError: (domainError) {
+              //         context.setupErrorState(domainError);
+              //       },
+              //     );
+              //   },
+              // )
+            ],
           ),
         ),
       ),
@@ -179,7 +212,10 @@ class StoreInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.push(StoreFullScreen(store: store));
+        context.push(BlocProvider<StoreCubit>(
+          create: (context) => StoreCubit(productRepo: getIt(), storeRepo: getIt(), storeId: store.id),
+          child: const StoreFullScreen(),
+        ));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),

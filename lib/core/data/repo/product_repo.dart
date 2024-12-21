@@ -26,4 +26,12 @@ class ProductRepo {
       },
     );
   }
+
+  Future<ResponseResult<ProductListResponseModel>> getProductsByStoreId(int storeId) async {
+    return await _connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return _apiService.getProductsByStoreId(storeId);
+      },
+    );
+  }
 }
