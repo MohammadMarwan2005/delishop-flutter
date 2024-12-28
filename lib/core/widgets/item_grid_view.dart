@@ -1,6 +1,7 @@
-import 'package:delishop/core/widgets/condition_text.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class ItemGridView<T> extends StatelessWidget {
   final String? title;
@@ -20,7 +21,7 @@ class ItemGridView<T> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title != null) ...[
-          const Text("Products",
+          Text("Products".tr(context),
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -28,18 +29,36 @@ class ItemGridView<T> extends StatelessWidget {
               )),
           SizedBox(height: 4.h),
         ],
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: items.length,
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 150.0,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-            childAspectRatio: 1,
-          ),
-          itemBuilder: (context, index) {
-            return cardBuilder(items[index]);
+        LayoutBuilder(
+          builder: (context, constraints) {
+            const maxCardWidth = 200.0;
+            final columnCount = (constraints.maxWidth / maxCardWidth).floor();
+            return AnimationLimiter(
+              child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: items.length,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: maxCardWidth,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                  childAspectRatio: 1,
+                ),
+                itemBuilder: (context, index) {
+                  return AnimationConfiguration.staggeredGrid(
+                    position: index,
+                    duration: const Duration(milliseconds: 200),
+                    columnCount: columnCount,
+                    child: SlideAnimation(
+                      verticalOffset: 50.0,
+                      child: FadeInAnimation(
+                        child: cardBuilder(items[index]),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
           },
         ),
       ],

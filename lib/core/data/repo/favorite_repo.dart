@@ -3,6 +3,7 @@ import 'package:delishop/core/data/model/favorite/favorite_response.dart';
 import 'package:delishop/core/helpers/internet_check_helper.dart';
 
 import '../api_service.dart';
+import '../model/product/product_list_response_model.dart';
 import '../model/store/store_list_response_model.dart';
 import '../response_result.dart';
 
@@ -33,4 +34,11 @@ class FavoriteRepo {
     );
   }
 
+  Future<ResponseResult<ProductListResponseModel>> getFavoriteProducts() async {
+    return await _connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return _apiService.getFavoriteProducts();
+      },
+    );
+  }
 }

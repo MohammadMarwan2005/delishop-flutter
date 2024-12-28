@@ -31,6 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+
+  flutter_localizations:
+    sdk: flutter
   # Model Serialization
   build_runner: ^2.4.13
   freezed: ^2.5.7
@@ -54,6 +57,9 @@ dependencies:
   shared_preferences: ^2.3.3
   iconly: ^1.0.1
   material_design_icons_flutter: ^7.0.7296
+  flutter_staggered_animations: ^1.1.1
+
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -83,8 +89,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/lang/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

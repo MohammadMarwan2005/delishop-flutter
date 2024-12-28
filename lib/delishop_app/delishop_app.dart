@@ -3,9 +3,11 @@ import 'package:delishop/delishop_app/first_route_helper.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../core/di/di_get_it.dart';
+import '../core/lang/app_localization.dart';
 
 class DelishopApp extends StatelessWidget {
   const DelishopApp({super.key});
@@ -22,8 +24,23 @@ class DelishopApp extends StatelessWidget {
           BlocProvider<AuthCubit>(create: (context) => getIt())
         ],
         child: MaterialApp(
+          supportedLocales: const [Locale('en'), Locale('ar')],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate
+          ],
+          localeResolutionCallback: (deviceLocale, supportedLocales) {
+            for (var locale in supportedLocales) {
+              if (deviceLocale != null &&
+                  deviceLocale.languageCode == locale.languageCode) {
+                return deviceLocale;
+              }
+            }
+            return supportedLocales.first;
+          },
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
           theme: DelishopTheme.lightTheme,
           home: FutureBuilder(
             future: getFirstRoute(),

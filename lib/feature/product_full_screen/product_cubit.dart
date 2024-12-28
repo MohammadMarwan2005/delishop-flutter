@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:delishop/core/data/api_service.dart';
 import 'package:delishop/core/data/model/favorite/favorite_response.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/data/model/store/store.dart';
@@ -66,7 +65,7 @@ class ProductCubit extends Cubit<ProductState> {
         await favoriteRepo.addProductToFavorite(product.id);
     result.when(
       onSuccess: (successData) {
-        emit(state.copyWith(favoriteState: UIState(data: successData)));
+        emit(state.copyWith(favoriteState: UIState(data: successData), product: UIState(data: state.productState.data?.copyWithInvertedFav())));
       },
       onError: (domainErrorModel) {
         emit(state.copyWith(favoriteState: UIState(error: domainErrorModel)));
@@ -80,7 +79,7 @@ class ProductCubit extends Cubit<ProductState> {
         await favoriteRepo.removeProductFromFavorite(product.id);
     result.when(
       onSuccess: (successData) {
-        emit(state.copyWith(favoriteState: UIState(data: successData)));
+        emit(state.copyWith(favoriteState: UIState(data: successData), product: UIState(data: state.productState.data?.copyWithInvertedFav())));
       },
       onError: (domainErrorModel) {
         emit(state.copyWith(favoriteState: UIState(error: domainErrorModel)));

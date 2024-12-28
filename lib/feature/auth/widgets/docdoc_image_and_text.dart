@@ -1,3 +1,5 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/theme/delishop_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +31,7 @@ class DocdocImageAndText extends StatelessWidget {
         Positioned(
             bottom: 1,
             child: Text(
-              "Best Doctor\nAppointment App",
+              "Best Doctor\nAppointment App".tr(context),
               style: DelishopTextStyles.font32OrangeBold.copyWith(height: 1.5),
               textAlign: TextAlign.center,
             ))

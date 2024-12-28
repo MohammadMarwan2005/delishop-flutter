@@ -1,0 +1,60 @@
+{
+  "Go to your Account": "اذهب إلى حسابك",
+  "Go to your Favorites": "اذهب إلى مفضلتك",
+  "Added": "تمت الإضافة",
+  "Removed": "تم الحذف",
+  "Categories": "الفئات",
+  "Malls": "المولات",
+  "Products": "المنتجات",
+  "Unprocessable Entity": "كيان غير قابل للمعالجة!",
+  "Unauthorized!": "غير مصرح!",
+  "No Internet Connection!": "لا يوجد اتصال بالإنترنت!",
+  "Unknown Error!": "خطأ غير معروف!",
+  "Not Found!": "غير موجود!",
+  "See All": "رؤية الكل",
+  "Wrong Credentials!": "بيانات غير صحيحة!",
+  "Check your information!": "تحقق من معلوماتك!",
+  "Check your connection": "تحقق من الاتصال",
+  "Opps!": "عذرًا!",
+  "Got it!": "تم",
+  "Try Again": "حاول مجددًا",
+  "User Account": "حساب المستخدم",
+  "Logout": "تسجيل الخروج",
+  "Go to Home": "اذهب إلى الرئيسية",
+  "Something went Wrong, ": "حدث خطأ ما، ",
+  "Your token is:": "رمزك هو:",
+  "Welcome, ": "مرحبًا، ",
+  "All Categories": "جميع الفئات",
+  "All Malls": "جميع المولات",
+  "All Products": "جميع المنتجات",
+  "We're excited to have you back, can't wait to see what you've been up to since you last logged in.": "نحن متحمسون لعودتك، لا يمكننا الانتظار لرؤية ما كنت تقوم به منذ آخر تسجيل دخول لك.",
+  "Welcome Back": "مرحبًا بعودتك",
+  "Login": "تسجيل الدخول",
+  "Don't have an account?": "لا تملك حسابًا؟",
+  "Sign Up": "إنشاء حساب",
+  "Enter valid values!": "أدخل قيمًا صحيحة!",
+  "Proceed": "موافقة",
+  "Phone Number": "رقم الهاتف",
+  "Please enter a valid phone number.": "يرجى إدخال رقم هاتف صالح.",
+  "Password": "كلمة المرور",
+  "Please enter a valid password": "يرجى إدخال كلمة مرور صالحة",
+  "Create Account": "إنشاء حساب",
+  "Sign up now and start exploring all that our app has to offer. We're excited to welcome you to our community!": "سجل الآن وابدأ في استكشاف كل ما يقدمه تطبيقنا. نحن متحمسون لاستقبالكم في مجتمعنا!",
+  "First Name": "الاسم الأول",
+  "Please enter a valid name.": "يرجى إدخال اسم صالح.",
+  "Last Name": "الاسم الأخير",
+  "Confirm Password": "تأكيد كلمة المرور",
+  "Passwords don't match!": "كلمات المرور لا تتطابق!",
+  "Must have at least one lower case letter": "يجب أن تحتوي على حرف صغير واحد على الأقل",
+  "Must have at least one upper case letter": "يجب أن تحتوي على حرف كبير واحد على الأقل",
+  "Must have at least one number": "يجب أن تحتوي على رقم واحد على الأقل",
+  "Must have at least one special Character": "يجب أن تحتوي على رمز خاص واحد على الأقل",
+  "Must be at least 8 characters": "يجب أن تحتوي على 8 أحرف على الأقل",
+  "Best Doctor\nAppointment App": "أفضل تطبيق\nلحجز مواعيد الأطباء",
+  "Don't forget the password again! 🥲": "لا تنسى كلمة المرور مرة أخرى! 🥲",
+  "Forget Password?": "نسيت كلمة المرور؟",
+  "Stores": "المتاجر",
+  "Favorites": "المفضلة",
+  "Add to Cart": "أضف إلى السلة",
+  "Already have an account?": "هل لديك حساب بالفعل؟"
+}

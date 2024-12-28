@@ -1,6 +1,7 @@
 extension ImageStringHelper on String {
   String validatePicture() {
-    return "http://10.0.2.2:8000${substring(21)}";
+    // return this;
+    return "http://195.88.87.77:8008${substring(21)}";
   }
 }
 

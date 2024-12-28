@@ -1,12 +1,14 @@
-import 'package:delishop/core/data/api_service.dart';
 import 'package:delishop/core/data/model/category/category.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/theme/delishop_text_styles.dart';
 import 'package:delishop/core/widgets/delishop_text_button.dart';
 import 'package:delishop/core/widgets/error_message.dart';
 import 'package:delishop/feature/all_malls/all_stores_screen.dart';
 import 'package:delishop/feature/all_produts/all_products_screen.dart';
+import 'package:delishop/feature/favorite/favorite_cubit.dart';
+import 'package:delishop/feature/favorite/favorite_screen.dart';
 import 'package:delishop/feature/home/home_cubit.dart';
 import 'package:delishop/feature/home/widgets/items_lazy_row.dart';
 import 'package:delishop/feature/home/widgets/small_category_widget.dart';
@@ -47,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                       return Column(
                         children: [
                           TitleAndSeeAll(
-                            title: "Categories",
+                            title: "Categories".tr(context),
                             onClick: () {
                               context.push(AllCategoriesScreen(categories: dataList));
                             },
@@ -62,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     onError: (domainError) {
-                      return ErrorMessage(message: domainError.message, onTryAgain: () {
+                      return ErrorMessage(message: domainError.getMessage(context), onTryAgain: () {
                         context.read<HomeCubit>().getAllCategories();
                       },);
                     },
@@ -74,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                       return Column(
                         children: [
                           TitleAndSeeAll(
-                            title: "Malls",
+                            title: "Malls".tr(context),
                             onClick: () {
                               context.push(AllStoresScreen(stores: dataList));
                             },
@@ -87,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     onError: (domainError) {
-                      return ErrorMessage(message: domainError.message, onTryAgain: () {
+                      return ErrorMessage(message: domainError.getMessage(context), onTryAgain: () {
                         context.read<HomeCubit>().getAllStores();
                       },);
                     },
@@ -99,7 +101,7 @@ class HomeScreen extends StatelessWidget {
                       return Column(
                         children: [
                           TitleAndSeeAll(
-                            title: "Products",
+                            title: "Products".tr(context),
                             onClick: () {
                               context.push(AllProductsScreen(products: dataList));
                             },
@@ -113,14 +115,17 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     onError: (domainError) {
-                      return ErrorMessage(message: domainError.message, onTryAgain: () {
+                      return ErrorMessage(message: domainError.getMessage(context), onTryAgain: () {
                         context.read<HomeCubit>().getAllProducts();
                       },);
                     },
                   ),
                   DelishopTextButton(onClick: () {
                     context.push(BlocProvider<AccountCubit>(create: (context) => getIt(), child: const AccountScreen()));
-                  }, label: "Go to your Account")
+                  }, label: "Go to your Account".tr(context)),
+                  DelishopTextButton(onClick: () {
+                    context.push(BlocProvider<FavoriteCubit>(create: (context) => getIt(), child: const FavoriteScreen()));
+                  }, label: "Go to your Favorites".tr(context)),
                 ],
               );
             },
