@@ -1,3 +1,4 @@
+import 'package:delishop/core/lang/lang_code_cubit.dart';
 import 'package:delishop/core/theme/theme.dart';
 import 'package:delishop/delishop_app/first_route_helper.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
@@ -21,38 +22,52 @@ class DelishopApp extends StatelessWidget {
       // This bloc will be needed in many screens
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<AuthCubit>(create: (context) => getIt())
+          BlocProvider<AuthCubit>(create: (context) => getIt()),
+          BlocProvider<LangCodeCubit>(create: (context) => getIt())
         ],
-        child: MaterialApp(
-          supportedLocales: const [Locale('en'), Locale('ar')],
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate
-          ],
-          localeResolutionCallback: (deviceLocale, supportedLocales) {
-            for (var locale in supportedLocales) {
-              if (deviceLocale != null &&
-                  deviceLocale.languageCode == locale.languageCode) {
-                return deviceLocale;
-              }
+        child: BlocBuilder<LangCodeCubit, LangCodeState>(
+          builder: (context, state) {
+            if (state is LangCodeLoaded) {
+              return MaterialApp(
+                locale: state.langCode != null ? Locale(state.langCode!) : null,
+                supportedLocales: const [Locale('en'), Locale('ar')],
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate
+                ],
+                localeResolutionCallback: (deviceLocale, supportedLocales) {
+                  for (var locale in supportedLocales) {
+                    if (deviceLocale != null &&
+                        deviceLocale.languageCode == locale.languageCode) {
+                      return deviceLocale;
+                    }
+                  }
+                  return supportedLocales.first;
+                },
+                debugShowCheckedModeBanner: false,
+                theme: DelishopTheme.lightTheme,
+                home: FutureBuilder(
+                  future: getFirstRoute(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Scaffold(
+                          body: Center(child: CircularProgressIndicator()));
+                    } else if (snapshot.hasData) {
+                      return snapshot.data!;
+                    }
+                    return const Placeholder();
+                  },
+                ),
+              );
+            } else {
+              return const MaterialApp(
+                home:
+                    Scaffold(body: Center(child: CircularProgressIndicator())),
+              );
             }
-            return supportedLocales.first;
           },
-          debugShowCheckedModeBanner: false,
-          theme: DelishopTheme.lightTheme,
-          home: FutureBuilder(
-            future: getFirstRoute(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Scaffold(body: Center(child: CircularProgressIndicator()));
-              } else if (snapshot.hasData) {
-                return snapshot.data!;
-              }
-              return const Placeholder();
-            },
-          ),
         ),
       ),
     );
