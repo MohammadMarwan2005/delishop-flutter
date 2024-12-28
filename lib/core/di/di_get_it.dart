@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:delishop/core/data/repo/categoy_repo.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
+import 'package:delishop/core/lang/lang_code_cubit.dart';
 import 'package:delishop/feature/account/cubit/account_cubit.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
 import 'package:delishop/feature/favorite/favorite_cubit.dart';
@@ -34,6 +35,9 @@ Future<void> initializeDependencies() async {
       () => AuthRepo(apiService: getIt(), connectivity: getIt()));
   getIt.registerLazySingleton<AuthCubit>(
       () => AuthCubit(authRepo: getIt(), userDataRepo: getIt()));
+
+  getIt.registerLazySingleton<LangCodeCubit>(
+      () => LangCodeCubit(getIt()));
 
   // account
   getIt.registerFactory<AccountCubit>(

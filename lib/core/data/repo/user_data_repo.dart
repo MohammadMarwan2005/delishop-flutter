@@ -28,8 +28,8 @@ class UserDataRepo {
     await sharedPrefs.setString(key, value);
   }
 
-  String getString(String key) {
-    return sharedPrefs.getString(key) ?? "";
+  String? getString(String key) {
+    return sharedPrefs.getString(key);
   }
 }
 
@@ -37,4 +37,5 @@ class DataAccessKeys {
   static String tokenKey = "tokenKey";
   static String firstNameKey = "firstNameKey";
   static String lastNameKey = "lastNameKey";
+  static String langCodeKey = "langCodeKey";
 }

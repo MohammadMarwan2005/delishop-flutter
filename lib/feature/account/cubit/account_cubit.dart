@@ -20,8 +20,8 @@ class AccountCubit extends Cubit<AccountState> {
     emit(const AccountState.loading());
     try {
       String token = await _userDataRepo.getToken();
-      String firstName = await _userDataRepo.getString(DataAccessKeys.firstNameKey);
-      String lastName = await _userDataRepo.getString(DataAccessKeys.lastNameKey);
+      String firstName = await _userDataRepo.getString(DataAccessKeys.firstNameKey) ?? "";
+      String lastName = await _userDataRepo.getString(DataAccessKeys.lastNameKey) ?? "";
       emit(AccountState.success(firstName, lastName, token));
     } catch (e) {
       emit(AccountState.error(

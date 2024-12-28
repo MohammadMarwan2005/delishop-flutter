@@ -1,5 +1,6 @@
 import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
+import 'package:delishop/core/lang/lang_code_cubit.dart';
 import 'package:delishop/core/widgets/delishop_text_button.dart';
 import 'package:delishop/feature/auth/login/login_screen.dart';
 import 'package:delishop/feature/home/home_screen.dart';
@@ -52,7 +53,16 @@ class AccountScreen extends StatelessWidget {
           DelishopTextButton(onClick: () {
             context.read<AccountCubit>().logout();
             context.removeAndPush(LoginScreen());
-          }, label: "Logout".tr(context))
+          }, label: "Logout".tr(context)),
+          BlocBuilder<LangCodeCubit, LangCodeState>(builder: (context, state) {
+            if(state is LangCodeLoaded) {
+              return DelishopTextButton(onClick: () {
+                context.read<LangCodeCubit>().toggleLangCode();
+              }, label: state.langCode ?? Localizations.localeOf(context).languageCode);
+            } else {
+              return const SizedBox();
+            }
+          },)
         ],
       ),
     );
