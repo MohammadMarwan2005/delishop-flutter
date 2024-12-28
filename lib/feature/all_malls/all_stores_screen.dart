@@ -1,4 +1,5 @@
 import 'package:delishop/core/data/model/store/store.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/widgets/item_grid_view.dart';
 import 'package:delishop/feature/home/widgets/small_store_card.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class AllStoresScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        title: const Text("All Malls"),
+        title: Text("All Malls".tr(context)),
       ),
       body: SafeArea(
           child: SingleChildScrollView(

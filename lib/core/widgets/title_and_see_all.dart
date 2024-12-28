@@ -1,3 +1,5 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +20,7 @@ class TitleAndSeeAll extends StatelessWidget {
             style: DelishopTextStyles.font24OrangeBold
                 .copyWith(color: Colors.black)),
         DelishopTextButton(
-            onClick: onClick, label: "See All")
+            onClick: onClick, label: "See All".tr(context))
       ],
     );
   }

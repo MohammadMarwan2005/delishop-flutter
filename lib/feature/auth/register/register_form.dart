@@ -1,4 +1,6 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/helpers/validation_helper.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/feature/auth/register/password_validation_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,11 +54,11 @@ class _RegisterFormState extends State<RegisterForm> {
                 DelishopTextField(
                   textEditingController:
                       context.read<AuthCubit>().firstNameController,
-                  labelText: "First Name",
+                  labelText: "First Name".tr(context),
                   keyboardType: TextInputType.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter a valid name.";
+                      return "Please enter a valid name.".tr(context);
                     }
                     return null;
                   },
@@ -66,11 +68,11 @@ class _RegisterFormState extends State<RegisterForm> {
                 DelishopTextField(
                   textEditingController:
                       context.read<AuthCubit>().lastNameController,
-                  labelText: "Last Name",
+                  labelText: "Last Name".tr(context),
                   keyboardType: TextInputType.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter a valid name.";
+                      return "Please enter a valid name.".tr(context);
                     }
                     return null;
                   },
@@ -80,13 +82,13 @@ class _RegisterFormState extends State<RegisterForm> {
                 DelishopTextField(
                   textEditingController:
                       context.read<AuthCubit>().phoneNumberController,
-                  labelText: "Phone Number",
+                  labelText: "Phone Number".tr(context),
                   keyboardType: TextInputType.phone,
                   validator: (value) {
                     if (value == null ||
                         value.isEmpty ||
                         !value.isPhoneNumberValid()) {
-                      return "Please enter a valid phone number.";
+                      return "Please enter a valid phone number.".tr(context);
                     }
                     return null;
                   },
@@ -96,13 +98,13 @@ class _RegisterFormState extends State<RegisterForm> {
                 DelishopTextField(
                   textEditingController:
                       context.read<AuthCubit>().passwordController,
-                  labelText: "Password",
+                  labelText: "Password".tr(context),
                   keyboardType: TextInputType.visiblePassword,
                   validator: (value) {
                     if (value == null ||
                         value.isEmpty ||
                         !value.isPasswordValid()) {
-                      return "Please enter a valid password";
+                      return "Please enter a valid password".tr(context);
                     }
                     return null;
                   },
@@ -124,16 +126,16 @@ class _RegisterFormState extends State<RegisterForm> {
                 DelishopTextField(
                   textEditingController:
                       context.read<AuthCubit>().passwordConfirmationController,
-                  labelText: "Confirm Password",
+                  labelText: "Confirm Password".tr(context),
                   keyboardType: TextInputType.visiblePassword,
                   validator: (value) {
                     if (value == null ||
                         value.isEmpty ||
                         value != context.read<AuthCubit>().passwordController.text) {
-                      return "Passwords don't match!";
+                      return "Passwords don't match!".tr(context);
                     }
                     if (!value.isPasswordValid()) {
-                      return "Please enter a valid password";
+                      return "Please enter a valid password".tr(context);
                     }
                     return null;
                   },

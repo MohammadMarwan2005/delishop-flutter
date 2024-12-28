@@ -21,17 +21,26 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Product {
   int get id => throw _privateConstructorUsedError;
+
   @JsonKey(name: "store_id")
   int get storeId => throw _privateConstructorUsedError;
+
   String get name => throw _privateConstructorUsedError;
+
   String get description => throw _privateConstructorUsedError;
+
   @JsonKey(name: "product_picture")
   String? get productPicture => throw _privateConstructorUsedError;
+
   String get price => throw _privateConstructorUsedError;
+
   String get discount => throw _privateConstructorUsedError;
+
   int get quantity => throw _privateConstructorUsedError;
+
   @JsonKey(name: "is_favorite")
   bool? get isFavorite => throw _privateConstructorUsedError;
+
   @JsonKey(name: "rating")
   double? get rating => throw _privateConstructorUsedError;
 
@@ -48,6 +57,7 @@ mixin _$Product {
 abstract class $ProductCopyWith<$Res> {
   factory $ProductCopyWith(Product value, $Res Function(Product) then) =
       _$ProductCopyWithImpl<$Res, Product>;
+
   @useResult
   $Res call(
       {int id,
@@ -69,6 +79,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -138,6 +149,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
   factory _$$ProductImplCopyWith(
           _$ProductImpl value, $Res Function(_$ProductImpl) then) =
       __$$ProductImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -311,6 +323,11 @@ class _$ProductImpl implements _Product {
       this,
     );
   }
+
+  @override
+  Product copyWithInvertedFav() {
+    return copyWith(isFavorite: isFavorite?.notOrNull());
+  }
 }
 
 abstract class _Product implements Product {
@@ -330,25 +347,34 @@ abstract class _Product implements Product {
 
   @override
   int get id;
+
   @override
   @JsonKey(name: "store_id")
   int get storeId;
+
   @override
   String get name;
+
   @override
   String get description;
+
   @override
   @JsonKey(name: "product_picture")
   String? get productPicture;
+
   @override
   String get price;
+
   @override
   String get discount;
+
   @override
   int get quantity;
+
   @override
   @JsonKey(name: "is_favorite")
   bool? get isFavorite;
+
   @override
   @JsonKey(name: "rating")
   double? get rating;

@@ -151,4 +151,15 @@ class ApiService {
       jsonToModel: (jsonMap) => FavoriteResponse.fromJson(jsonMap),
     );
   }
+
+  Future<ResponseResult<ProductListResponseModel>> getFavoriteProducts() async {
+    final token = await userDataRepo.getToken();
+    final http.Response httpResponse = await _httpClient.get(
+      Uri.parse(ApiConsts.getFavoriteProductsUrl),
+      headers: CommonConsts.getTokenHeader(token),
+    );
+    return httpResponse.handle(jsonToModel: (jsonMap) {
+      return ProductListResponseModel.fromJson(jsonMap);
+    });
+  }
 }

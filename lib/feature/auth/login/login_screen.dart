@@ -1,4 +1,6 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
 import 'package:delishop/feature/auth/login/phone_number_and_password_form.dart';
 import 'package:delishop/feature/auth/register/register_screen.dart';
@@ -30,14 +32,14 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(height: 50.h),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text("Welcome Back",
+                  child: Text("Welcome Back".tr(context),
                       style: DelishopTextStyles.font24OrangeBold),
                 ),
                 SizedBox(height: 8.h),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
-                    "We're excited to have you back, can't wait to see what you've been up to since you last logged in.",
+                    "We're excited to have you back, can't wait to see what you've been up to since you last logged in.".tr(context),
                     style: DelishopTextStyles.font14RegularGrey
                         .copyWith(height: 1.7),
                   ),
@@ -51,11 +53,11 @@ class LoginScreen extends StatelessWidget {
                     onClick: () {
                       validateThenLogin(context, _formKey);
                     },
-                    label: "Login"),
+                    label: "Login".tr(context)),
                 SizedBox(height: 32.h),
                 SuggestionAndTextButton(
-                  suggestionText: "Don't have an account?",
-                  buttonLabel: "Sign Up",
+                  suggestionText: "Don't have an account?".tr(context),
+                  buttonLabel: "Sign Up".tr(context),
                   onClick: () {
                     context.pushReplacement(RegisterScreen());
                   },
@@ -76,9 +78,9 @@ class LoginScreen extends StatelessWidget {
       authCubit.login();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Enter valid values!"),
+        content: Text("Enter valid values!".tr(context)),
         action: SnackBarAction(
-          label: "Proceed",
+          label: "Proceed".tr(context),
           onPressed: () {
             authCubit.login();
           },

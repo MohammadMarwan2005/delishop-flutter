@@ -1,4 +1,8 @@
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+
+import '../api_consts.dart';
 
 /// DomainErrorModel is working for:
 /// 422: Unprocessable Entity ✅✅
@@ -14,7 +18,8 @@ class DomainErrorModel extends Equatable {
   @override
   List<Object?> get props => [message, details];
 
-  static DomainErrorModel fromJson(Map<String, dynamic> jsonMap, int statusCode) {
+  static DomainErrorModel fromJson(
+      Map<String, dynamic> jsonMap, int statusCode) {
     final String message = jsonMap["message"].toString();
     final int code = statusCode;
     List<String> details = [];
@@ -29,5 +34,22 @@ class DomainErrorModel extends Equatable {
       print("An error occurred: ${e.toString()}");
     }
     return DomainErrorModel(message: message, code: code, details: details);
+  }
+
+  String getMessage(BuildContext context) {
+    switch (code) {
+      case StatusCodes.unprocessableEntity:
+        return "Unprocessable Entity!".tr(context);
+      case StatusCodes.unauthorized:
+        return "Unauthorized!".tr(context);
+      case StatusCodes.noInternet:
+        return "No Internet Connection!".tr(context);
+      case StatusCodes.unknown:
+        return "Unknown Error!".tr(context);
+      case StatusCodes.notFound:
+        return "Not Found!".tr(context);
+      default:
+        return this.message;
+    }
   }
 }

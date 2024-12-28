@@ -1,4 +1,6 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/data/model/product/product.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/feature/home/widgets/small_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +16,7 @@ class AllProductsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        title: const Text("All Products"),
+        title: Text("All Products".tr(context)),
       ),
       body: SafeArea(
           child: SingleChildScrollView(

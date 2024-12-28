@@ -1,5 +1,5 @@
 abstract class ApiConsts {
-  static const String baseUrl = "http://10.0.2.2:8000/api";
+  static const String baseUrl = "http://195.88.87.77:8008/api";
   static const String loginUrl = "$baseUrl/auth/login";
   static const String registerUrl = "$baseUrl/auth/register";
   static const String productSearchUrl = "$baseUrl/product/search";
@@ -11,6 +11,7 @@ abstract class ApiConsts {
   static const String getAllCategories = "$baseUrl/categories/getCategories";
   static const String addProductToFavoriteUrl = "$baseUrl/favorite/addToFavorite";
   static const String removeProductFromFavoriteUrl = "$baseUrl/favorite/removeFromFavorite";
+  static const String getFavoriteProductsUrl = "$baseUrl/favorite/getFavorites";
 }
 
 abstract class StatusCodes {
