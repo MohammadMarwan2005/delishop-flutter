@@ -20,4 +20,12 @@ extension NavigationHelper on BuildContext {
   void pop() {
     Navigator.pop(this);
   }
+
+  void removeAndPush(Widget screen) {
+    Navigator.pushAndRemoveUntil(
+      this,
+      MaterialPageRoute(builder: (context) => screen),
+          (route) => false,  // Removes all routes, so the screen will be the only screen in the stack
+    );
+  }
 }

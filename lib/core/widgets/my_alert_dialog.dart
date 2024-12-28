@@ -1,4 +1,6 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -20,13 +22,13 @@ class MyAlertDialog extends StatelessWidget {
         size: 32,
       ),
       title: Text(title),
-      content: ErrorDetails(details: details),
+      content: ErrorDetails(details: details, isError: isError),
       actions: [
         DelishopTextButton(
           onClick: () {
             context.pop();
           },
-          label: "Got it!",
+          label: "Got it!".tr(context),
         ),
       ],
     );

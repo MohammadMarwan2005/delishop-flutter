@@ -3,6 +3,7 @@ import 'package:delishop/core/data/repo/categoy_repo.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:delishop/feature/account/cubit/account_cubit.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
+import 'package:delishop/feature/favorite/favorite_cubit.dart';
 import 'package:delishop/feature/home/home_cubit.dart';
 import 'package:delishop/feature/home/home_screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -35,7 +36,7 @@ Future<void> initializeDependencies() async {
       () => AuthCubit(authRepo: getIt(), userDataRepo: getIt()));
 
   // account
-  getIt.registerLazySingleton<AccountCubit>(
+  getIt.registerFactory<AccountCubit>(
       () => AccountCubit(userDataRepo: getIt()));
 
   getIt.registerLazySingleton<ProductRepo>(
@@ -50,9 +51,15 @@ Future<void> initializeDependencies() async {
       () => FavoriteRepo(apiService: getIt(), connectivity: getIt()));
 
   // home
-  getIt.registerLazySingleton<HomeCubit>(() => HomeCubit(
+  getIt.registerFactory<HomeCubit>(() => HomeCubit(
         storeRepo: getIt(),
         productRepo: getIt(),
         categoryRepo: getIt(),
       ));
+
+  // favorite cubit:
+
+  // this is wrong, this will give me the same item everytime I go to the screen, I want to get a new object everytime
+  getIt.registerFactory<FavoriteCubit>(() => FavoriteCubit(favoriteRepo: getIt()));
+
 }

@@ -1,4 +1,5 @@
 import 'package:delishop/core/helpers/error_handling_helper.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../data/model/domain_error_model.dart';
@@ -10,22 +11,22 @@ extension AlertDialogHelper on BuildContext {
     List<String> details = error.details ?? [];
 
     error.when(onUnprocessableEntity: () {
-      title = "Unproccessable Entity!";
+      title = "Unproccessable Entity!".tr(this);
     }, onUnauthorized: () {
-      title = "Wrong Credentials!";
+      title = "Wrong Credentials!".tr(this);
       details = ["Check your information!"];
     }, onNoInternet: () {
-      title = "No Internet Connection!";
-      details = ["Check you connection"];
+      title = "No Internet Connection!".tr(this);
+      details = ["Check you connection".tr(this)];
     }, onConflict: () {
-      title = "Opps!";
+      title = "Opps!".tr(this);
       details = [error.message];
     }, onNotFound: () {
-      title = "Opps!";
+      title = "Opps!".tr(this);
       details = [error.message];
     }, onUnknown: () {
-      title = "Opps!";
-      details = ["Unknown Error!"];
+      title = "Opps!".tr(this);
+      details = ["Unknown Error!".tr(this)];
     });
     showDialog(
         context: this,

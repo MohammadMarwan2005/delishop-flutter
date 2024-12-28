@@ -27,7 +27,7 @@ extension InternetCheckHelper on Connectivity {
     } on http.ClientException {
       return const Error(DomainErrorModel(
         message: "No Internet Connection",
-        code: StatusCodes.unknown,
+        code: StatusCodes.noInternet,
       ));
     }
   }

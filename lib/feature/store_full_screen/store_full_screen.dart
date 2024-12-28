@@ -1,5 +1,7 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/helpers/image_string_helper.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/widgets/error_message.dart';
 import 'package:delishop/core/widgets/item_grid_view.dart';
 import 'package:delishop/core/widgets/loading.dart';
@@ -125,7 +127,7 @@ class StoreFullScreen extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: ItemGridView<Product>(
-                          title: "Products",
+                          title: "Products".tr(context),
                           items: data,
                           cardBuilder: (item) {
                             return SmallProductCard(product: item);

@@ -1,3 +1,5 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:flutter/material.dart';
 
 class ErrorMessage extends StatelessWidget {
@@ -16,7 +18,7 @@ class ErrorMessage extends StatelessWidget {
           children: [
             Text(message),
             ElevatedButton(
-                onPressed: onTryAgain, child: const Text("Try Again"))
+                onPressed: onTryAgain, child: Text("Try Again".tr(context)))
           ],
         ),
       ),

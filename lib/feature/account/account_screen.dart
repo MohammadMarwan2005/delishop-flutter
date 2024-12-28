@@ -1,5 +1,7 @@
 import 'package:delishop/core/helpers/navigation_helper.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/widgets/delishop_text_button.dart';
+import 'package:delishop/feature/auth/login/login_screen.dart';
 import 'package:delishop/feature/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +18,7 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("User Account"), backgroundColor: Theme.of(context).colorScheme.inversePrimary),
+      appBar: AppBar(title: Text("User Account".tr(context)), backgroundColor: Theme.of(context).colorScheme.inversePrimary),
       body: Column(
         children: [
           SafeArea(
@@ -31,22 +33,26 @@ class AccountScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Icon(IconlyLight.profile),
-                        Text("Welcome, $firstName $lastName!", style: Theme.of(context).textTheme.titleLarge,),
+                        Text("${"Welcome, ".tr(context)}$firstName $lastName!", style: Theme.of(context).textTheme.titleLarge,),
                         SizedBox(height: 16.h),
-                        Text("Your token is: \n$token"),
+                        Text("${"Your token is:".tr(context)}\n$token"),
                       ],
                     ),
                   );
                 },
                 error: (error) {
-                  return Center(child: Text("Something went Wrong, ${error.message}"));
+                  return Center(child: Text("Something went Wrong, ".tr(context) + error.message));
                 },
               );
             }),
           ),
           DelishopTextButton(onClick: () {
             context.push(BlocProvider<HomeCubit>(create: (context) => getIt(), child: const HomeScreen()));
-          }, label: "Go to Home")
+          }, label: "Go to Home".tr(context)),
+          DelishopTextButton(onClick: () {
+            context.read<AccountCubit>().logout();
+            context.removeAndPush(LoginScreen());
+          }, label: "Logout".tr(context))
         ],
       ),
     );

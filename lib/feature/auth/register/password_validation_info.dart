@@ -1,3 +1,5 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,23 +20,23 @@ class PasswordValidationInfo extends StatelessWidget {
     return Column(
       children: [
         ConditionText(
-            name: "Must have at least one lower case letter",
+            name: "Must have at least one lower case letter".tr(context),
             validated: hasLowerCase),
         SizedBox(height: 2.h),
         ConditionText(
-            name: "Must have at least one upper case letter",
+            name: "Must have at least one upper case letter".tr(context),
             validated: hasUpperCase),
         SizedBox(height: 2.h),
         ConditionText(
-            name: "Must have at least one number",
+            name: "Must have at least one number".tr(context),
             validated: hasNumber),
         SizedBox(height: 2.h),
         ConditionText(
-            name: "Must have at least one special Character",
+            name: "Must have at least one special Character".tr(context),
             validated: hasSpecialCharacter),
         SizedBox(height: 2.h),
         ConditionText(
-            name: "Must be at least 8 characters",
+            name: "Must be at least 8 characters".tr(context),
             validated: hasMinLength),
         SizedBox(height: 2.h),
       ],

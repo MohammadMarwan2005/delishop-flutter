@@ -1,4 +1,6 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/helpers/validation_helper.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,13 +56,13 @@ class _PhoneNumberAndPasswordFormState
                 DelishopTextField(
                   textEditingController:
                       context.read<AuthCubit>().phoneNumberController,
-                  labelText: "Phone Number",
+                  labelText: "Phone Number".tr(context),
                   keyboardType: TextInputType.phone,
                   validator: (value) {
                     if (value == null ||
                         value.isEmpty ||
                         !value.isPhoneNumberValid()) {
-                      return "Please enter a valid phone number.";
+                      return "Please enter a valid phone number.".tr(context);
                     }
                     return null;
                   },
@@ -70,13 +72,13 @@ class _PhoneNumberAndPasswordFormState
                 DelishopTextField(
                   textEditingController:
                       context.read<AuthCubit>().passwordController,
-                  labelText: "Password",
+                  labelText: "Password".tr(context),
                   keyboardType: TextInputType.visiblePassword,
                   validator: (value) {
                     if (value == null ||
                         value.isEmpty ||
                         !value.isPasswordValid()) {
-                      return "Please enter a valid password";
+                      return "Please enter a valid password".tr(context);
                     }
                     return null;
                   },

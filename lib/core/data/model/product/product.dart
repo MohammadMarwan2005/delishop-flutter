@@ -1,8 +1,6 @@
-import 'package:delishop/core/helpers/image_string_helper.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'product.freezed.dart';
-
 part 'product.g.dart';
 
 @freezed
@@ -22,4 +20,14 @@ class Product with _$Product {
 
   factory Product.fromJson(Map<String, Object?> json) =>
       _$ProductFromJson(json);
+
+  Product copyWithInvertedFav() {
+    return copyWith(isFavorite: isFavorite?.notOrNull());
+  }
+}
+
+extension BooleanExtension on bool {
+  bool notOrNull() {
+    return !this;
+  }
 }
