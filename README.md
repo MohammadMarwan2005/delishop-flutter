@@ -16,7 +16,9 @@
 ## ⭕🔳 Big Todo:
 ### User:
 🔳 Cart Feature
+🔳 Checkout Order Screen
 🔳 My Orders Screen
+🔳 Edit/Delete Order Screen
 🔳 Notification Screen
 🔳 Sending Notification using Firebase
 🔳 Search Screen (for a mall or a category or a product)
@@ -27,6 +29,7 @@
 ### Mall:
 🔳 My Mall Profile Screen
 🔳 Add/Edit Product Screen
+🔳 Orders Feature
 ### Super Admin:
 🔳 Add New Mall Screen (Phone Number and Password)
 
