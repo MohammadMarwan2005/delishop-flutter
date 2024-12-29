@@ -14,7 +14,7 @@
 
 
 ## ⭕🔳 Big Todo:
-### User:
+### ⭕ User:
 🔳 Cart Feature
 🔳 Checkout Order Screen
 🔳 My Orders Screen
@@ -26,11 +26,11 @@
 🔳 Professional Profile Screen
 🔳 Splash Screen
 🔳 Onboarding Screens
-### Mall:
+### ⭕ Mall:
 🔳 My Mall Profile Screen
 🔳 Add/Edit Product Screen
 🔳 Orders Feature
-### Super Admin:
+### ⭕ Super Admin:
 🔳 Add New Mall Screen (Phone Number and Password)
 
 
