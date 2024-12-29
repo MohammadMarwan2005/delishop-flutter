@@ -27,6 +27,7 @@
 ### Mall:
 🔳 My Mall Profile Screen
 🔳 Add/Edit Product Screen
+🔳 Orders Feature
 ### Super Admin:
 🔳 Add New Mall Screen (Phone Number and Password)
 
