@@ -1,7 +1,7 @@
-# delishop
+# 🛍️ Delishop
 
 
-## Done: 
+## ✅ Done: 
 ✅ Auth Feature
 ✅ Home Screen
 ✅ All Categories Screen
@@ -13,7 +13,7 @@
 ✅ Favorites Feature
 
 
-## Big Todo:
+## ⭕🔳 Big Todo:
 ### User:
 🔳 Cart Feature
 🔳 My Orders Screen
@@ -31,7 +31,7 @@
 🔳 Add New Mall Screen (Phone Number and Password)
 
 
-## Small Todo: 
+## 🟢🔳 Small Todo: 
 🔳 Create the ToggleLangButton and add it to Auth Screens
 🔳 Bottom Nav Bar (Home-Orders-Search-Favorites-Profile)
 🔳 Add top buttons in home screen (Notifications-Cart)
