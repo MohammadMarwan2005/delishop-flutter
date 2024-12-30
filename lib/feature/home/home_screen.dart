@@ -19,11 +19,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/di/di_get_it.dart';
-import '../../core/widgets/loading_circle.dart';
 import '../../core/widgets/title_and_see_all.dart';
 import '../account/account_screen.dart';
 import '../account/cubit/account_cubit.dart';
 import '../all_categories/all_categories_screen.dart';
+import 'package:delishop/core/widgets/loading.dart' as loading;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return Column(
                 children: [
                   state.categoryState.when(
-                    onLoading: () => const LoadingCircle(),
+                    onLoading: () => const loading.Loading(),
                     onSuccess: (dataList) {
                       return Column(
                         children: [
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 8.h),
                   state.storeState.when(
-                    onLoading: () => const LoadingCircle(),
+                    onLoading: () => const loading.Loading(),
                     onSuccess: (dataList) {
                       return Column(
                         children: [
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 8.h),
                   state.productState.when(
-                    onLoading: () => const LoadingCircle(),
+                    onLoading: () => const loading.Loading(),
                     onSuccess: (dataList) {
                       return Column(
                         children: [

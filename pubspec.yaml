@@ -59,6 +59,7 @@ dependencies:
   material_design_icons_flutter: ^7.0.7296
   flutter_staggered_animations: ^1.1.1
   firebase_core: ^3.9.0
+  lottie: ^3.2.0
 
 
 
@@ -93,6 +94,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/lang/
+    - assets/animation/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

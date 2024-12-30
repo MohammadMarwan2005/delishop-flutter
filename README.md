@@ -25,7 +25,7 @@
 🔳 Add/Edit Rating Screen
 🔳 Professional Profile Screen
 🔳 Splash Screen
-🔳 Onboarding Screens
+🔳 Onboarding Screens (using lottie)
 ### ⭕ Mall:
 🔳 My Mall Profile Screen
 🔳 Add/Edit Product Screen
@@ -38,4 +38,6 @@
 ✅ Create the ToggleLangButton and add it to Auth Screens
 🔳 Bottom Nav Bar (Home-Orders-Search-Favorites-Profile)
 🔳 Add top buttons in home screen (Notifications-Cart)
-🔳 Adding MallProducts to SingleMallScreen
+✅ Adding MallProducts to SingleMallScreen
+✅ Adding no products in the favorite message
+🔳 Adding Rating for the product and the the store

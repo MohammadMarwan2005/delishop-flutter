@@ -3,6 +3,7 @@ import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/widgets/error_message.dart';
 import 'package:delishop/core/widgets/item_grid_view.dart';
 import 'package:delishop/core/widgets/loading.dart';
+import 'package:delishop/core/widgets/no_result_message.dart';
 import 'package:delishop/feature/home/widgets/small_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       context.read<FavoriteCubit>().logViewFav();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +44,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 return const Loading();
               },
               onSuccess: (data) {
+                if (data.isEmpty) {
+                  return NoResultMessage(
+                    messageLabel: "No favorite products found!".tr(context),
+                    buttonLabel: "Try Again".tr(context),
+                    onButtonClicked: () {
+                      context.read<FavoriteCubit>().fetchFavoriteProducts();
+                    },
+                  );
+                }
                 return RefreshIndicator(
                   onRefresh: () async {
                     context.read<FavoriteCubit>().fetchFavoriteProducts();
