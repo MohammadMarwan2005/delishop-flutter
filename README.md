@@ -25,7 +25,7 @@
 🔳 Add/Edit Rating Screen
 🔳 Professional Profile Screen
 🔳 Splash Screen
-🔳 Onboarding Screens (using lottie)
+✅ Onboarding Screens (using lottie)
 ### ⭕ Mall:
 🔳 My Mall Profile Screen
 🔳 Add/Edit Product Screen
