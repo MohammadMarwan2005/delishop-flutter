@@ -40,4 +40,3 @@
 🔳 Add top buttons in home screen (Notifications-Cart)
 ✅ Adding MallProducts to SingleMallScreen
 ✅ Adding no products in the favorite message
-🔳 Adding Rating for the product and the the store

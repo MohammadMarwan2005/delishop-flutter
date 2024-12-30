@@ -5,7 +5,11 @@ class UserDataRepo {
   final SharedPreferences _sharedPrefs;
   final FlutterSecureStorage _storage;
 
-  UserDataRepo({required SharedPreferences sharedPrefs, required FlutterSecureStorage storage}) : _storage = storage, _sharedPrefs = sharedPrefs;
+  UserDataRepo(
+      {required SharedPreferences sharedPrefs,
+      required FlutterSecureStorage storage})
+      : _storage = storage,
+        _sharedPrefs = sharedPrefs;
 
   Future<bool> hasToken() async {
     final value = await _storage.read(key: DataAccessKeys.tokenKey);
@@ -31,6 +35,14 @@ class UserDataRepo {
   String? getString(String key) {
     return _sharedPrefs.getString(key);
   }
+
+  setOnboarded() async {
+    await _sharedPrefs.setBool(DataAccessKeys.hasOnboardedKey, true);
+  }
+
+  bool hasOnboarded() {
+    return _sharedPrefs.getBool(DataAccessKeys.hasOnboardedKey) ?? false;
+  }
 }
 
 class DataAccessKeys {
@@ -39,4 +51,5 @@ class DataAccessKeys {
   static String firstNameKey = "firstNameKey";
   static String lastNameKey = "lastNameKey";
   static String langCodeKey = "langCodeKey";
+  static String hasOnboardedKey = "hasOnboardedKey";
 }

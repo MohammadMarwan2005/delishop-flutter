@@ -49,7 +49,7 @@ class DelishopApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 theme: DelishopTheme.lightTheme,
                 home: FutureBuilder(
-                  future: getFirstRoute(),
+                  future: getFirstRoute(context),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Scaffold(
