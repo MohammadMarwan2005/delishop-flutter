@@ -8,7 +8,9 @@ import 'package:delishop/core/data/model/product/product_list_response_model.dar
 import 'package:delishop/core/data/model/store/store.dart';
 import 'package:delishop/core/data/model/store/store_list_response_model.dart';
 import 'package:delishop/core/data/repo/categoy_repo.dart';
+import 'package:delishop/core/data/repo/ga_repo.dart';
 import 'package:delishop/core/data/repo/product_repo.dart';
+import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:delishop/feature/home/home_list_state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -19,13 +21,15 @@ import '../../core/data/response_result.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  final StoreRepo storeRepo;
-  final ProductRepo productRepo;
-  final CategoryRepo categoryRepo;
+  final StoreRepo _storeRepo;
+  final ProductRepo _productRepo;
+  final CategoryRepo _categoryRepo;
+  final UserDataRepo _userDataRepo;
+  final GARepo _gaRepo;
 
-  HomeCubit({ required this.categoryRepo,
-      required this.storeRepo, required this.productRepo})
-      : super(const HomeState(
+  HomeCubit({required UserDataRepo userDataRepo,required  GARepo gaRepo, required CategoryRepo categoryRepo,
+      required StoreRepo storeRepo, required ProductRepo productRepo})
+      : _gaRepo = gaRepo, _userDataRepo = userDataRepo, _categoryRepo = categoryRepo, _productRepo = productRepo, _storeRepo = storeRepo, super(const HomeState(
             storeState: HomeListState<Store>(),
             productState: HomeListState<Product>(),
             categoryState: HomeListState<Category>())) {
@@ -44,7 +48,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
         state.copyWith(storeState: state.storeState.copyWith(isLoading: true)));
     final ResponseResult<StoreListResponseModel> result =
-        await storeRepo.getAllStores();
+        await _storeRepo.getAllStores();
     result.when(
       onSuccess: (successData) {
         emit(state.copyWith(
@@ -61,7 +65,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(
         productState: state.productState.copyWith(isLoading: true)));
     final ResponseResult<ProductListResponseModel> result =
-        await productRepo.getAllProducts();
+        await _productRepo.getAllProducts();
     result.when(
       onSuccess: (successData) {
         emit(state.copyWith(
@@ -80,7 +84,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(
         categoryState: state.categoryState.copyWith(isLoading: true)));
     final ResponseResult<CategoryListResponseModel> result =
-        await categoryRepo.getAllCategories();
+        await _categoryRepo.getAllCategories();
     result.when(
       onSuccess: (successData) {
         emit(state.copyWith(
@@ -93,5 +97,8 @@ class HomeCubit extends Cubit<HomeState> {
                 state.categoryState.copyWith(error: domainErrorModel)));
       },
     );
+  }
+  void logViewHome() {
+    _gaRepo.logViewHome(_userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
   }
 }

@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:delishop/core/data/model/product/product_list_response_model.dart';
+import 'package:delishop/core/data/repo/ga_repo.dart';
+import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../core/data/model/product/product.dart';
@@ -12,15 +14,23 @@ import '../../core/ui_state.dart';
 part 'store_state.dart';
 
 class StoreCubit extends Cubit<StoreState> {
-  final ProductRepo productRepo;
-  final StoreRepo storeRepo;
+  final ProductRepo _productRepo;
+  final StoreRepo _storeRepo;
+  final GARepo _gaRepo;
+  final UserDataRepo _userDataRepo;
   final int storeId;
 
   StoreCubit(
-      {required this.productRepo,
-      required this.storeRepo,
+      {required ProductRepo productRepo,
+      required StoreRepo storeRepo,
+      required UserDataRepo userDataRepo,
+      required GARepo gaRepo,
       required this.storeId})
-      : super(const StoreState(
+      : _gaRepo = gaRepo,
+        _storeRepo = storeRepo,
+        _productRepo = productRepo,
+  _userDataRepo = userDataRepo,
+        super(const StoreState(
             productsState: UIState(isLoading: true),
             storeState: UIState(isLoading: true))) {
     fetchStoreAndItsProducts();
@@ -34,12 +44,12 @@ class StoreCubit extends Cubit<StoreState> {
   }
 
   Future<void> fetchStore() async {
-    emit(state.copyWith(
-        store: const UIState(isLoading: true)));
+    emit(state.copyWith(store: const UIState(isLoading: true)));
 
-    ResponseResult<Store> storeResult = await storeRepo.getStoreById(storeId);
+    ResponseResult<Store> storeResult = await _storeRepo.getStoreById(storeId);
     storeResult.when(
       onSuccess: (successData) {
+        _gaRepo.logViewStore(successData, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
         emit(state.copyWith(store: UIState(data: successData)));
       },
       onError: (domainErrorModel) {
@@ -55,7 +65,7 @@ class StoreCubit extends Cubit<StoreState> {
         ),
         store: const UIState(isLoading: true)));
     ResponseResult<ProductListResponseModel> productsResult =
-    await productRepo.getProductsByStoreId(storeId);
+        await _productRepo.getProductsByStoreId(storeId);
 
     productsResult.when(
       onSuccess: (successData) {

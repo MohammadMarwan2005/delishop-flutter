@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "998971120352",
+    "project_id": "delishop-5bd8e",
+    "storage_bucket": "delishop-5bd8e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998971120352:android:3eb314bd87d58168c6ce85",
+        "android_client_info": {
+          "package_name": "com.example.delishop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSTmRzga952F9I7H2CykBex-zQB9YWvRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

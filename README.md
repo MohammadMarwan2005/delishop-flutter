@@ -35,7 +35,7 @@
 
 
 ## 🟢🔳 Small Todo: 
-🔳 Create the ToggleLangButton and add it to Auth Screens
+✅ Create the ToggleLangButton and add it to Auth Screens
 🔳 Bottom Nav Bar (Home-Orders-Search-Favorites-Profile)
 🔳 Add top buttons in home screen (Notifications-Cart)
 🔳 Adding MallProducts to SingleMallScreen

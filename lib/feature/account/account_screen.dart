@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../core/di/di_get_it.dart';
+import '../../core/widgets/toggle_lang_button.dart';
 import '../home/home_cubit.dart';
 import 'cubit/account_cubit.dart';
 
@@ -54,15 +55,7 @@ class AccountScreen extends StatelessWidget {
             context.read<AccountCubit>().logout();
             context.removeAndPush(LoginScreen());
           }, label: "Logout".tr(context)),
-          BlocBuilder<LangCodeCubit, LangCodeState>(builder: (context, state) {
-            if(state is LangCodeLoaded) {
-              return DelishopTextButton(onClick: () {
-                context.read<LangCodeCubit>().toggleLangCode();
-              }, label: state.langCode ?? Localizations.localeOf(context).languageCode);
-            } else {
-              return const SizedBox();
-            }
-          },)
+          const ToggleLangButton()
         ],
       ),
     );

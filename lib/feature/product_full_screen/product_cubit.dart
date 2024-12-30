@@ -2,8 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:delishop/core/data/model/favorite/favorite_response.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/data/model/store/store.dart';
+import 'package:delishop/core/data/repo/ga_repo.dart';
 import 'package:delishop/core/data/repo/product_repo.dart';
 import 'package:delishop/core/data/repo/store_repo.dart';
+import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:delishop/core/data/response_result.dart';
 import 'package:delishop/core/ui_state.dart';
 import 'package:equatable/equatable.dart';
@@ -13,17 +15,21 @@ import '../../core/data/repo/favorite_repo.dart';
 part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
-  final ProductRepo productRepo;
-  final StoreRepo storeRepo;
-  final FavoriteRepo favoriteRepo;
+  final ProductRepo _productRepo;
+  final StoreRepo _storeRepo;
+  final FavoriteRepo _favoriteRepo;
   final Product product;
+  final GARepo _gaRepo;
+  final UserDataRepo _userDataRepo;
 
   ProductCubit({
-    required this.productRepo,
-    required this.storeRepo,
-    required this.favoriteRepo,
+    required UserDataRepo userDataRepo,
+    required ProductRepo productRepo,
+    required StoreRepo storeRepo,
+    required FavoriteRepo favoriteRepo,
     required this.product,
-  }) : super(const ProductState(
+    required GARepo gaRepo,
+  }) : _userDataRepo = userDataRepo, _productRepo = productRepo, _favoriteRepo = favoriteRepo, _storeRepo = storeRepo, _gaRepo = gaRepo, super(const ProductState(
             productState: UIState(initial: true),
             storeState: UIState(isLoading: true),
             favoriteState: UIState(isLoading: true))) {
@@ -37,9 +43,10 @@ class ProductCubit extends Cubit<ProductState> {
           store: const UIState(isLoading: true)),
     );
     ResponseResult<Product> productResult =
-        await productRepo.getProductById(product.id);
+        await _productRepo.getProductById(product.id);
     productResult.when(
       onSuccess: (successData) {
+        _gaRepo.logViewProduct(successData, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
         emit(state.copyWith(product: UIState(data: successData)));
       },
       onError: (domainErrorModel) {
@@ -47,9 +54,10 @@ class ProductCubit extends Cubit<ProductState> {
       },
     );
     ResponseResult<Store> storeResult =
-        await storeRepo.getStoreById(product.storeId);
+        await _storeRepo.getStoreById(product.storeId);
     storeResult.when(
       onSuccess: (successData) {
+        // todo? getStore??? no
         emit(state.copyWith(store: UIState(data: successData)));
       },
       onError: (domainErrorModel) {
@@ -62,9 +70,10 @@ class ProductCubit extends Cubit<ProductState> {
     emit(state.copyWith(
         favoriteState: const UIState(initial: null, isLoading: true)));
     ResponseResult<FavoriteResponse> result =
-        await favoriteRepo.addProductToFavorite(product.id);
+        await _favoriteRepo.addProductToFavorite(product.id);
     result.when(
       onSuccess: (successData) {
+        _gaRepo.logAddToFavorites(product, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
         emit(state.copyWith(favoriteState: UIState(data: successData), product: UIState(data: state.productState.data?.copyWithInvertedFav())));
       },
       onError: (domainErrorModel) {
@@ -76,15 +85,20 @@ class ProductCubit extends Cubit<ProductState> {
     emit(state.copyWith(
         favoriteState: const UIState(initial: null, isLoading: true)));
     ResponseResult<FavoriteResponse> result =
-        await favoriteRepo.removeProductFromFavorite(product.id);
+        await _favoriteRepo.removeProductFromFavorite(product.id);
     result.when(
       onSuccess: (successData) {
+        _gaRepo.logRemoveFromFavorites(product, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
         emit(state.copyWith(favoriteState: UIState(data: successData), product: UIState(data: state.productState.data?.copyWithInvertedFav())));
       },
       onError: (domainErrorModel) {
         emit(state.copyWith(favoriteState: UIState(error: domainErrorModel)));
       },
     );
+  }
+
+  void addToCart() {
+    _gaRepo.logAddToCart(product, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
   }
 
 }
