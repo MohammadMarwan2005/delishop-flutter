@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/theme/delishop_text_styles.dart';
+import '../../../core/widgets/toggle_lang_button.dart';
 
 class RegisterScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -59,6 +60,8 @@ class RegisterScreen extends StatelessWidget {
                   context.pushReplacement(LoginScreen());
                 },
               ),
+              SizedBox(height: 16.h),
+              const ToggleLangButton(),
               SizedBox(height: 32.h),
               const LoginBlocListener()
             ],

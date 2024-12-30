@@ -19,7 +19,7 @@ class SmallStoreCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.push(BlocProvider<StoreCubit>(
-          create: (context) => StoreCubit(productRepo: getIt(), storeRepo: getIt(), storeId: store.id),
+          create: (context) => StoreCubit(productRepo: getIt(), storeRepo: getIt(), storeId: store.id, userDataRepo: getIt(), gaRepo: getIt()),
           child: const StoreFullScreen(),
         ));
       },

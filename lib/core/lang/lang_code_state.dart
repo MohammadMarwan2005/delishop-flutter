@@ -16,4 +16,9 @@ final class LangCodeLoaded extends LangCodeState {
 
   @override
   List<Object> get props => [langCode.toString()];
+
+  String getLabel() {
+    if(langCode == null || langCode == "en") return "العربية";
+    return "English";
+  }
 }

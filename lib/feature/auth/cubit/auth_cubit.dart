@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:delishop/core/data/model/domain_error_model.dart';
+import 'package:delishop/core/data/repo/ga_repo.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:delishop/core/data/response_result.dart';
 import 'package:delishop/feature/auth/model/auth_response_model.dart';
@@ -16,8 +17,9 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   // final loginFormKey = GlobalKey<FormState>();
   // final registerFormKey = GlobalKey<FormState>();
-  final AuthRepo authRepo;
-  final UserDataRepo userDataRepo;
+  final AuthRepo _authRepo;
+  final UserDataRepo _userDataRepo;
+  final GARepo _gaRepo;
 
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -26,7 +28,7 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController passwordConfirmationController =
       TextEditingController();
 
-  AuthCubit({required this.authRepo, required this.userDataRepo}) : super(const AuthState.initial());
+  AuthCubit({required AuthRepo authRepo, required UserDataRepo userDataRepo, required GARepo gaRepo}) : _authRepo = authRepo, _userDataRepo = userDataRepo, _gaRepo = gaRepo, super(const AuthState.initial());
 
   Future<void> login() async {
     emit(const AuthState.loading());
@@ -34,10 +36,11 @@ class AuthCubit extends Cubit<AuthState> {
         phoneNumber: phoneNumberController.text,
         password: passwordController.text);
     final ResponseResult<AuthResponseModel> result =
-        await authRepo.login(requestBody);
+        await _authRepo.login(requestBody);
     result.when(
       onSuccess: (authResponseModel) async {
-        await saveUserData(authResponseModel);
+        await saveUserData(authResponseModel, requestBody.phoneNumber);
+        _gaRepo.logLogin(authResponseModel.data.firstName, authResponseModel.data.lastName, requestBody.phoneNumber);
         emit(AuthState.success(authResponseModel));
       },
       onError: (domainErrorModel) {
@@ -55,10 +58,11 @@ class AuthCubit extends Cubit<AuthState> {
         password: passwordController.text,
         passwordConfirmation: passwordConfirmationController.text);
     final ResponseResult<AuthResponseModel> result =
-        await authRepo.register(requestBody);
+        await _authRepo.register(requestBody);
     result.when(
       onSuccess: (authResponseModel) async {
-        await saveUserData(authResponseModel);
+        await saveUserData(authResponseModel, requestBody.phoneNumber);
+        _gaRepo.logSignup(authResponseModel.data.firstName, authResponseModel.data.lastName, requestBody.phoneNumber);
         emit(AuthState.success(authResponseModel));
       },
       onError: (domainErrorModel) {
@@ -67,9 +71,10 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  saveUserData(AuthResponseModel authResponseModel) async {
-    await userDataRepo.setString(authResponseModel.data.firstName, DataAccessKeys.firstNameKey);
-    await userDataRepo.setString(authResponseModel.data.lastName, DataAccessKeys.lastNameKey);
-    await userDataRepo.setToken(authResponseModel.data.token);
+  saveUserData(AuthResponseModel authResponseModel, String phoneNumber) async {
+    await _userDataRepo.setString(authResponseModel.data.firstName, DataAccessKeys.firstNameKey);
+    await _userDataRepo.setString(authResponseModel.data.lastName, DataAccessKeys.lastNameKey);
+    await _userDataRepo.setString(phoneNumber, DataAccessKeys.phoneNumberKey);
+    await _userDataRepo.setToken(authResponseModel.data.token);
   }
 }

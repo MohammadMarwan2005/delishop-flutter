@@ -188,7 +188,9 @@ class ProductFullScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child:
-                        DelishopButton(onPressed: () {}, text: "Add to Cart".tr(context)),
+                        DelishopButton(onPressed: () {
+                          context.read<ProductCubit>().addToCart();
+                        }, text: "Add to Cart".tr(context)),
                   ),
                 ],
               );
@@ -212,7 +214,7 @@ class StoreInfo extends StatelessWidget {
       onTap: () {
         context.push(BlocProvider<StoreCubit>(
           create: (context) => StoreCubit(
-              productRepo: getIt(), storeRepo: getIt(), storeId: store.id),
+              productRepo: getIt(), storeRepo: getIt(), storeId: store.id, userDataRepo: getIt(), gaRepo: getIt()),
           child: const StoreFullScreen(),
         ));
       },

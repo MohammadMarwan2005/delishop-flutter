@@ -1,6 +1,7 @@
 import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
+import 'package:delishop/core/widgets/toggle_lang_button.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
 import 'package:delishop/feature/auth/login/phone_number_and_password_form.dart';
 import 'package:delishop/feature/auth/register/register_screen.dart';
@@ -62,6 +63,8 @@ class LoginScreen extends StatelessWidget {
                     context.pushReplacement(RegisterScreen());
                   },
                 ),
+                SizedBox(height: 16.h),
+                const ToggleLangButton(),
                 SizedBox(height: 32.h),
                 const LoginBlocListener()
               ],

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:delishop/core/data/repo/ga_repo.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,8 +12,9 @@ part 'account_cubit.freezed.dart';
 
 class AccountCubit extends Cubit<AccountState> {
   final UserDataRepo _userDataRepo;
+  final GARepo _gaRepo;
 
-  AccountCubit({required UserDataRepo userDataRepo}) : _userDataRepo = userDataRepo, super(const AccountState.initial()) {
+  AccountCubit({required UserDataRepo userDataRepo, required GARepo gaRepo}) : _gaRepo = gaRepo, _userDataRepo = userDataRepo, super(const AccountState.initial()) {
     getAccountData();
   }
 
@@ -30,7 +32,7 @@ class AccountCubit extends Cubit<AccountState> {
   }
 
   Future<void> logout() async {
+    _gaRepo.logLogout(_userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
     await _userDataRepo.deleteToken();
   }
-
 }
