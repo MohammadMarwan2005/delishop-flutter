@@ -40,3 +40,7 @@
 🔳 Add top buttons in home screen (Notifications-Cart)
 ✅ Adding MallProducts to SingleMallScreen
 ✅ Adding no products in the favorite message
+
+## 🐞🔳 Bug Fixes: 
+🔳 ProductScreen, Try Again Bug
+🔳 hotfix, change the CircularProgressBarIndicator in the first screen
