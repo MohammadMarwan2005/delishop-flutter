@@ -13,7 +13,7 @@ class GARepo {
       name: "login",
       parameters: {
         "method": "phoneNumber_and_password",
-        "phoneNumber": phoneNumber,
+        "phone_number": phoneNumber,
         "firstName": firstName,
         "lastName": lastName,
       },
@@ -26,7 +26,7 @@ class GARepo {
       name: "signup",
       parameters: {
         "method": "phoneNumber_and_password",
-        "phoneNumber": phoneNumber,
+        "phone_number": phoneNumber,
         "firstName": firstName,
         "lastName": lastName,
       },
@@ -94,7 +94,7 @@ class GARepo {
     _analytics.logEvent(
       name: "view_favorites",
       parameters: {
-        "phoneNumber": phoneNumber,
+        "phone_number": phoneNumber,
       },
     );
   }
@@ -104,7 +104,7 @@ class GARepo {
     _analytics.logEvent(
       name: "view_home",
       parameters: {
-        "phoneNumber": phoneNumber,
+        "phone_number": phoneNumber,
       },
     );
   }
@@ -118,7 +118,7 @@ class GARepo {
         "item_name": product.name,
         "item_category": product.storeId,
         "price": product.price.toString(),
-        "phoneNumber": phoneNumber,
+        "phone_number": phoneNumber,
       },
     );
   }
@@ -130,7 +130,7 @@ class GARepo {
       name: "toggle_language",
       parameters: {
         "lang": languageCode,
-        "phoneNumber": phoneNumber,
+        "phone_number": phoneNumber,
       },
     );
   }
@@ -140,7 +140,7 @@ class GARepo {
     _analytics.logEvent(
       name: "logout",
       parameters: {
-        "phoneNumber": phoneNumber,
+        "phone_number": phoneNumber,
       },
     );
   }

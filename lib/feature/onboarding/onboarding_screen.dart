@@ -14,7 +14,7 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntroductionScreen(
       pages: getPageModels(context),
-      showNextButton: false,
+      showNextButton: true,
       done: Text("Done".tr(context)),
       isProgressTap: true,
       onDone: () {
@@ -27,6 +27,7 @@ class OnboardingScreen extends StatelessWidget {
         onDone();
         context.pushReplacement(RegisterScreen());
       },
+      next: Text("Next".tr(context)),
     );
   }
 }

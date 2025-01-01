@@ -36,14 +36,14 @@
 
 ## 🟢🔳 Small Todo: 
 ✅ Create the ToggleLangButton and add it to Auth Screens
-🔳 Bottom Nav Bar (Home-Orders-Search-Favorites-Profile)
+✅ Bottom Nav Bar (Home-Orders-Search-Favorites-Profile)
 🔳 Add top buttons in home screen (Notifications-Cart)
 ✅ Adding MallProducts to SingleMallScreen
 ✅ Adding no products in the favorite message
-🔳 Add time limit for loading
+✅ Add time limit for loading
 ✅ Make Try Again Feature reloading every empty state in the Cubit 
 
 
 ## 🐞🔳 Bug Fixes: 
 ✅ ProductScreen, Try Again Bug
-🔳 hotfix, change the CircularProgressBarIndicator in the first screen
+✅ hotfix, change the CircularProgressBarIndicator in the first screen

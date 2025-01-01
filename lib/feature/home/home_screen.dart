@@ -44,10 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        title: Text("Delishop", style: DelishopTextStyles.font32OrangeBold),
-      ),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(

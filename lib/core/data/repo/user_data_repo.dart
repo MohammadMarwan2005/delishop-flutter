@@ -43,6 +43,10 @@ class UserDataRepo {
   bool hasOnboarded() {
     return _sharedPrefs.getBool(DataAccessKeys.hasOnboardedKey) ?? false;
   }
+
+  Future<void> clearAllData() async {
+    await _sharedPrefs.clear();
+  }
 }
 
 class DataAccessKeys {
