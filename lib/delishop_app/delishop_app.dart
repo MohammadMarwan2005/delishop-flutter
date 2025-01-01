@@ -1,5 +1,6 @@
 import 'package:delishop/core/lang/lang_code_cubit.dart';
 import 'package:delishop/core/theme/theme.dart';
+import 'package:delishop/core/widgets/loading.dart';
 import 'package:delishop/delishop_app/first_route_helper.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class DelishopApp extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Scaffold(
-                          body: Center(child: CircularProgressIndicator()));
+                          body: Loading());
                     } else if (snapshot.hasData) {
                       return snapshot.data!;
                     }
