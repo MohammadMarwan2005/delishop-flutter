@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ErrorMessage(
                         message: domainError.getMessage(context),
                         onTryAgain: () {
-                          context.read<HomeCubit>().getAllCategories();
+                          context.read<HomeCubit>().loadEmptyStates();
                         },
                       );
                     },
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ErrorMessage(
                         message: domainError.getMessage(context),
                         onTryAgain: () {
-                          context.read<HomeCubit>().getAllStores();
+                          context.read<HomeCubit>().loadEmptyStates();
                         },
                       );
                     },
@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ErrorMessage(
                         message: domainError.getMessage(context),
                         onTryAgain: () {
-                          context.read<HomeCubit>().getAllProducts();
+                          context.read<HomeCubit>().loadEmptyStates();
                         },
                       );
                     },

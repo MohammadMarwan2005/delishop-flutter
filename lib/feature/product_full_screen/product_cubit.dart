@@ -29,7 +29,12 @@ class ProductCubit extends Cubit<ProductState> {
     required FavoriteRepo favoriteRepo,
     required this.product,
     required GARepo gaRepo,
-  }) : _userDataRepo = userDataRepo, _productRepo = productRepo, _favoriteRepo = favoriteRepo, _storeRepo = storeRepo, _gaRepo = gaRepo, super(const ProductState(
+  })  : _userDataRepo = userDataRepo,
+        _productRepo = productRepo,
+        _favoriteRepo = favoriteRepo,
+        _storeRepo = storeRepo,
+        _gaRepo = gaRepo,
+        super(const ProductState(
             productState: UIState(initial: true),
             storeState: UIState(isLoading: true),
             favoriteState: UIState(isLoading: true))) {
@@ -37,27 +42,36 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   void fetchProductAndStore() async {
-    emit(
-      state.copyWith(
-          product: const UIState(isLoading: true),
-          store: const UIState(isLoading: true)),
-    );
+    await Future.wait([
+      fetchProduct(),
+      fetchStore(),
+    ]);
+  }
+
+  Future<void> fetchProduct() async {
+    emit(state.copyWith(product: const UIState(isLoading: true)));
     ResponseResult<Product> productResult =
         await _productRepo.getProductById(product.id);
     productResult.when(
       onSuccess: (successData) {
-        _gaRepo.logViewProduct(successData, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
+        _gaRepo.logViewProduct(successData,
+            _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
         emit(state.copyWith(product: UIState(data: successData)));
       },
       onError: (domainErrorModel) {
         emit(state.copyWith(product: UIState(error: domainErrorModel)));
       },
     );
+  }
+
+  Future<void> fetchStore() async {
+    emit(
+      state.copyWith(store: const UIState(isLoading: true)),
+    );
     ResponseResult<Store> storeResult =
         await _storeRepo.getStoreById(product.storeId);
     storeResult.when(
       onSuccess: (successData) {
-        // todo? getStore??? no
         emit(state.copyWith(store: UIState(data: successData)));
       },
       onError: (domainErrorModel) {
@@ -73,14 +87,19 @@ class ProductCubit extends Cubit<ProductState> {
         await _favoriteRepo.addProductToFavorite(product.id);
     result.when(
       onSuccess: (successData) {
-        _gaRepo.logAddToFavorites(product, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
-        emit(state.copyWith(favoriteState: UIState(data: successData), product: UIState(data: state.productState.data?.copyWithInvertedFav())));
+        _gaRepo.logAddToFavorites(product,
+            _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
+        emit(state.copyWith(
+            favoriteState: UIState(data: successData),
+            product:
+                UIState(data: state.productState.data?.copyWithInvertedFav())));
       },
       onError: (domainErrorModel) {
         emit(state.copyWith(favoriteState: UIState(error: domainErrorModel)));
       },
     );
   }
+
   void removeFromFavorite() async {
     emit(state.copyWith(
         favoriteState: const UIState(initial: null, isLoading: true)));
@@ -88,8 +107,12 @@ class ProductCubit extends Cubit<ProductState> {
         await _favoriteRepo.removeProductFromFavorite(product.id);
     result.when(
       onSuccess: (successData) {
-        _gaRepo.logRemoveFromFavorites(product, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
-        emit(state.copyWith(favoriteState: UIState(data: successData), product: UIState(data: state.productState.data?.copyWithInvertedFav())));
+        _gaRepo.logRemoveFromFavorites(product,
+            _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
+        emit(state.copyWith(
+            favoriteState: UIState(data: successData),
+            product:
+                UIState(data: state.productState.data?.copyWithInvertedFav())));
       },
       onError: (domainErrorModel) {
         emit(state.copyWith(favoriteState: UIState(error: domainErrorModel)));
@@ -98,7 +121,18 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   void addToCart() {
-    _gaRepo.logAddToCart(product, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
+    _gaRepo.logAddToCart(
+        product, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
   }
 
+  Future<void> reloadEmptyStates() async {
+    final List<Future<void>> futures = [];
+    if(state.productState.error != null) {
+      futures.add(fetchProduct());
+    }
+    if(state.storeState.error != null) {
+      futures.add(fetchStore());
+    }
+    await Future.wait(futures);
+  }
 }

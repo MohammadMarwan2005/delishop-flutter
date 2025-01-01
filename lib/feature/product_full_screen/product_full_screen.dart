@@ -162,7 +162,9 @@ class ProductFullScreen extends StatelessWidget {
                     },
                     onError: (domainError) => ErrorMessage(
                       message: domainError.message,
-                      onTryAgain: () {},
+                      onTryAgain: () {
+                        context.read<ProductCubit>().reloadEmptyStates();
+                      },
                     ),
                   ),
                   Padding(
@@ -178,7 +180,7 @@ class ProductFullScreen extends StatelessWidget {
                         return ErrorMessage(
                           message: domainError.message,
                           onTryAgain: () {
-                            context.read<ProductCubit>().fetchProductAndStore();
+                            context.read<ProductCubit>().reloadEmptyStates();
                           },
                         );
                       },

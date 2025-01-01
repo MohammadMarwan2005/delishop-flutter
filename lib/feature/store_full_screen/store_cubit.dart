@@ -29,7 +29,7 @@ class StoreCubit extends Cubit<StoreState> {
       : _gaRepo = gaRepo,
         _storeRepo = storeRepo,
         _productRepo = productRepo,
-  _userDataRepo = userDataRepo,
+        _userDataRepo = userDataRepo,
         super(const StoreState(
             productsState: UIState(isLoading: true),
             storeState: UIState(isLoading: true))) {
@@ -49,7 +49,8 @@ class StoreCubit extends Cubit<StoreState> {
     ResponseResult<Store> storeResult = await _storeRepo.getStoreById(storeId);
     storeResult.when(
       onSuccess: (successData) {
-        _gaRepo.logViewStore(successData, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
+        _gaRepo.logViewStore(successData,
+            _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
         emit(state.copyWith(store: UIState(data: successData)));
       },
       onError: (domainErrorModel) {
@@ -75,5 +76,16 @@ class StoreCubit extends Cubit<StoreState> {
         emit(state.copyWith(products: UIState(error: domainErrorModel)));
       },
     );
+  }
+
+  Future<void> loadEmptyStates() async {
+    final List<Future<void>> futures = [];
+    if (state.storeState.error != null) {
+      futures.add(fetchStore());
+    }
+    if (state.productsState.error != null) {
+      futures.add(fetchStoreProducts());
+    }
+    await Future.wait(futures);
   }
 }

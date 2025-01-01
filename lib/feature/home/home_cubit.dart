@@ -101,4 +101,18 @@ class HomeCubit extends Cubit<HomeState> {
   void logViewHome() {
     _gaRepo.logViewHome(_userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
   }
+
+  Future<void> loadEmptyStates() async {
+    final List<Future<void>> futures = [];
+    if(state.categoryState.error != null) {
+      futures.add(getAllCategories());
+    }
+    if(state.productState.error != null) {
+      futures.add(getAllProducts());
+    }
+    if(state.storeState.error != null) {
+      futures.add(getAllStores());
+    }
+    await Future.wait(futures);
+  }
 }

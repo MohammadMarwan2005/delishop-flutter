@@ -45,5 +45,5 @@
 
 
 ## 🐞🔳 Bug Fixes: 
-🔳 ProductScreen, Try Again Bug
+✅ ProductScreen, Try Again Bug
 🔳 hotfix, change the CircularProgressBarIndicator in the first screen

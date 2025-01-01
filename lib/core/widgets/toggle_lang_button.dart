@@ -18,7 +18,7 @@ class ToggleLangButton extends StatelessWidget {
             children: [
               OutlinedButton(
                   onPressed: () {
-                    context.read<LangCodeCubit>().toggleLangCode();
+                    context.read<LangCodeCubit>().toggleLangCode(context);
                   },
                   child: Text(state.getLabel())),
             ],

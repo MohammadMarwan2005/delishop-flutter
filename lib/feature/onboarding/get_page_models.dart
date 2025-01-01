@@ -49,19 +49,22 @@ List<PageViewModel> getPageModels(BuildContext context) {
 extension OnboardingScreenHelper on String {
   Widget getBodyWithToggleLangButton(BuildContext context) {
     double height = MediaQuery.of(context).size.height / 4.5;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          "Explore a world of products at your fingertips. Search, shop, and enjoy endless possibilities!"
-              .tr(context),
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        Flexible(
-          child: SizedBox(height: height),
-        ),
-        const ToggleLangButton()
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            tr(context),
+            style: Theme.of(context).textTheme.bodyLarge,
+            textAlign: TextAlign.center,
+          ),
+          Flexible(
+            child: SizedBox(height: height),
+          ),
+          const ToggleLangButton()
+        ],
+      ),
     );
   }
 }

@@ -116,7 +116,7 @@ class StoreFullScreen extends StatelessWidget {
                       return ErrorMessage(
                         message: domainError.message,
                         onTryAgain: () {
-                          context.read<StoreCubit>().fetchStore();
+                          context.read<StoreCubit>().loadEmptyStates();
                         },
                       );
                     },
@@ -139,9 +139,7 @@ class StoreFullScreen extends StatelessWidget {
                       return ErrorMessage(
                         message: domainError.message,
                         onTryAgain: () {
-                          context
-                              .read<StoreCubit>()
-                              .fetchStoreProducts();
+                          context.read<StoreCubit>().loadEmptyStates();
                         },
                       );
                     },
