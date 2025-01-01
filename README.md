@@ -40,6 +40,9 @@
 🔳 Add top buttons in home screen (Notifications-Cart)
 ✅ Adding MallProducts to SingleMallScreen
 ✅ Adding no products in the favorite message
+🔳 Add time limit for loading
+🔳 Make Try Again Feature reloading every empty state in the Cubit 
+
 
 ## 🐞🔳 Bug Fixes: 
 🔳 ProductScreen, Try Again Bug
