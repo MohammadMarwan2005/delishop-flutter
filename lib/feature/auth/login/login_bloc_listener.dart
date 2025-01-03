@@ -7,6 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/di/di_get_it.dart';
 import '../../account/account_screen.dart';
+import '../../bottom_nav_host/bottom_nav_host.dart';
+import '../../favorite/favorite_cubit.dart';
+import '../../home/home_cubit.dart';
 
 class LoginBlocListener extends StatelessWidget {
   const LoginBlocListener({super.key});
@@ -18,9 +21,11 @@ class LoginBlocListener extends StatelessWidget {
           state.when(
               initial: () {},
               success: (successResponseModel) {
-                context.pushReplacement(BlocProvider<AccountCubit>(
-                    create: (context) => getIt(),
-                    child: const AccountScreen()));
+                context.pushReplacement(MultiBlocProvider(providers: [
+                  BlocProvider<HomeCubit>(create: (context) => getIt()),
+                  BlocProvider<FavoriteCubit>(create: (context) => getIt()),
+                  BlocProvider<AccountCubit>(create: (context) => getIt()),
+                ], child: const BottomNavHost()));
               },
               error: (error) {
                 context.setupErrorState(error); // this
@@ -29,5 +34,4 @@ class LoginBlocListener extends StatelessWidget {
         },
         child: const SizedBox.shrink());
   }
-
 }

@@ -1,6 +1,8 @@
+import 'package:delishop/core/data/db_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'product.freezed.dart';
+
 part 'product.g.dart';
 
 @freezed
@@ -29,5 +31,30 @@ class Product with _$Product {
 extension BooleanExtension on bool {
   bool notOrNull() {
     return !this;
+  }
+}
+
+extension ProductMapper on Product {
+  ProductDataModel toProductDataModel() {
+    return ProductDataModel(
+        id: id,
+        storeId: storeId,
+        name: name,
+        description: description,
+        productPicture: productPicture,
+        price: price,
+        discount: discount,
+        quantity: quantity);
+  }
+
+}
+
+extension RemovingFromCartHelper on String {
+
+  String getRemovedFromCartMessage(String currentLangCode) {
+    if (currentLangCode == 'ar') {
+      return "تمت إزالة $this من السلة!";
+    }
+    return "$this Removed From Cart!";
   }
 }

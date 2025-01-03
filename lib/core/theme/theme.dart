@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DelishopTheme {
-  static ThemeData lightTheme = ThemeData(colorScheme: lightScheme);
+  static ThemeData lightTheme = ThemeData(
+      colorScheme: lightScheme,
+      scaffoldBackgroundColor: Colors.white,
+      appBarTheme: const AppBarTheme(backgroundColor: Colors.white));
 
   static ColorScheme lightScheme = const ColorScheme(
     brightness: Brightness.light,
@@ -104,5 +107,6 @@ class DelishopTheme {
     surfaceContainerLow: Color(4294963693),
     surfaceContainer: Color(4294765285),
     surfaceContainerHigh: Color(4294436064),
-    surfaceContainerHighest: Color(4294041562),  );
+    surfaceContainerHighest: Color(4294041562),
+  );
 }
