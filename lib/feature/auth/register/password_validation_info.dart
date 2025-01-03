@@ -17,23 +17,24 @@ class PasswordValidationInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ex: Aa@12345
     return Column(
       children: [
-        ConditionText(
-            name: "Must have at least one lower case letter".tr(context),
-            validated: hasLowerCase),
-        SizedBox(height: 2.h),
         ConditionText(
             name: "Must have at least one upper case letter".tr(context),
             validated: hasUpperCase),
         SizedBox(height: 2.h),
         ConditionText(
-            name: "Must have at least one number".tr(context),
-            validated: hasNumber),
+            name: "Must have at least one lower case letter".tr(context),
+            validated: hasLowerCase),
         SizedBox(height: 2.h),
         ConditionText(
             name: "Must have at least one special Character".tr(context),
             validated: hasSpecialCharacter),
+        SizedBox(height: 2.h),
+        ConditionText(
+            name: "Must have at least one number".tr(context),
+            validated: hasNumber),
         SizedBox(height: 2.h),
         ConditionText(
             name: "Must be at least 8 characters".tr(context),

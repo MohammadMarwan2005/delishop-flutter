@@ -8,4 +8,5 @@ abstract class DelishopColors {
   static Color lightGrey = const Color(0xFFD3D3D3);
   static Color veryLightGrey = const Color(0xFFFDFDFF);
   static Color blueSurface = const Color(0xFFE3ECFF);
+  static var imageBackground = const Color(0xFFF5F6F9);
 }

@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../core/di/di_get_it.dart';
 import '../core/lang/app_localization.dart';
+import '../feature/cart/cubit/cart_cubit.dart';
 
 class DelishopApp extends StatelessWidget {
   const DelishopApp({super.key});
@@ -24,7 +25,8 @@ class DelishopApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthCubit>(create: (context) => getIt()),
-          BlocProvider<LangCodeCubit>(create: (context) => getIt())
+          BlocProvider<LangCodeCubit>(create: (context) => getIt()),
+          BlocProvider<CartCubit>(create: (context) => getIt())
         ],
         child: BlocBuilder<LangCodeCubit, LangCodeState>(
           builder: (context, state) {

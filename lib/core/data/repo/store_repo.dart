@@ -19,6 +19,13 @@ class StoreRepo {
       },
     );
   }
+  Future<ResponseResult<StoreListResponseModel>> getStoresByIds(List<int> ids) async {
+    return await _connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return _apiService.getStoresByIds(ids);
+      },
+    );
+  }
 
   Future<ResponseResult<Store>> getStoreById(int id) async {
     return await _connectivity.checkInternetBefore(

@@ -4,25 +4,28 @@ import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/theme/delishop_colors.dart';
 import 'package:delishop/core/theme/delishop_text_styles.dart';
+import 'package:delishop/core/ui_state.dart';
 import 'package:delishop/core/widgets/error_message.dart';
 import 'package:delishop/core/widgets/loading.dart';
+import 'package:delishop/feature/cart/cubit/cart_cubit.dart';
 import 'package:delishop/feature/product_full_screen/product_cubit.dart';
 import 'package:delishop/feature/store_full_screen/store_full_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/data/model/store/store.dart';
 import '../../core/di/di_get_it.dart';
 import '../../core/widgets/broken_image.dart';
 import '../../core/widgets/delishop_button.dart';
 import '../../core/widgets/my_alert_dialog.dart';
+import '../cart/cart_screen.dart';
 import '../store_full_screen/store_cubit.dart';
 
 class ProductFullScreen extends StatelessWidget {
   const ProductFullScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext outerContext) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -35,8 +38,8 @@ class ProductFullScreen extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return MyAlertDialog(
-                          title:
-                              state.productState.data!.isFavorite.getMessage(context),
+                          title: state.productState.data!.isFavorite
+                              .getMessage(context),
                           details: [data.message],
                           isError: false);
                     },
@@ -169,7 +172,7 @@ class ProductFullScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: state.storeState.when(
+                    child: state.copyWith().storeState.when(
                       onLoading: () {
                         return const Loading();
                       },
@@ -189,10 +192,52 @@ class ProductFullScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child:
-                        DelishopButton(onPressed: () {
-                          context.read<ProductCubit>().addToCart();
-                        }, text: "Add to Cart".tr(context)),
+                    child: state.isInCartState.when(
+                      onLoading: () => const Loading(),
+                      onSuccess: (data) {
+                        if (data) {
+                          return DelishopButton(
+                              onPressed: () {
+                                final product =
+                                    context.read<ProductCubit>().product;
+                                setupConfirmationSnackBar(context, () {
+                                  outerContext
+                                      .read<CartCubit>()
+                                      .addProductToCart(product,
+                                          increaseBadge: false);
+                                  context.read<ProductCubit>().fetchIsInCart();
+                                }, product.name);
+                                context
+                                    .read<CartCubit>()
+                                    .removeFromCart(product.id);
+                                context.read<ProductCubit>().fetchIsInCart();
+                              },
+                              text: "Remove from Cart".tr(context));
+                        } else {
+                          return DelishopButton(
+                              onPressed: () {
+                                if (state.productState.data != null) {
+                                  context.read<CartCubit>().addProductToCart(
+                                      state.productState.data!);
+                                  context.read<ProductCubit>().fetchIsInCart();
+                                } else {
+                                  context
+                                      .read<ProductCubit>()
+                                      .reloadEmptyStates();
+                                }
+                              },
+                              text: "Add to Cart".tr(context));
+                        }
+                      },
+                      onError: (domainError) {
+                        return ErrorMessage(
+                          message: domainError.getMessage(context),
+                          onTryAgain: () {
+                            context.read<ProductCubit>().reloadEmptyStates();
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ],
               );
@@ -216,7 +261,11 @@ class StoreInfo extends StatelessWidget {
       onTap: () {
         context.push(BlocProvider<StoreCubit>(
           create: (context) => StoreCubit(
-              productRepo: getIt(), storeRepo: getIt(), storeId: store.id, userDataRepo: getIt(), gaRepo: getIt()),
+              productRepo: getIt(),
+              storeRepo: getIt(),
+              storeId: store.id,
+              userDataRepo: getIt(),
+              gaRepo: getIt()),
           child: const StoreFullScreen(),
         ));
       },
@@ -258,6 +307,6 @@ class StoreInfo extends StatelessWidget {
 extension MessageHelper on bool? {
   String getMessage(BuildContext context) {
     if (this == null) return "";
-      return this! ? "Added".tr(context) : "Removed".tr(context);
+    return this! ? "Added".tr(context) : "Removed".tr(context);
   }
 }

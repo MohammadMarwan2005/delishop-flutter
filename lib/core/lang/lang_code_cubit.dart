@@ -20,12 +20,17 @@ class LangCodeCubit extends Cubit<LangCodeState> {
   }
 
   toggleLangCode(BuildContext context) {
-    String deviceLangCode = Localizations.localeOf(context).languageCode;
-    final currentLangCode = _userDataRepo.getString(DataAccessKeys.langCodeKey) ?? deviceLangCode;
+    final currentLangCode = getCurrentLangCode(context);
     var value = "en";
     if (currentLangCode == "en") value = "ar";
     _userDataRepo.setString(value, DataAccessKeys.langCodeKey);
     emit(LangCodeLoaded(langCode: value));
     _gaRepo.logToggleLanguage(value, _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
+  }
+
+  String getCurrentLangCode(BuildContext context) {
+    String deviceLangCode = Localizations.localeOf(context).languageCode;
+    final currentLangCode = _userDataRepo.getString(DataAccessKeys.langCodeKey) ?? deviceLangCode;
+    return currentLangCode;
   }
 }

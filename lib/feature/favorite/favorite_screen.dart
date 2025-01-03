@@ -1,4 +1,3 @@
-import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/widgets/error_message.dart';
 import 'package:delishop/core/widgets/item_grid_view.dart';
@@ -24,6 +23,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<FavoriteCubit>().logViewFav();
+      context.read<FavoriteCubit>().fetchFavoriteProducts();
     });
   }
 
@@ -31,7 +31,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text("Favorites".tr(context)),
       ),
       body: SafeArea(

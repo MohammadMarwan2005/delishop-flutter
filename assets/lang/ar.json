@@ -71,6 +71,12 @@
   "Orders": "الطلبات",
   "Search": "البحث",
   "Favorite": "المفضلة",
-  "Profile": "الملف الشخصي",
-  "Notifications": "الإشعارات"
+  "Profile": "حسابي",
+  "Notifications": "الإشعارات",
+  "Cart": "السلة",
+  "Next": "التالي",
+  "Undo": "تراجع",
+  "Product Removed From Cart!": "تمت إزالة المنتج من السلة!",
+  "No products found in the cart!": "لا يوجد منتجات في السلة!",
+  "Remove from Cart": "إزالة من السلة"
 }

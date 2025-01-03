@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:delishop/core/data/db_service.dart';
 import 'package:delishop/core/data/model/favorite/favorite_response.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/data/model/store/store.dart';
@@ -21,6 +22,7 @@ class ProductCubit extends Cubit<ProductState> {
   final Product product;
   final GARepo _gaRepo;
   final UserDataRepo _userDataRepo;
+  final DBService _dbService;
 
   ProductCubit({
     required UserDataRepo userDataRepo,
@@ -29,15 +31,17 @@ class ProductCubit extends Cubit<ProductState> {
     required FavoriteRepo favoriteRepo,
     required this.product,
     required GARepo gaRepo,
+    required DBService dbService,
   })  : _userDataRepo = userDataRepo,
         _productRepo = productRepo,
         _favoriteRepo = favoriteRepo,
         _storeRepo = storeRepo,
         _gaRepo = gaRepo,
+        _dbService = dbService,
         super(const ProductState(
             productState: UIState(initial: true),
             storeState: UIState(isLoading: true),
-            favoriteState: UIState(isLoading: true))) {
+            favoriteState: UIState(isLoading: true), isInCartState: UIState(isLoading: true))) {
     fetchProductAndStore();
   }
 
@@ -45,6 +49,7 @@ class ProductCubit extends Cubit<ProductState> {
     await Future.wait([
       fetchProduct(),
       fetchStore(),
+      fetchIsInCart()
     ]);
   }
 
@@ -133,6 +138,15 @@ class ProductCubit extends Cubit<ProductState> {
     if(state.storeState.error != null) {
       futures.add(fetchStore());
     }
+    if(state.isInCartState.error != null) {
+      futures.add(fetchStore());
+    }
     await Future.wait(futures);
+  }
+
+  Future<void> fetchIsInCart() async {
+    emit(state.copyWith(isInCartState: const UIState(isLoading: true)));
+    final result = await _dbService.isInDatabase(product.id);
+    emit(state.copyWith(isInCartState: UIState(data: result)));
   }
 }

@@ -6,6 +6,7 @@ abstract class ApiConsts {
   static const String getProductByIdUrl = "$baseUrl/product/getProduct";
   static const String getProductsByStoreIdUrl = "$baseUrl/product/getProductsByStore";
   static const String storeSearchUrl = "$baseUrl/store/search";
+  static const String getStoresByIds = "$baseUrl/store/getStoresByIds";
   static const String getStoreByIdUrl = "$baseUrl/store/getStore";
   static const String getStoresByCategoryId = "$baseUrl/store/getStoreByCategory";
   static const String getAllCategories = "$baseUrl/categories/getCategories";

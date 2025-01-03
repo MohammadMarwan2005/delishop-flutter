@@ -70,12 +70,13 @@ class ApiService {
       return Product.fromJson(jsonMap);
     });
   }
-  Future<ResponseResult<ProductListResponseModel>> getProductsByStoreId(int storeId) async {
-    final http.Response httpResponse = await _httpClient
-        .get(
-          Uri.parse("${ApiConsts.getProductsByStoreIdUrl}/$storeId"),
-          headers: CommonConsts.acceptJsonHeader,
-        );
+
+  Future<ResponseResult<ProductListResponseModel>> getProductsByStoreId(
+      int storeId) async {
+    final http.Response httpResponse = await _httpClient.get(
+      Uri.parse("${ApiConsts.getProductsByStoreIdUrl}/$storeId"),
+      headers: CommonConsts.acceptJsonHeader,
+    );
     print('Response: ${httpResponse.body}'); // Print the response for debugging
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return ProductListResponseModel.fromJson(jsonMap);
@@ -87,6 +88,19 @@ class ApiService {
       Uri.parse(ApiConsts.storeSearchUrl),
       headers: CommonConsts.acceptJsonHeader,
     );
+    return httpResponse.handle(jsonToModel: (jsonMap) {
+      return StoreListResponseModel.fromJson(jsonMap);
+    });
+  }
+
+  Future<ResponseResult<StoreListResponseModel>> getStoresByIds(
+      List<int> ids) async {
+    final http.Response httpResponse =
+        await _httpClient.post(Uri.parse(ApiConsts.getStoresByIds),
+            headers: CommonConsts.acceptJsonHeader,
+            body: jsonEncode({
+              'store_ids': ids,
+            }));
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return StoreListResponseModel.fromJson(jsonMap);
     });
@@ -105,8 +119,8 @@ class ApiService {
     });
   }
 
-
-  Future<ResponseResult<StoreListResponseModel>> getStoresByCategoryId(int categoryId) async {
+  Future<ResponseResult<StoreListResponseModel>> getStoresByCategoryId(
+      int categoryId) async {
     final http.Response httpResponse = await _httpClient.get(
       Uri.parse("${ApiConsts.getStoresByCategoryId}/$categoryId"),
       headers: CommonConsts.acceptJsonHeader,
@@ -137,7 +151,6 @@ class ApiService {
       jsonToModel: (jsonMap) => FavoriteResponse.fromJson(jsonMap),
     );
   }
-
 
   Future<ResponseResult<FavoriteResponse>> removeProductFromFavorite(
       int productId) async {
