@@ -22,7 +22,9 @@ class UserDataRepo {
   }
 
   Future<String> getToken() async {
-    return await _storage.read(key: DataAccessKeys.tokenKey) ?? "";
+    final token = await _storage.read(key: DataAccessKeys.tokenKey) ?? "";
+    print('🟢 Debug: READ TOKEN:' + token);
+    return token;
   }
 
   deleteToken() async {

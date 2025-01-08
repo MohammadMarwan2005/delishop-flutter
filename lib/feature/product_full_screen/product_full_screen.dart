@@ -287,7 +287,7 @@ class StoreInfo extends StatelessWidget {
                   style: DelishopTextStyles.font16SemiBoldBlack,
                 ),
                 Text(
-                  store.location,
+                  store.locationName,
                   style: TextStyle(fontSize: 14, color: DelishopColors.grey),
                 ),
               ],

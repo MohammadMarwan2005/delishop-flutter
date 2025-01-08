@@ -55,7 +55,7 @@ class GARepo {
         "store_id": store.id,
         "store_category_id": store.categoryId,
         "store_name": store.name,
-        "store_location": store.location,
+        "store_location": store.locationName,
         "phone_number": phoneNumber,
       },
     );

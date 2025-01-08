@@ -28,7 +28,10 @@ mixin _$Store {
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: "store_picture")
   String get storePicture => throw _privateConstructorUsedError;
-  String get location => throw _privateConstructorUsedError;
+  @JsonKey(name: "location_name")
+  String get locationName => throw _privateConstructorUsedError;
+  @JsonKey(name: "location_url")
+  String get locationUrl => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   String get createdAt => throw _privateConstructorUsedError;
@@ -57,7 +60,8 @@ abstract class $StoreCopyWith<$Res> {
       @JsonKey(name: "category_id") int categoryId,
       String name,
       @JsonKey(name: "store_picture") String storePicture,
-      String location,
+      @JsonKey(name: "location_name") String locationName,
+      @JsonKey(name: "location_url") String locationUrl,
       String description,
       @JsonKey(name: "created_at") String createdAt,
       @JsonKey(name: "updated_at") String updatedAt,
@@ -84,7 +88,8 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
     Object? categoryId = null,
     Object? name = null,
     Object? storePicture = null,
-    Object? location = null,
+    Object? locationName = null,
+    Object? locationUrl = null,
     Object? description = null,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -111,9 +116,13 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
           ? _value.storePicture
           : storePicture // ignore: cast_nullable_to_non_nullable
               as String,
-      location: null == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
+      locationName: null == locationName
+          ? _value.locationName
+          : locationName // ignore: cast_nullable_to_non_nullable
+              as String,
+      locationUrl: null == locationUrl
+          ? _value.locationUrl
+          : locationUrl // ignore: cast_nullable_to_non_nullable
               as String,
       description: null == description
           ? _value.description
@@ -148,7 +157,8 @@ abstract class _$$storeImplCopyWith<$Res> implements $StoreCopyWith<$Res> {
       @JsonKey(name: "category_id") int categoryId,
       String name,
       @JsonKey(name: "store_picture") String storePicture,
-      String location,
+      @JsonKey(name: "location_name") String locationName,
+      @JsonKey(name: "location_url") String locationUrl,
       String description,
       @JsonKey(name: "created_at") String createdAt,
       @JsonKey(name: "updated_at") String updatedAt,
@@ -173,7 +183,8 @@ class __$$storeImplCopyWithImpl<$Res>
     Object? categoryId = null,
     Object? name = null,
     Object? storePicture = null,
-    Object? location = null,
+    Object? locationName = null,
+    Object? locationUrl = null,
     Object? description = null,
     Object? createdAt = null,
     Object? updatedAt = null,
@@ -200,9 +211,13 @@ class __$$storeImplCopyWithImpl<$Res>
           ? _value.storePicture
           : storePicture // ignore: cast_nullable_to_non_nullable
               as String,
-      location: null == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
+      locationName: null == locationName
+          ? _value.locationName
+          : locationName // ignore: cast_nullable_to_non_nullable
+              as String,
+      locationUrl: null == locationUrl
+          ? _value.locationUrl
+          : locationUrl // ignore: cast_nullable_to_non_nullable
               as String,
       description: null == description
           ? _value.description
@@ -233,7 +248,8 @@ class _$storeImpl implements _store {
       @JsonKey(name: "category_id") required this.categoryId,
       required this.name,
       @JsonKey(name: "store_picture") required this.storePicture,
-      required this.location,
+      @JsonKey(name: "location_name") required this.locationName,
+      @JsonKey(name: "location_url") required this.locationUrl,
       required this.description,
       @JsonKey(name: "created_at") required this.createdAt,
       @JsonKey(name: "updated_at") required this.updatedAt,
@@ -256,7 +272,11 @@ class _$storeImpl implements _store {
   @JsonKey(name: "store_picture")
   final String storePicture;
   @override
-  final String location;
+  @JsonKey(name: "location_name")
+  final String locationName;
+  @override
+  @JsonKey(name: "location_url")
+  final String locationUrl;
   @override
   final String description;
   @override
@@ -271,7 +291,7 @@ class _$storeImpl implements _store {
 
   @override
   String toString() {
-    return 'Store(id: $id, userId: $userId, categoryId: $categoryId, name: $name, storePicture: $storePicture, location: $location, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, rating: $rating)';
+    return 'Store(id: $id, userId: $userId, categoryId: $categoryId, name: $name, storePicture: $storePicture, locationName: $locationName, locationUrl: $locationUrl, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, rating: $rating)';
   }
 
   @override
@@ -286,8 +306,10 @@ class _$storeImpl implements _store {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.storePicture, storePicture) ||
                 other.storePicture == storePicture) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
+            (identical(other.locationName, locationName) ||
+                other.locationName == locationName) &&
+            (identical(other.locationUrl, locationUrl) ||
+                other.locationUrl == locationUrl) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.createdAt, createdAt) ||
@@ -299,8 +321,19 @@ class _$storeImpl implements _store {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, categoryId, name,
-      storePicture, location, description, createdAt, updatedAt, rating);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      userId,
+      categoryId,
+      name,
+      storePicture,
+      locationName,
+      locationUrl,
+      description,
+      createdAt,
+      updatedAt,
+      rating);
 
   /// Create a copy of Store
   /// with the given fields replaced by the non-null parameter values.
@@ -325,7 +358,8 @@ abstract class _store implements Store {
       @JsonKey(name: "category_id") required final int categoryId,
       required final String name,
       @JsonKey(name: "store_picture") required final String storePicture,
-      required final String location,
+      @JsonKey(name: "location_name") required final String locationName,
+      @JsonKey(name: "location_url") required final String locationUrl,
       required final String description,
       @JsonKey(name: "created_at") required final String createdAt,
       @JsonKey(name: "updated_at") required final String updatedAt,
@@ -347,7 +381,11 @@ abstract class _store implements Store {
   @JsonKey(name: "store_picture")
   String get storePicture;
   @override
-  String get location;
+  @JsonKey(name: "location_name")
+  String get locationName;
+  @override
+  @JsonKey(name: "location_url")
+  String get locationUrl;
   @override
   String get description;
   @override

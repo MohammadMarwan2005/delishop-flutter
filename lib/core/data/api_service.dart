@@ -30,7 +30,7 @@ class ApiService {
       LoginRequestModel body) async {
     final http.Response httpResponse = await _httpClient.post(
       Uri.parse(ApiConsts.loginUrl),
-      headers: CommonConsts.acceptJsonHeader,
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
       body: jsonEncode(body.toJson()),
     );
     return httpResponse.handle(jsonToModel: (jsonMap) {
@@ -42,7 +42,7 @@ class ApiService {
       RegisterRequestModel body) async {
     final http.Response httpResponse = await _httpClient.post(
       Uri.parse(ApiConsts.registerUrl),
-      headers: CommonConsts.acceptJsonHeader,
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
       body: jsonEncode(body.toJson()),
     );
     return httpResponse.handle(jsonToModel: (jsonMap) {
@@ -53,7 +53,7 @@ class ApiService {
   Future<ResponseResult<ProductListResponseModel>> getAllProducts() async {
     final http.Response httpResponse = await _httpClient.post(
       Uri.parse(ApiConsts.productSearchUrl),
-      headers: CommonConsts.acceptJsonHeader,
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
     );
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return ProductListResponseModel.fromJson(jsonMap);
@@ -68,7 +68,6 @@ class ApiService {
           headers: CommonConsts.getTokenHeader(token),
         )
         .then((value) => value.getDataResponse());
-    print('Response: ${httpResponse.body}'); // Print the response for debugging
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return Product.fromJson(jsonMap);
     });
@@ -78,9 +77,8 @@ class ApiService {
       int storeId) async {
     final http.Response httpResponse = await _httpClient.get(
       Uri.parse("${ApiConsts.getProductsByStoreIdUrl}/$storeId"),
-      headers: CommonConsts.acceptJsonHeader,
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
     );
-    print('Response: ${httpResponse.body}'); // Print the response for debugging
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return ProductListResponseModel.fromJson(jsonMap);
     });
@@ -89,7 +87,7 @@ class ApiService {
   Future<ResponseResult<StoreListResponseModel>> getAllStores() async {
     final http.Response httpResponse = await _httpClient.post(
       Uri.parse(ApiConsts.storeSearchUrl),
-      headers: CommonConsts.acceptJsonHeader,
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
     );
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return StoreListResponseModel.fromJson(jsonMap);
@@ -100,7 +98,7 @@ class ApiService {
       List<int> ids) async {
     final http.Response httpResponse =
         await _httpClient.post(Uri.parse(ApiConsts.getStoresByIds),
-            headers: CommonConsts.acceptJsonHeader,
+            headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
             body: jsonEncode({
               'store_ids': ids,
             }));
@@ -126,7 +124,7 @@ class ApiService {
       int categoryId) async {
     final http.Response httpResponse = await _httpClient.get(
       Uri.parse("${ApiConsts.getStoresByCategoryId}/$categoryId"),
-      headers: CommonConsts.acceptJsonHeader,
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
     );
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return StoreListResponseModel.fromJson(jsonMap);
@@ -136,7 +134,7 @@ class ApiService {
   Future<ResponseResult<CategoryListResponseModel>> getAllCategories() async {
     final http.Response httpResponse = await _httpClient.get(
       Uri.parse(ApiConsts.getAllCategories),
-      headers: CommonConsts.acceptJsonHeader,
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
     );
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return CategoryListResponseModel.fromJson(jsonMap);
@@ -161,7 +159,6 @@ class ApiService {
     final http.Response httpResponse = await _httpClient.delete(
         Uri.parse("${ApiConsts.removeProductFromFavoriteUrl}/$productId"),
         headers: CommonConsts.getTokenHeader(token));
-    print('Response: ${httpResponse.body}'); // Print the response for debugging
 
     return httpResponse.handle(
       jsonToModel: (jsonMap) => FavoriteResponse.fromJson(jsonMap),
@@ -187,7 +184,6 @@ class ApiService {
           headers: CommonConsts.getTokenHeader(token),
         )
         .then((value) => value.getDataResponse());
-    print("getMyBalance: ${httpResponse.body}");
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return WalletBalanceResponse.fromJson(jsonMap);
     });
@@ -202,7 +198,6 @@ class ApiService {
           headers: CommonConsts.getTokenHeader(token),
         )
         .then((value) => value.getDataResponse());
-    print(httpResponse.body);
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return Location.fromJson(jsonMap);
     });
@@ -215,7 +210,6 @@ class ApiService {
       headers: CommonConsts.getTokenHeader(token),
       body: jsonEncode(location.toJson()),
     ).then((value) => value.getDataResponse(),);
-    print(httpResponse.body);
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
         return Location.fromJson(jsonMap);

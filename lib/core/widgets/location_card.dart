@@ -79,7 +79,7 @@ class LocationCard extends StatelessWidget {
           context.setupErrorState(state.addState.error!);
         }
         if (state.deleteState.error != null) {
-          context.setupErrorState(state.addState.error!);
+          context.setupErrorState(state.deleteState.error!);
         }
       },
     );

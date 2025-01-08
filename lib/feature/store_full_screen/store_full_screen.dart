@@ -71,7 +71,7 @@ class StoreFullScreen extends StatelessWidget {
                                         color: Colors.grey),
                                     const SizedBox(width: 8),
                                     Text(
-                                      store.location,
+                                      store.locationName,
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: DelishopColors.grey,
