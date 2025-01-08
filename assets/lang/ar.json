@@ -78,5 +78,15 @@
   "Undo": "تراجع",
   "Product Removed From Cart!": "تمت إزالة المنتج من السلة!",
   "No products found in the cart!": "لا يوجد منتجات في السلة!",
-  "Remove from Cart": "إزالة من السلة"
+  "Remove from Cart": "إزالة من السلة",
+  "Store": "المتجر",
+  "Total:": "الإجمالي:",
+  "Confirmation": "التأكيد",
+  "Location": "الموقع",
+  "Add": "إضافة",
+  "Choose": "اختر",
+  "Add New Location": "إضافة موقع جديد",
+  "Location Name": "اسم الموقع",
+  "Location URL": "رابط الموقع",
+  "Cancel": "إلغاء"
 }

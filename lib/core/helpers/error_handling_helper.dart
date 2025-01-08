@@ -31,7 +31,10 @@ extension SuccessHelper on http.Response {
 
   http.Response getDataResponse() {
     if (isSuccess()) {
-      return http.Response(jsonEncode(jsonDecode(body)["data"]), statusCode);
+      // encode the string to handle arabic characters
+      final utf8EncodedBody = utf8.encode(jsonEncode(jsonDecode(body)["data"]));
+
+      return http.Response.bytes(utf8EncodedBody, statusCode);
     } else {
       return this;
     }

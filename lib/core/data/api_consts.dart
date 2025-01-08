@@ -13,6 +13,11 @@ abstract class ApiConsts {
   static const String addProductToFavoriteUrl = "$baseUrl/favorite/addToFavorite";
   static const String removeProductFromFavoriteUrl = "$baseUrl/favorite/removeFromFavorite";
   static const String getFavoriteProductsUrl = "$baseUrl/favorite/getFavorites";
+  static const String getMyBalanceUrl = "$baseUrl/wallet/balance";
+  static const String getDefaultLocation = "$baseUrl/location/getDefaultUserLocation";
+  static const String addLocation = "$baseUrl/location/addLocation";
+  static const String getUserLocations = "$baseUrl/location/getUserLocations";
+  static const String deleteLocation = "$baseUrl/location/deleteLocation";
 }
 
 abstract class StatusCodes {

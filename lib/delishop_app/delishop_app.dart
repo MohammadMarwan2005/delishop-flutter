@@ -3,6 +3,7 @@ import 'package:delishop/core/theme/theme.dart';
 import 'package:delishop/core/widgets/loading.dart';
 import 'package:delishop/delishop_app/first_route_helper.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
+import 'package:delishop/feature/global/global_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -26,7 +27,8 @@ class DelishopApp extends StatelessWidget {
         providers: [
           BlocProvider<AuthCubit>(create: (context) => getIt()),
           BlocProvider<LangCodeCubit>(create: (context) => getIt()),
-          BlocProvider<CartCubit>(create: (context) => getIt())
+          BlocProvider<CartCubit>(create: (context) => getIt()),
+          BlocProvider<GlobalCubit>(create: (context) => getIt()),
         ],
         child: BlocBuilder<LangCodeCubit, LangCodeState>(
           builder: (context, state) {

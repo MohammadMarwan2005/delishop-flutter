@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DelishopButton extends StatelessWidget {
-  final Function() onPressed;
+  final Function()? onPressed;
   final String text;
   final bool isLoading;
+  final Color? textColor;
 
   const DelishopButton(
       {super.key,
       required this.onPressed,
       required this.text,
-      this.isLoading = false});
+      this.isLoading = false, this.textColor});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class DelishopButton extends StatelessWidget {
               if (isLoading) ...[SizedBox(width: 20.w)],
               Text(
                 text,
-                style: DelishopTextStyles.font16SemiBoldWhite,
+                style: DelishopTextStyles.font16SemiBoldWhite.copyWith(color: textColor),
               ),
               if (isLoading) ...[
                 SizedBox(

@@ -78,5 +78,15 @@
   "Undo": "Undo",
   "Product Removed From Cart!": "Product Removed From Cart!",
   "No products found in the cart!": "No products found in the cart!",
-  "Remove from Cart": "Remove from Cart"
+  "Remove from Cart": "Remove from Cart",
+  "Store": "Store",
+  "Total:": "Total:",
+  "Confirmation": "Confirmation",
+  "Location": "Location",
+  "Add": "Add",
+  "Choose": "Choose",
+  "Add New Location": "Add New Location",
+  "Location Name": "Location Name",
+  "Location URL": "Location URL",
+  "Cancel": "Cancel"
 }

@@ -164,7 +164,7 @@ class ProductFullScreen extends StatelessWidget {
                       );
                     },
                     onError: (domainError) => ErrorMessage(
-                      message: domainError.message,
+                      message: domainError.getMessage(context),
                       onTryAgain: () {
                         context.read<ProductCubit>().reloadEmptyStates();
                       },
@@ -181,7 +181,7 @@ class ProductFullScreen extends StatelessWidget {
                       },
                       onError: (domainError) {
                         return ErrorMessage(
-                          message: domainError.message,
+                          message: domainError.getMessage(context),
                           onTryAgain: () {
                             context.read<ProductCubit>().reloadEmptyStates();
                           },

@@ -3,18 +3,22 @@ import 'package:delishop/core/data/db_service.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/feature/cart/logic/order_entity.dart';
 import 'package:equatable/equatable.dart';
+import '../../../core/data/repo/wallet_repo.dart';
 import '../../../core/ui_state.dart';
-import '../logic/get_order_enitity_use_case.dart';
+import '../logic/get_order_entity_use_case.dart';
 
 part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
   final DBService _dbService;
   final GetOrderEntitiesUseCase _getOrderEntitiesUseCase;
+  final WalletRepo _walletRepo;
 
-  CartCubit(this._dbService, this._getOrderEntitiesUseCase)
-      : super(const CartState(orderEntities: UIState(isLoading: true))) {
-    Future.wait([fetchCartContent()]);
+  CartCubit(this._dbService, this._getOrderEntitiesUseCase, this._walletRepo)
+      : super(const CartState(
+            orderEntities: UIState(isLoading: true),
+            currentBalance: UIState(isLoading: true))) {
+    reloadAllData();
   }
 
   Future<void> fetchCartContent({int? badgeCount}) async {
@@ -33,6 +37,20 @@ class CartCubit extends Cubit<CartState> {
         emit(state.copyWith(
             products: UIState(error: domainErrorModel),
             badgeCount: badgeCount));
+      },
+    );
+  }
+
+  Future<void> fetchMyBalance() async {
+    emit(state.copyWith(currentBalance: const UIState(isLoading: true)));
+    final response = await _walletRepo.getMyBalance();
+    response.when(
+      onSuccess: (successData) {
+        emit(state.copyWith(
+            currentBalance: UIState(data: double.parse(successData.balance))));
+      },
+      onError: (domainErrorModel) {
+        emit(state.copyWith(currentBalance: UIState(error: domainErrorModel)));
       },
     );
   }
@@ -58,5 +76,9 @@ class CartCubit extends Cubit<CartState> {
     newMap[id] = newQuan;
     print(newMap);
     emit(state.copyWith(productsQuants: newMap));
+  }
+
+  void reloadAllData() {
+    Future.wait([fetchCartContent(), fetchMyBalance()]);
   }
 }

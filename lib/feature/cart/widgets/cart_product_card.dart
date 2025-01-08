@@ -155,7 +155,7 @@ class CountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double size = 35;
-    return enabled ? ElevatedButton(
+    return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(size, size),
         shape: RoundedRectangleBorder(
@@ -164,8 +164,8 @@ class CountButton extends StatelessWidget {
         backgroundColor: DelishopColors.imageBackground,
         padding: EdgeInsets.zero,
       ),
-      onPressed: onClick,
+      onPressed: enabled ? onClick : () {},
       child: child,
-    ) : const SizedBox(height: size * 1.3,width: size * 1.3);
+    );
   }
 }

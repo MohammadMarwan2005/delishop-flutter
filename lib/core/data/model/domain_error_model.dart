@@ -24,7 +24,7 @@ class DomainErrorModel extends Equatable {
     final int code = statusCode;
     List<String> details = [];
     try {
-      details = (jsonMap["errors"] as Map<String, dynamic>)
+      details = ((jsonMap["errors"] ?? {}) as Map<String, dynamic>)
           .entries
           .map((e) => e.value.toString())
           .toList();

@@ -1,5 +1,7 @@
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/lang/app_localization.dart';
+import 'package:delishop/feature/bottom_nav_host/wallet_label.dart';
+import 'package:delishop/feature/cart/cubit/cart_cubit.dart';
 import 'package:delishop/feature/cart/widgets/tabbed_cart_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +29,14 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext outerContext) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cart".tr(outerContext)),
+        title: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Cart".tr(context)),
+            const WalletLabel()
+          ],
+        ),
       ),
       body: SafeArea(
           child: Padding(

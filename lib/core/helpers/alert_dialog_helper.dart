@@ -17,7 +17,7 @@ extension AlertDialogHelper on BuildContext {
       details = ["Check your information!"];
     }, onNoInternet: () {
       title = "No Internet Connection!".tr(this);
-      details = ["Check you connection".tr(this)];
+      details = ["Check your connection".tr(this)];
     }, onConflict: () {
       title = "Opps!".tr(this);
       details = [error.message];

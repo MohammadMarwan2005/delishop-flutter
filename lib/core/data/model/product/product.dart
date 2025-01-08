@@ -23,9 +23,6 @@ class Product with _$Product {
   factory Product.fromJson(Map<String, Object?> json) =>
       _$ProductFromJson(json);
 
-  Product copyWithInvertedFav() {
-    return copyWith(isFavorite: isFavorite?.notOrNull());
-  }
 }
 
 extension BooleanExtension on bool {
@@ -47,6 +44,9 @@ extension ProductMapper on Product {
         quantity: quantity);
   }
 
+  Product copyWithInvertedFav() {
+    return copyWith(isFavorite: isFavorite?.notOrNull());
+  }
 }
 
 extension RemovingFromCartHelper on String {

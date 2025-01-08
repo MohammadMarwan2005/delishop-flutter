@@ -14,8 +14,8 @@ class Loading extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Lottie.asset(
-            height: 100.h,
-            width: 100.h,
+            height: height ?? 100.h,
+            width: width ?? 100.h,
             "assets/animation/an_loading.json",
             repeat: true,
           ),

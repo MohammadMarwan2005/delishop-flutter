@@ -45,6 +45,6 @@ class UIState<T> extends Equatable {
     if (error != null) {
       return onError(error!);
     }
-    return onError(error!);
+    return onError(DomainErrorModel(message: "message", code: 404));
   }
 }

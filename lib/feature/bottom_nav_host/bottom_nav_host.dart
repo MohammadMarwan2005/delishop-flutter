@@ -2,6 +2,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/theme/delishop_colors.dart';
+import 'package:delishop/feature/bottom_nav_host/wallet_label.dart';
 import 'package:delishop/feature/cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,8 +14,6 @@ import '../favorite/favorite_screen.dart';
 import '../home/home_screen.dart';
 
 class BottomNavHost extends StatefulWidget {
-  static const routeName = '/BottomNavyBarPage';
-
   const BottomNavHost({super.key});
 
   @override
@@ -24,6 +23,14 @@ class BottomNavHost extends StatefulWidget {
 //🔳 Bottom Nav Bar (Home-Orders-Search-Favorites-Profile)
 class _BottomNavHostState extends State<BottomNavHost> {
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CartCubit>().reloadAllData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +48,7 @@ class _BottomNavHostState extends State<BottomNavHost> {
                     style: DelishopTextStyles.font32OrangeBold,
                     textDirection: TextDirection.ltr,
                   ),
+                  WalletLabel(),
                   Row(
                     children: [
                       // CircleAvatar(
@@ -50,7 +58,8 @@ class _BottomNavHostState extends State<BottomNavHost> {
                           tooltip: "Notifications".tr(context),
                           onPressed: () {},
                           color: Colors.black,
-                          icon: const Icon(Icons.notifications_none).getBadged(1)),
+                          icon: const Icon(Icons.notifications_none)
+                              .getBadged(1)),
                       // ),
                       IconButton(
                         tooltip: "Cart".tr(context),
@@ -58,8 +67,9 @@ class _BottomNavHostState extends State<BottomNavHost> {
                           context.push(const CartScreen());
                           context.read<CartCubit>().clearBadge();
                         },
-                        icon: const Icon(Icons.shopping_basket_outlined).getBadged(
-                            context.read<CartCubit>().state.badgeCount),
+                        icon: const Icon(Icons.shopping_basket_outlined)
+                            .getBadged(
+                                context.read<CartCubit>().state.badgeCount),
                       ),
                     ],
                   )
@@ -70,7 +80,8 @@ class _BottomNavHostState extends State<BottomNavHost> {
         ),
       ),
       body: views[currentIndex],
-      bottomNavigationBar: BottomNavyBar(
+      bottomNavigationBar:
+      BottomNavyBar(
         selectedIndex: currentIndex,
         showElevation: true,
         itemCornerRadius: 8,
@@ -82,13 +93,15 @@ class _BottomNavHostState extends State<BottomNavHost> {
         }),
         items: [
           BottomNavyBarItem(
-            icon: Icon(currentIndex==0 ? Icons.home : Icons.home_outlined),
+            icon: Icon(currentIndex == 0 ? Icons.home : Icons.home_outlined),
             title: Text("Home".tr(context)),
             activeColor: DelishopColors.primary,
             inactiveColor: DelishopColors.grey,
           ),
           BottomNavyBarItem(
-            icon: Icon(currentIndex== 1? Icons.shopping_bag : Icons.shopping_bag_outlined),
+            icon: Icon(currentIndex == 1
+                ? Icons.shopping_bag
+                : Icons.shopping_bag_outlined),
             title: Text("Orders".tr(context)),
             activeColor: DelishopColors.primary,
             inactiveColor: DelishopColors.grey,
@@ -100,13 +113,14 @@ class _BottomNavHostState extends State<BottomNavHost> {
             inactiveColor: DelishopColors.grey,
           ),
           BottomNavyBarItem(
-            icon: Icon( currentIndex==3 ? Icons.favorite : Icons.favorite_outline),
+            icon: Icon(
+                currentIndex == 3 ? Icons.favorite : Icons.favorite_outline),
             title: Text("Favorite".tr(context)),
             activeColor: DelishopColors.primary,
             inactiveColor: DelishopColors.grey,
           ),
           BottomNavyBarItem(
-            icon: Icon(currentIndex==4 ? Icons.person : Icons.person_outline),
+            icon: Icon(currentIndex == 4 ? Icons.person : Icons.person_outline),
             title: Text("Profile".tr(context)),
             activeColor: DelishopColors.primary,
             inactiveColor: DelishopColors.grey,

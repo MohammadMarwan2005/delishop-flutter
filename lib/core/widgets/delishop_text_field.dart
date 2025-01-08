@@ -32,13 +32,17 @@ class _DelishopTextFieldState extends State<DelishopTextField> {
 
   void _updateColor() {
     setState(() {
-      labelColor =
+      if(widget.validator != null) {
+        labelColor =
       (widget.validator!(widget.textEditingController?.text) != null)
           ? Theme
           .of(context)
           .colorScheme
           .error
           : (_focusNode.hasFocus) ? DelishopColors.primary : DelishopColors.lightGrey;
+      } else {
+        labelColor = (_focusNode.hasFocus) ? DelishopColors.primary : DelishopColors.lightGrey;
+      }
     });
   }
 
