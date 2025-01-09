@@ -67,6 +67,11 @@ class CartCubit extends Cubit<CartState> {
     await fetchCartContent();
   }
 
+  Future<void> removeProductsFromDatabase(List<int> productsIds) async{
+    await _dbService.removeProductsFromDatabase(productsIds);
+    await fetchCartContent();
+  }
+
   clearBadge() {
     emit(state.copyWith(badgeCount: 0));
   }

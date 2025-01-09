@@ -1,8 +1,12 @@
+import 'package:delishop/core/helpers/alert_dialog_helper.dart';
+import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
+import 'package:delishop/core/widgets/delishop_text_field.dart';
 import 'package:delishop/feature/bottom_nav_host/wallet_label.dart';
 import 'package:delishop/feature/cart/cubit/cart_cubit.dart';
 import 'package:delishop/feature/cart/logic/order_entity.dart';
 import 'package:delishop/feature/cart/widgets/tabbed_cart_list.dart';
+import 'package:delishop/feature/order/cubit/order_cubit.dart';
 import 'package:delishop/feature/order/widgets/order_summery_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +16,7 @@ import '../../core/lang/lang_code_cubit.dart';
 import '../../core/theme/delishop_text_styles.dart';
 import '../../core/widgets/delishop_button.dart';
 import '../../core/widgets/location_card.dart';
+import '../../core/widgets/my_alert_dialog.dart';
 import '../global/global_cubit.dart';
 import '../product_full_screen/product_full_screen.dart';
 
@@ -29,6 +34,8 @@ class OrderSummeryScreen extends StatefulWidget {
 }
 
 class _OrderSummeryScreenState extends State<OrderSummeryScreen> {
+  TextEditingController descriptionController = TextEditingController();
+
   int? selectedIndex;
 
   @override
@@ -47,7 +54,7 @@ class _OrderSummeryScreenState extends State<OrderSummeryScreen> {
         child: BlocBuilder<GlobalCubit, GlobalState>(
           builder: (context, globalState) {
             return BlocBuilder<CartCubit, CartState>(
-              builder: (context, cartState) {
+              builder: (cartContext, cartState) {
                 final locations = globalState.allLocations.data;
                 final enabled = (locations != null &&
                     locations.isNotEmpty &&
@@ -56,21 +63,66 @@ class _OrderSummeryScreenState extends State<OrderSummeryScreen> {
                     cartState.currentBalance.data != null &&
                     (cartState.currentBalance.data! >=
                         widget.order.getOrderPrice(widget.quants)));
-                return DelishopButton(
-                  text: widget.order.getCheckoutButtonLabel(
-                      context,
-                      widget.quants,
-                      context
-                          .read<LangCodeCubit>()
-                          .getCurrentLangCode(context)),
-                  textColor:
-                      enabled ? Colors.white : Colors.black.withOpacity(0.5),
-                  onPressed: enabled
-                      ? () {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Order: \n${widget.order}")));
-                        }
-                      : null,
+                return BlocConsumer<OrderCubit, OrderState>(
+                  builder: (context, state) {
+                    final isLoading =
+                        state.createOrderResponse.isLoading ?? false;
+                    return DelishopButton(
+                      isLoading: isLoading,
+                      text: widget.order.getCheckoutButtonLabel(
+                          context,
+                          widget.quants,
+                          context
+                              .read<LangCodeCubit>()
+                              .getCurrentLangCode(context)),
+                      textColor: enabled
+                          ? Colors.white
+                          : Colors.black.withOpacity(0.5),
+                      onPressed: enabled
+                          ? () {
+                              context.read<OrderCubit>().order(
+                                  widget.order,
+                                  widget.quants,
+                                  globalState.allLocations.data![
+                                      selectedIndex!.getIndex(locations)],
+                                  descriptionController.text);
+                            }
+                          : null,
+                    );
+                  },
+                  listener: (context, state) {
+                    state.createOrderResponse.when(
+                      onLoading: () {},
+                      onSuccess: (data) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return MyAlertDialog(
+                              title: "Ordered Successfully".tr(context),
+                              details: widget.order.products
+                                  .map(
+                                    (e) => e.name,
+                                  )
+                                  .toList(),
+                              isError: false,
+                              onGotItClicked: () {
+                                context
+                                    .read<CartCubit>()
+                                    .removeProductsFromDatabase(
+                                        widget.order.products
+                                            .map(
+                                              (e) => e.id,
+                                            )
+                                            .toList());
+                                context.pop();
+                              },
+                            );
+                          },
+                        );
+                      },
+                      onError: (domainError) {},
+                    );
+                  },
                 );
               },
             );
@@ -118,7 +170,7 @@ class _OrderSummeryScreenState extends State<OrderSummeryScreen> {
                     quantity: widget.quants[product.id] ?? 1,
                   )),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 48.h),
+                padding: EdgeInsets.only(top: 48.h, bottom: 32.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
@@ -141,6 +193,11 @@ class _OrderSummeryScreenState extends State<OrderSummeryScreen> {
                   ],
                 ),
               ),
+              DelishopTextField(
+                textEditingController: descriptionController,
+                labelText: "Your Notes".tr(context),
+                minLines: 1,
+              )
             ],
           ),
         ),

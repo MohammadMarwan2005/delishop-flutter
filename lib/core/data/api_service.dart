@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:delishop/core/data/model/category/category_list_response_model.dart';
 import 'package:delishop/core/data/model/favorite/favorite_response.dart';
 import 'package:delishop/core/data/model/location/location.dart';
+import 'package:delishop/core/data/model/order/create_order_request/create_order_request.dart';
+import 'package:delishop/core/data/model/order/order_response/order_response.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/data/model/store/store_list_response_model.dart';
 import 'package:delishop/core/data/model/wallet/wallet_balance_response.dart';
@@ -16,6 +18,7 @@ import 'package:http/http.dart' as http;
 
 import 'api_consts.dart';
 import 'model/location/location_list_response_model.dart';
+import 'model/order/order_list/order_list_response.dart';
 import 'model/product/product_list_response_model.dart';
 import 'model/store/store.dart';
 
@@ -23,8 +26,10 @@ class ApiService {
   final UserDataRepo _userDataRepo;
   final http.Client _httpClient;
 
-  ApiService({required UserDataRepo userDataRepo, required http.Client httpClient})
-      : _userDataRepo = userDataRepo, _httpClient = httpClient;
+  ApiService(
+      {required UserDataRepo userDataRepo, required http.Client httpClient})
+      : _userDataRepo = userDataRepo,
+        _httpClient = httpClient;
 
   Future<ResponseResult<AuthResponseModel>> login(
       LoginRequestModel body) async {
@@ -96,12 +101,12 @@ class ApiService {
 
   Future<ResponseResult<StoreListResponseModel>> getStoresByIds(
       List<int> ids) async {
-    final http.Response httpResponse =
-        await _httpClient.post(Uri.parse(ApiConsts.getStoresByIds),
-            headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
-            body: jsonEncode({
-              'store_ids': ids,
-            }));
+    final http.Response httpResponse = await _httpClient.post(
+        Uri.parse(ApiConsts.getStoresByIds),
+        headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+        body: jsonEncode({
+          'store_ids': ids,
+        }));
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return StoreListResponseModel.fromJson(jsonMap);
     });
@@ -205,11 +210,15 @@ class ApiService {
 
   Future<ResponseResult<Location>> addNewLocation(Location location) async {
     final token = await _userDataRepo.getToken();
-    final http.Response httpResponse = await _httpClient.post(
-      Uri.parse(ApiConsts.addLocation),
-      headers: CommonConsts.getTokenHeader(token),
-      body: jsonEncode(location.toJson()),
-    ).then((value) => value.getDataResponse(),);
+    final http.Response httpResponse = await _httpClient
+        .post(
+          Uri.parse(ApiConsts.addLocation),
+          headers: CommonConsts.getTokenHeader(token),
+          body: jsonEncode(location.toJson()),
+        )
+        .then(
+          (value) => value.getDataResponse(),
+        );
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
         return Location.fromJson(jsonMap);
@@ -219,10 +228,14 @@ class ApiService {
 
   Future<ResponseResult<Location>> deleteLocation(int locationId) async {
     final token = await _userDataRepo.getToken();
-    final http.Response httpResponse = await _httpClient.delete(
-      Uri.parse("${ApiConsts.deleteLocation}/$locationId"),
-      headers: CommonConsts.getTokenHeader(token),
-    ).then((value) => value.getDataResponse(),);
+    final http.Response httpResponse = await _httpClient
+        .delete(
+          Uri.parse("${ApiConsts.deleteLocation}/$locationId"),
+          headers: CommonConsts.getTokenHeader(token),
+        )
+        .then(
+          (value) => value.getDataResponse(),
+        );
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
         return Location.fromJson(jsonMap);
@@ -232,14 +245,42 @@ class ApiService {
 
   Future<ResponseResult<LocationListResponseModel>> getUserLocations() async {
     final token = await _userDataRepo.getToken();
-    final http.Response httpResponse = await _httpClient
-        .get(
-          Uri.parse(ApiConsts.getUserLocations),
-          headers: CommonConsts.getTokenHeader(token),
-        );
+    final http.Response httpResponse = await _httpClient.get(
+      Uri.parse(ApiConsts.getUserLocations),
+      headers: CommonConsts.getTokenHeader(token),
+    );
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
         return LocationListResponseModel.fromJson(jsonMap);
+      },
+    );
+  }
+
+  Future<ResponseResult<OrderResponse>> createOrder(
+      CreateOrderRequest requestModel) async {
+    final http.Response httpResponse = await _httpClient
+        .post(Uri.parse(ApiConsts.createOrder),
+            headers:
+                CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+            body: jsonEncode(requestModel.toJson()))
+        .then((value) => value.getDataResponse());
+    return httpResponse.handle(
+      jsonToModel: (jsonMap) {
+        return OrderResponse.fromJson(jsonMap);
+      },
+    );
+  }
+
+  Future<ResponseResult<OrderListResponse>> getMyOrders() async {
+    final http.Response httpResponse = await _httpClient
+        .get(
+          Uri.parse(ApiConsts.getMyOrdersUrl),
+          headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+        );
+    print(httpResponse.body);
+    return httpResponse.handle(
+      jsonToModel: (jsonMap) {
+        return OrderListResponse.fromJson(jsonMap);
       },
     );
   }

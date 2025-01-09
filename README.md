@@ -16,7 +16,7 @@
 ## ⭕🔳 Big Todo:
 ### ⭕ User:
 ✅ Cart Feature
-🔳 Checkout Order Screen (back-end todo: checkout order && your account money)
+✅ Checkout Order Screen (back-end todo: checkout order && your account money)
 🔳 My Orders Screen (back-end todo: ensure that the order feature stable)
 🔳 Edit/Delete Order Screen (back-end todo: ensure that the order feature stable)
 🔳 Notification Screen (back-end todo: ensure that the order feature stable)

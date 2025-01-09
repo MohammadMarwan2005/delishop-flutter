@@ -1,3 +1,4 @@
+import 'package:delishop/core/di/di_get_it.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/lang/lang_code_cubit.dart';
@@ -5,10 +6,12 @@ import 'package:delishop/core/widgets/delishop_button.dart';
 import 'package:delishop/core/widgets/loading.dart';
 import 'package:delishop/feature/cart/cubit/cart_cubit.dart';
 import 'package:delishop/feature/cart/widgets/cart_product_card.dart';
+import 'package:delishop/feature/order/cubit/order_cubit.dart';
 import 'package:delishop/feature/order/order_summery_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart';
 
 import '../../../core/widgets/error_message.dart';
 import '../../../core/widgets/no_result_message.dart';
@@ -43,38 +46,43 @@ class _TabbedCartListState extends State<TabbedCartList> {
               );
             }
             final price =
-                data[selectedIndex].getOrderPrice(state.productsQuants);
+                data[selectedIndex.getIndex(data)].getOrderPrice(state.productsQuants);
             final bool enabled = (state.currentBalance.data ?? 0) >= price;
             return Scaffold(
               bottomNavigationBar: Padding(
                 padding: const EdgeInsets.only(bottom: 24.0),
                 child: DelishopButton(
-                  onPressed: enabled
-                      ? () {
-                    context.push(OrderSummeryScreen(order: data[selectedIndex.getIndex(data)], quants: state.productsQuants));
-                          // todo: go to the checkout screen (confirm wallet money is enough, confirm location is not null, order summery + delivery taxes, checkout order button)
-                          // if the wallet is enough, and the location is not null, and the user clicks order, that will trigger the order endpoint, and will successfully consider his order as pending...
-                          // that pending order will be shown in the mall account dashboard, and he can accept it, with an estimated delivery time, or can reject it with a rejection reason
-                          // every update should send a notification to both the user and the mall account...
-                          print(
-                              "<---------------------------------------------------------------------------------------------------------------------------------");
-                          print(
-                              "Order: \n ${data[selectedIndex.getIndex(data)].products} \n from ${data[selectedIndex.getIndex(data)].store.name} for \$${data[selectedIndex.getIndex(data)].getOrderPrice(state.productsQuants)}");
-                          print(
-                              "--------------------------------------------------------------------------------------------------------------------------------->");
-                        }
-                      : null,
-                  text:
-                      // "Checkout from ${data[selectedIndex.getIndex(data)].store.name} for \$${data[selectedIndex.getIndex(data)].getOrderPrice(state.productsQuants)}",
-                      data[selectedIndex.getIndex(data)].getCheckoutButtonLabel(
-                          context,
-                          state.productsQuants,
-                          context
-                              .read<LangCodeCubit>()
-                              .getCurrentLangCode(context)),
-
-                    textColor: enabled ? Colors.white : Colors.black.withOpacity(0.5)
-                ),
+                    onPressed: enabled
+                        ? () {
+                            context.push(BlocProvider<OrderCubit>(
+                              create: (context) => OrderCubit(getIt()),
+                              child: OrderSummeryScreen(
+                                  order: data[selectedIndex.getIndex(data)],
+                                  quants: state.productsQuants),
+                            ));
+                            // todo: go to the checkout screen (confirm wallet money is enough, confirm location is not null, order summery + delivery taxes, checkout order button)
+                            // if the wallet is enough, and the location is not null, and the user clicks order, that will trigger the order endpoint, and will successfully consider his order as pending...
+                            // that pending order will be shown in the mall account dashboard, and he can accept it, with an estimated delivery time, or can reject it with a rejection reason
+                            // every update should send a notification to both the user and the mall account...
+                            print(
+                                "<---------------------------------------------------------------------------------------------------------------------------------");
+                            print(
+                                "Order: \n ${data[selectedIndex.getIndex(data)].products} \n from ${data[selectedIndex.getIndex(data)].store.name} for \$${data[selectedIndex.getIndex(data)].getOrderPrice(state.productsQuants)}");
+                            print(
+                                "--------------------------------------------------------------------------------------------------------------------------------->");
+                          }
+                        : null,
+                    text:
+                        // "Checkout from ${data[selectedIndex.getIndex(data)].store.name} for \$${data[selectedIndex.getIndex(data)].getOrderPrice(state.productsQuants)}",
+                        data[selectedIndex.getIndex(data)]
+                            .getCheckoutButtonLabel(
+                                context,
+                                state.productsQuants,
+                                context
+                                    .read<LangCodeCubit>()
+                                    .getCurrentLangCode(context)),
+                    textColor:
+                        enabled ? Colors.white : Colors.black.withOpacity(0.5)),
               ),
               body: DefaultTabController(
                   initialIndex: selectedIndex.getIndex(data),

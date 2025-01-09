@@ -11,6 +11,8 @@ class DelishopTextField extends StatefulWidget {
   final String? Function(String? value)? validator;
   final void Function(String? value)? onChanged;
   final bool Function()? validate;
+  final int? minLines;
+  final int? maxLines;
 
   const DelishopTextField({super.key,
     required this.labelText,
@@ -19,7 +21,7 @@ class DelishopTextField extends StatefulWidget {
     this.textEditingController,
     this.validator,
     this.onChanged,
-    this.validate});
+    this.validate, this.minLines, this.maxLines});
 
   @override
   State<DelishopTextField> createState() => _DelishopTextFieldState();
@@ -60,6 +62,8 @@ class _DelishopTextFieldState extends State<DelishopTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: widget.maxLines,
+      minLines: widget.minLines,
       cursorOpacityAnimates: true,
       focusNode: _focusNode,
       onTap: () {

@@ -11,7 +11,9 @@ class MyAlertDialog extends StatelessWidget {
   final String title;
   final List<String> details;
   final bool isError;
-  const MyAlertDialog({super.key, required this.title, required this.details, required this.isError});
+  final Function()? onGotItClicked;
+
+  const MyAlertDialog({super.key, required this.title, required this.details, required this.isError, this.onGotItClicked});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class MyAlertDialog extends StatelessWidget {
         DelishopTextButton(
           onClick: () {
             context.pop();
+            if(onGotItClicked != null) onGotItClicked!();
           },
           label: "Got it!".tr(context),
         ),
