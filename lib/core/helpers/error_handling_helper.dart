@@ -19,8 +19,9 @@ extension SuccessHelper on http.Response {
   /// otherwise it will return the data as a Domain ErrorModel.
   ResponseResult<T> handle<T>(
       {required T Function(Map<String, dynamic> jsonMap) jsonToModel}) {
+    final decodedBody = utf8.decode(bodyBytes);
     if (isSuccess()) {
-      final successModel = jsonToModel(jsonDecode(body));
+      final successModel = jsonToModel(jsonDecode(decodedBody));
       return Success(successModel);
     } else {
       final errorModel =

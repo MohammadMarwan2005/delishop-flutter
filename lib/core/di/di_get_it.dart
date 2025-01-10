@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:delishop/core/data/repo/categoy_repo.dart';
 import 'package:delishop/core/data/repo/ga_repo.dart';
+import 'package:delishop/core/data/repo/profile_repo.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:delishop/core/data/repo/wallet_repo.dart';
 import 'package:delishop/core/lang/lang_code_cubit.dart';
@@ -11,17 +12,18 @@ import 'package:delishop/feature/favorite/favorite_cubit.dart';
 import 'package:delishop/feature/global/global_cubit.dart';
 import 'package:delishop/feature/home/home_cubit.dart';
 import 'package:delishop/feature/order/cubit/order_cubit.dart';
+import 'package:delishop/feature/profile/cubit/profile_cubit.dart';
 import 'package:delishop/feature/search/cubit/search_cubit.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../feature/cart/logic/get_order_entity_use_case.dart';
-import '../../feature/order/order_response_to_order_entity_use_case.dart';
 import '../data/api_service.dart';
 import '../data/db_service.dart';
 import '../data/repo/auth_repo.dart';
@@ -89,8 +91,8 @@ Future<void> initializeDependencies() async {
   // I want to create a new object when I call getIt(), is this correct?
   getIt.registerFactory<OrderRepo>(() => OrderRepo(getIt(), getIt()));
 
-  getIt.registerLazySingleton<OrderCubit>(() => OrderCubit(getIt()));
-  getIt.registerLazySingleton<SearchCubit>(() => SearchCubit(getIt(), getIt()));
+  getIt.registerFactory<OrderCubit>(() => OrderCubit(getIt()));
+  getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt(), getIt()));
 
   getIt.registerLazySingleton<LangCodeCubit>(
       () => LangCodeCubit(getIt(), getIt()));
@@ -99,6 +101,15 @@ Future<void> initializeDependencies() async {
   // account
   getIt.registerFactory<AccountCubit>(() =>
       AccountCubit(userDataRepo: getIt(), gaRepo: getIt(), dbService: getIt()));
+
+  getIt.registerLazySingleton<ImagePicker>(() => ImagePicker());
+  getIt.registerFactory<ProfileCubit>(() => ProfileCubit(
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      ));
 
   getIt.registerLazySingleton<ProductRepo>(
       () => ProductRepo(apiService: getIt(), connectivity: getIt()));
@@ -111,6 +122,7 @@ Future<void> initializeDependencies() async {
   getIt.registerLazySingleton<SearchRepo>(() => SearchRepo(getIt(), getIt()));
   getIt.registerLazySingleton<FavoriteRepo>(
       () => FavoriteRepo(apiService: getIt(), connectivity: getIt()));
+  getIt.registerLazySingleton<ProfileRepo>(() => ProfileRepo(getIt(), getIt()));
 
   // home
   getIt.registerFactory<HomeCubit>(() => HomeCubit(

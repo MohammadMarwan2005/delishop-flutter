@@ -28,7 +28,7 @@ mixin _$Profile {
   @JsonKey(name: "phone_number")
   String get phoneNumber => throw _privateConstructorUsedError;
   @JsonKey(name: "profile_picture")
-  String get imageUrl => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   /// Serializes this Profile to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +49,7 @@ abstract class $ProfileCopyWith<$Res> {
       @JsonKey(name: "first_name") String firstName,
       @JsonKey(name: "last_name") String lastName,
       @JsonKey(name: "phone_number") String phoneNumber,
-      @JsonKey(name: "profile_picture") String imageUrl});
+      @JsonKey(name: "profile_picture") String? imageUrl});
 }
 
 /// @nodoc
@@ -71,7 +71,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? firstName = null,
     Object? lastName = null,
     Object? phoneNumber = null,
-    Object? imageUrl = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -90,10 +90,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -110,7 +110,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       @JsonKey(name: "first_name") String firstName,
       @JsonKey(name: "last_name") String lastName,
       @JsonKey(name: "phone_number") String phoneNumber,
-      @JsonKey(name: "profile_picture") String imageUrl});
+      @JsonKey(name: "profile_picture") String? imageUrl});
 }
 
 /// @nodoc
@@ -130,7 +130,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? firstName = null,
     Object? lastName = null,
     Object? phoneNumber = null,
-    Object? imageUrl = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$ProfileImpl(
       id: null == id
@@ -149,10 +149,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: null == imageUrl
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -183,7 +183,7 @@ class _$ProfileImpl implements _Profile {
   final String phoneNumber;
   @override
   @JsonKey(name: "profile_picture")
-  final String imageUrl;
+  final String? imageUrl;
 
   @override
   String toString() {
@@ -233,7 +233,7 @@ abstract class _Profile implements Profile {
           @JsonKey(name: "first_name") required final String firstName,
           @JsonKey(name: "last_name") required final String lastName,
           @JsonKey(name: "phone_number") required final String phoneNumber,
-          @JsonKey(name: "profile_picture") required final String imageUrl}) =
+          @JsonKey(name: "profile_picture") required final String? imageUrl}) =
       _$ProfileImpl;
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
@@ -251,7 +251,7 @@ abstract class _Profile implements Profile {
   String get phoneNumber;
   @override
   @JsonKey(name: "profile_picture")
-  String get imageUrl;
+  String? get imageUrl;
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.

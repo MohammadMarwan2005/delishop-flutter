@@ -1,5 +1,6 @@
 import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/widgets/error_message.dart';
+import 'package:delishop/core/widgets/lets_search_widget.dart';
 import 'package:delishop/core/widgets/loading.dart';
 import 'package:delishop/core/widgets/no_result_message.dart';
 import 'package:delishop/core/widgets/product_list_row.dart';
@@ -106,17 +107,27 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           state.searchResult.when(
                             onInitial: () {
-                              return Text("Search for something to get the result"
-                                  .tr(context));
+                              return LetsSearchWidget(
+                                messageLabel:
+                                    "Search for something to get the result"
+                                        .tr(context),
+                                buttonLabel: "Search",
+                                onButtonClicked: () {
+                                  context.read<SearchCubit>().search();
+                                },
+                              );
                             },
                             onLoading: () {
                               return const Loading();
                             },
                             onSuccess: (data) {
-                              if (data.stores.isEmpty && data.products.isEmpty) {
+                              if (data.stores.isEmpty &&
+                                  data.products.isEmpty) {
                                 return NoResultMessage(
-                                  messageLabel:
-                                      context.read<SearchCubit>().getProductsOrStoresFoundForThisKeywordInThisCategory(context),
+                                  messageLabel: context
+                                      .read<SearchCubit>()
+                                      .getProductsOrStoresFoundForThisKeywordInThisCategory(
+                                          context),
                                   buttonLabel: "Try Again".tr(context),
                                   onButtonClicked: () {
                                     context.read<SearchCubit>().search();

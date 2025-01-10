@@ -18,10 +18,20 @@ abstract class ApiConsts {
   static const String addLocation = "$baseUrl/location/addLocation";
   static const String getUserLocations = "$baseUrl/location/getUserLocations";
   static const String deleteLocation = "$baseUrl/location/deleteLocation";
-  static String createOrder = "$baseUrl/order/createOrder";
-  static String updateOrder = "$baseUrl/order/updateStatusOrder";
-  static String getMyOrdersUrl = "$baseUrl/order/getUserOrders";
-  static String searchUrl = "$baseUrl/categories/search";
+  static const String createOrder = "$baseUrl/order/createOrder";
+  static const String updateOrder = "$baseUrl/order/updateStatusOrder";
+  static const String getMyOrdersUrl = "$baseUrl/order/getUserOrders";
+  static const String searchUrl = "$baseUrl/categories/search";
+  static const String getProfileUrl = "$baseUrl/profile/getProfile";
+  static const String updateProfileUrl = "$baseUrl/profile/updateProfile";
+  static const String getMyStoreReview = "$baseUrl/storeRating/getMyRating";
+  static const String getMyProductReview = "$baseUrl/productRating/getMyRating";
+  static const String postMyStoreReview = "$baseUrl/storeRating/addRating";
+  static const String postMyProductReview = "$baseUrl/productRating/addRating";
+  static const String deleteMyStoreReview = "$baseUrl/storeRating/deleteRating";
+  static const String deleteMyProductReview = "$baseUrl/productRating/deleteRating";
+  static const String getStoreReviews = "$baseUrl/storeRating/getRatings";
+  static const String getProductReviews = "$baseUrl/productRating/getRatings";
 }
 
 abstract class StatusCodes {
@@ -45,4 +55,9 @@ abstract class CommonConsts {
       'Authorization': 'Bearer $token',
     };
   }
+
+}
+
+extension UriHelper on String {
+  Uri getUri() => Uri.parse(this);
 }

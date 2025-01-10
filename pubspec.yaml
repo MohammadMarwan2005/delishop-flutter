@@ -64,6 +64,7 @@ dependencies:
   bottom_navy_bar: ^6.1.0
   sqflite: ^2.4.1
   url_launcher: ^6.3.1
+  image_picker: ^1.1.2
 
 
 
@@ -99,6 +100,7 @@ flutter:
   assets:
     - assets/lang/
     - assets/animation/
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

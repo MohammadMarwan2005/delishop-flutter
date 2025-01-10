@@ -17,7 +17,7 @@ class Product with _$Product {
     required double discount,
     required int quantity,
     @JsonKey(name: "is_favorite") required bool? isFavorite,
-    @JsonKey(name: "rating") required double? rating,
+    @JsonKey(name: "rating") required String? rating,
   }) = _Product;
 
   factory Product.fromJson(Map<String, Object?> json) =>

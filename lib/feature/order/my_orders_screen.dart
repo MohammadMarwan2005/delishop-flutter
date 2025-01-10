@@ -43,14 +43,15 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               return const Loading();
             },
             onSuccess: (data) {
-              if(data.isEmpty) {
+              if (data.isEmpty) {
                 return NoResultMessage(
-                messageLabel: "You have no orders yet.".tr(context),
-                buttonLabel: "Go to Cart!".tr(context),
-                onButtonClicked: () {
-                  context.push(const CartScreen());
-                },
-              );
+                  height: 200.h,
+                  messageLabel: "You have no orders yet.".tr(context),
+                  buttonLabel: "Go to Cart!".tr(context),
+                  onButtonClicked: () {
+                    context.push(const CartScreen());
+                  },
+                );
               }
               return RefreshIndicator(
                 onRefresh: () async {
@@ -90,10 +91,13 @@ class OrderCard extends StatelessWidget {
       onTap: () {
         context.push(BlocProvider.value(
           value: context.read<OrderCubit>(),
-          child: OrderInfoScreen(order: orderResponse, onPop: () {
-            context.read<OrderCubit>().fetchAllWithoutLoading();
-            context.read<CartCubit>().reloadAllData();
-          },),
+          child: OrderInfoScreen(
+            order: orderResponse,
+            onPop: () {
+              context.read<OrderCubit>().fetchAllWithoutLoading();
+              context.read<CartCubit>().reloadAllData();
+            },
+          ),
         ));
       },
       child: Column(

@@ -5,8 +5,11 @@ import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/theme/delishop_colors.dart';
 import 'package:delishop/feature/bottom_nav_host/wallet_label.dart';
 import 'package:delishop/feature/cart/cart_screen.dart';
+import 'package:delishop/feature/favorite/favorite_cubit.dart';
 import 'package:delishop/feature/global/global_cubit.dart';
 import 'package:delishop/feature/order/cubit/order_cubit.dart';
+import 'package:delishop/feature/profile/cubit/profile_cubit.dart';
+import 'package:delishop/feature/profile/profile_screen.dart';
 import 'package:delishop/feature/search/cubit/search_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -142,12 +145,21 @@ class BottomNavHost extends StatelessWidget {
 List<Widget> views = [
   const HomeScreen(),
   BlocProvider<OrderCubit>(
-    create: (context) => OrderCubit(getIt()),
+    create: (context) => getIt(),
     child: const MyOrdersScreen(),
   ),
-  const SearchScreen(),
-  const FavoriteScreen(),
-  const AccountScreen()
+  BlocProvider<SearchCubit>(
+    create: (context) => getIt(),
+    child: const SearchScreen(),
+  ),
+  BlocProvider<FavoriteCubit>(
+    create: (context) => getIt(),
+    child: const FavoriteScreen(),
+  ),
+  BlocProvider<ProfileCubit>(
+    create: (context) => getIt(),
+    child: const ProfileScreen(),
+  )
 ];
 
 extension BadgeWidgetHelper on Icon {

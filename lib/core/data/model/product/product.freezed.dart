@@ -33,7 +33,7 @@ mixin _$Product {
   @JsonKey(name: "is_favorite")
   bool? get isFavorite => throw _privateConstructorUsedError;
   @JsonKey(name: "rating")
-  double? get rating => throw _privateConstructorUsedError;
+  String? get rating => throw _privateConstructorUsedError;
 
   /// Serializes this Product to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -59,7 +59,7 @@ abstract class $ProductCopyWith<$Res> {
       double discount,
       int quantity,
       @JsonKey(name: "is_favorite") bool? isFavorite,
-      @JsonKey(name: "rating") double? rating});
+      @JsonKey(name: "rating") String? rating});
 }
 
 /// @nodoc
@@ -128,7 +128,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
     ) as $Val);
   }
 }
@@ -150,7 +150,7 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       double discount,
       int quantity,
       @JsonKey(name: "is_favorite") bool? isFavorite,
-      @JsonKey(name: "rating") double? rating});
+      @JsonKey(name: "rating") String? rating});
 }
 
 /// @nodoc
@@ -217,7 +217,7 @@ class __$$ProductImplCopyWithImpl<$Res>
       rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
     ));
   }
 }
@@ -263,7 +263,7 @@ class _$ProductImpl implements _Product {
   final bool? isFavorite;
   @override
   @JsonKey(name: "rating")
-  final double? rating;
+  final String? rating;
 
   @override
   String toString() {
@@ -324,7 +324,7 @@ abstract class _Product implements Product {
       required final double discount,
       required final int quantity,
       @JsonKey(name: "is_favorite") required final bool? isFavorite,
-      @JsonKey(name: "rating") required final double? rating}) = _$ProductImpl;
+      @JsonKey(name: "rating") required final String? rating}) = _$ProductImpl;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
 
@@ -351,7 +351,7 @@ abstract class _Product implements Product {
   bool? get isFavorite;
   @override
   @JsonKey(name: "rating")
-  double? get rating;
+  String? get rating;
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.

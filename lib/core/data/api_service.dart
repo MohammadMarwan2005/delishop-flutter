@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:delishop/core/data/model/category/category_list_response_model.dart';
 import 'package:delishop/core/data/model/favorite/favorite_response.dart';
@@ -6,6 +7,7 @@ import 'package:delishop/core/data/model/location/location.dart';
 import 'package:delishop/core/data/model/order/create_order_request/create_order_request.dart';
 import 'package:delishop/core/data/model/order/order_response/order_response.dart';
 import 'package:delishop/core/data/model/product/product.dart';
+import 'package:delishop/core/data/model/profile/profile.dart';
 import 'package:delishop/core/data/model/search/search_response.dart';
 import 'package:delishop/core/data/model/store/store_list_response_model.dart';
 import 'package:delishop/core/data/model/wallet/wallet_balance_response.dart';
@@ -22,6 +24,7 @@ import 'model/location/location_list_response_model.dart';
 import 'model/order/order_list/order_list_response.dart';
 import 'model/product/product_list_response_model.dart';
 import 'model/store/store.dart';
+import 'model/store_review/store_review.dart';
 
 class ApiService {
   final UserDataRepo _userDataRepo;
@@ -312,8 +315,7 @@ class ApiService {
         .post(Uri.parse(ApiConsts.searchUrl),
             headers:
                 CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
-            body: jsonEncode(
-                {"category_id": categoryId, "keyword": keyWord}))
+            body: jsonEncode({"category_id": categoryId, "keyword": keyWord}))
         .then((value) => value.getDataResponse());
     print(httpResponse.body);
     return httpResponse.handle(
@@ -322,12 +324,47 @@ class ApiService {
       },
     );
   }
-}
 
-// Failed...
-extension HttpHelper on http.Client {
-  Future<http.Response> postEncoded(Uri url,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
-    return post(url, headers: headers, body: body, encoding: utf8);
+  Future<ResponseResult<Profile>> getProfile() async {
+    final http.Response httpResponse = await _httpClient
+        .get(
+          ApiConsts.getProfileUrl.getUri(),
+          headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+        )
+        .then((value) => value.getDataResponse());
+    return httpResponse.handle(
+      jsonToModel: (jsonMap) {
+        return Profile.fromJson(jsonMap);
+      },
+    );
+  }
+
+  Future<ResponseResult<Profile>> updateProfile(
+      Profile profile, File? image) async {
+    var request =
+        http.MultipartRequest("POST", ApiConsts.updateProfileUrl.getUri());
+    final token = await _userDataRepo.getToken();
+    request.headers.addAll({
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${token}',
+    });
+    request.fields.addAll(profile.toJsonWithoutPictureField());
+
+    if (image != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          "profile_picture",
+          image.path,
+        ),
+      );
+    }
+    final streamedResponse = await request.send();
+    final httpResponse = await http.Response.fromStream(streamedResponse)
+        .then((value) => value.getDataResponse());
+    return httpResponse.handle(
+      jsonToModel: (jsonMap) {
+        return Profile.fromJson(jsonMap);
+      },
+    );
   }
 }
