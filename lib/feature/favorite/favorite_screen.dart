@@ -44,12 +44,19 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               },
               onSuccess: (data) {
                 if (data.isEmpty) {
-                  return NoResultMessage(
-                    messageLabel: "No favorite products found!".tr(context),
-                    buttonLabel: "Try Again".tr(context),
-                    onButtonClicked: () {
-                      context.read<FavoriteCubit>().fetchFavoriteProducts();
-                    },
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      NoResultMessage(
+                        messageLabel: "No favorite products found!".tr(context),
+                        buttonLabel: "Try Again".tr(context),
+                        onButtonClicked: () {
+                          context.read<FavoriteCubit>().fetchFavoriteProducts();
+                        },
+                        height: 150.h,
+                      ),
+                      const Flexible(child: SizedBox(height: 100))
+                    ],
                   );
                 }
                 return RefreshIndicator(

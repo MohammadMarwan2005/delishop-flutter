@@ -18,10 +18,10 @@ class OrderResponse with _$OrderResponse {
   const factory OrderResponse({
     required int id,
     @JsonKey(name: "store") required Store store,
-    @JsonKey(name: "location") required Location location,
+    @JsonKey(name: "location") required Location? location,
     @JsonKey(name: "total_amount") required double totalAmount,
     @JsonKey(name: "order_date") required String orderDate,
-    @JsonKey(name: "status") required OrderStatus status, // the status should
+    @JsonKey(name: "status") required OrderStatus status,
     @JsonKey(name: "description") String? description,
     @JsonKey(name: "products_order") required List<ProductOrder> productOrders,
   }) = _OrderResponse;

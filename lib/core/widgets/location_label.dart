@@ -1,33 +1,21 @@
+import 'package:delishop/core/data/model/domain_error_model.dart';
+import 'package:delishop/core/lang/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../data/model/location/location.dart';
 import '../theme/delishop_colors.dart';
 
 class LocationLabel extends StatelessWidget {
-  final Location location;
+  final Location? location;
 
   const LocationLabel({super.key, required this.location});
 
   @override
   Widget build(BuildContext context) {
-    // return ActionChip(
-    //     label: Row(
-    //   children: [
-    //     const Icon(Icons.location_on, color: Colors.grey),
-    //     const SizedBox(width: 8),
-    //     Text(
-    //       location.name,
-    //       style: const TextStyle(
-    //         fontSize: 16,
-    //         color: Colors.blue,
-    //       ),
-    //     ),
-    //   ],
-    // ));
     return GestureDetector(
       onTap: () {
         openUrl(
-          location.url,
+          location?.url ?? "",
               () {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Failed to open this link!")),
@@ -40,7 +28,7 @@ class LocationLabel extends StatelessWidget {
           const Icon(Icons.location_on, color: Color(0xFF4169E1)),
           const SizedBox(width: 8),
           Text(
-            location.name,
+            location?.name ?? "Deleted Location".tr(context),
             style: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 16,

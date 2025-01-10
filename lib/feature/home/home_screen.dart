@@ -1,29 +1,18 @@
 import 'package:delishop/core/data/model/category/category.dart';
-import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
-import 'package:delishop/core/theme/delishop_text_styles.dart';
-import 'package:delishop/core/widgets/delishop_text_button.dart';
 import 'package:delishop/core/widgets/error_message.dart';
-import 'package:delishop/feature/all_malls/all_stores_screen.dart';
-import 'package:delishop/feature/all_produts/all_products_screen.dart';
-import 'package:delishop/feature/favorite/favorite_cubit.dart';
-import 'package:delishop/feature/favorite/favorite_screen.dart';
+import 'package:delishop/core/widgets/loading.dart' as loading;
+import 'package:delishop/core/widgets/product_list_row.dart';
+import 'package:delishop/core/widgets/store_list_row.dart';
 import 'package:delishop/feature/home/home_cubit.dart';
 import 'package:delishop/feature/home/widgets/items_lazy_row.dart';
 import 'package:delishop/feature/home/widgets/small_category_widget.dart';
-import 'package:delishop/feature/home/widgets/small_product_card.dart';
-import 'package:delishop/feature/home/widgets/small_store_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../core/di/di_get_it.dart';
 import '../../core/widgets/title_and_see_all.dart';
-import '../account/account_screen.dart';
-import '../account/cubit/account_cubit.dart';
 import '../all_categories/all_categories_screen.dart';
-import 'package:delishop/core/widgets/loading.dart' as loading;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
               return Column(
@@ -67,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ItemsLazyRow<Category>(
                             size: 140,
                             items: dataList,
-                            cardBuilder: (item) =>
+                            cardBuilder: (item, _) =>
                                 SmallCategoryWidget(category: item),
                           )
                         ],
@@ -86,20 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   state.storeState.when(
                     onLoading: () => const loading.Loading(),
                     onSuccess: (dataList) {
-                      return Column(
-                        children: [
-                          TitleAndSeeAll(
-                            title: "Malls".tr(context),
-                            onClick: () {
-                              context.push(AllStoresScreen(stores: dataList));
-                            },
-                          ),
-                          ItemsLazyRow(
-                              items: dataList,
-                              cardBuilder: (item) =>
-                                  SmallStoreCard(store: item))
-                        ],
-                      );
+                      return StoreListRow(stores: dataList);
                     },
                     onError: (domainError) {
                       return ErrorMessage(
@@ -114,22 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   state.productState.when(
                     onLoading: () => const loading.Loading(),
                     onSuccess: (dataList) {
-                      return Column(
-                        children: [
-                          TitleAndSeeAll(
-                            title: "Products".tr(context),
-                            onClick: () {
-                              context
-                                  .push(AllProductsScreen(products: dataList));
-                            },
-                          ),
-                          ItemsLazyRow<Product>(
-                            items: dataList,
-                            cardBuilder: (item) =>
-                                SmallProductCard(product: item),
-                          )
-                        ],
-                      );
+                      return ProductListRow(products: dataList);
                     },
                     onError: (domainError) {
                       return ErrorMessage(

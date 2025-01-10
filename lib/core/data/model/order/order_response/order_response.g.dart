@@ -10,7 +10,9 @@ _$OrderResponseImpl _$$OrderResponseImplFromJson(Map<String, dynamic> json) =>
     _$OrderResponseImpl(
       id: (json['id'] as num).toInt(),
       store: Store.fromJson(json['store'] as Map<String, dynamic>),
-      location: Location.fromJson(json['location'] as Map<String, dynamic>),
+      location: json['location'] == null
+          ? null
+          : Location.fromJson(json['location'] as Map<String, dynamic>),
       totalAmount: (json['total_amount'] as num).toDouble(),
       orderDate: json['order_date'] as String,
       status: $enumDecode(_$OrderStatusEnumMap, json['status']),
@@ -37,4 +39,5 @@ const _$OrderStatusEnumMap = {
   OrderStatus.completed: 'completed',
   OrderStatus.sent: 'sent',
   OrderStatus.cancelled: 'cancelled',
+  OrderStatus.rejected: 'rejected',
 };

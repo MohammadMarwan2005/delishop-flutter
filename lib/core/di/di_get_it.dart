@@ -11,6 +11,7 @@ import 'package:delishop/feature/favorite/favorite_cubit.dart';
 import 'package:delishop/feature/global/global_cubit.dart';
 import 'package:delishop/feature/home/home_cubit.dart';
 import 'package:delishop/feature/order/cubit/order_cubit.dart';
+import 'package:delishop/feature/search/cubit/search_cubit.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -28,6 +29,7 @@ import '../data/repo/favorite_repo.dart';
 import '../data/repo/location_repo.dart';
 import '../data/repo/order_repo.dart';
 import '../data/repo/product_repo.dart';
+import '../data/repo/search_repo.dart';
 import '../data/repo/store_repo.dart';
 
 final getIt = GetIt.instance;
@@ -85,11 +87,10 @@ Future<void> initializeDependencies() async {
       () => LocationRepo(getIt(), getIt()));
 
   // I want to create a new object when I call getIt(), is this correct?
-  getIt.registerFactory<OrderRepo>(
-      () => OrderRepo(getIt(), getIt()));
+  getIt.registerFactory<OrderRepo>(() => OrderRepo(getIt(), getIt()));
 
-  getIt.registerLazySingleton<OrderCubit>(
-          () => OrderCubit(getIt()));
+  getIt.registerLazySingleton<OrderCubit>(() => OrderCubit(getIt()));
+  getIt.registerLazySingleton<SearchCubit>(() => SearchCubit(getIt(), getIt()));
 
   getIt.registerLazySingleton<LangCodeCubit>(
       () => LangCodeCubit(getIt(), getIt()));
@@ -107,6 +108,7 @@ Future<void> initializeDependencies() async {
 
   getIt.registerLazySingleton<CategoryRepo>(
       () => CategoryRepo(apiService: getIt(), connectivity: getIt()));
+  getIt.registerLazySingleton<SearchRepo>(() => SearchRepo(getIt(), getIt()));
   getIt.registerLazySingleton<FavoriteRepo>(
       () => FavoriteRepo(apiService: getIt(), connectivity: getIt()));
 

@@ -17,8 +17,8 @@
 ### ⭕ User:
 ✅ Cart Feature
 ✅ Checkout Order Screen (back-end todo: checkout order && your account money)
-🔳 My Orders Screen (back-end todo: ensure that the order feature stable)
-🔳 Edit/Delete Order Screen (back-end todo: ensure that the order feature stable)
+✅ My Orders Screen (back-end todo: ensure that the order feature stable)
+✅ Edit/Delete Order Screen (back-end todo: ensure that the order feature stable)
 🔳 Notification Screen (back-end todo: ensure that the order feature stable)
 🔳 Sending Notification using Firebase (back-end todo: setup firebase in back-end)
 🔳 Search Screen (for a mall or a category or a product)

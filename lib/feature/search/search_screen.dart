@@ -1,4 +1,15 @@
+import 'package:delishop/core/lang/app_localization.dart';
+import 'package:delishop/core/widgets/error_message.dart';
+import 'package:delishop/core/widgets/loading.dart';
+import 'package:delishop/core/widgets/no_result_message.dart';
+import 'package:delishop/core/widgets/product_list_row.dart';
+import 'package:delishop/core/widgets/store_list_row.dart';
+import 'package:delishop/feature/search/cubit/search_cubit.dart';
+import 'package:delishop/feature/search/cubit/search_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'categories_filter_row.dart';
 
 /*
 * Todo:
@@ -22,14 +33,120 @@ import 'package:flutter/material.dart';
 *
 * */
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
   @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<SearchCubit>().search();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Search"),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SearchBar(
+                leading: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Icon(Icons.search),
+                ),
+                hintText: "Search for products and malls".tr(context),
+                elevation: const WidgetStatePropertyAll(2),
+                controller: context.read<SearchCubit>().searchController,
+                onSubmitted: (value) {
+                  context.read<SearchCubit>().search();
+                },
+              ),
+              const SizedBox(height: 16),
+              BlocBuilder<SearchCubit, SearchState>(
+                builder: (context, state) {
+                  return RefreshIndicator(
+                      onRefresh: () async {
+                        context.read<SearchCubit>().search();
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          state.categories.when(
+                            onLoading: () {
+                              return const Loading();
+                            },
+                            onSuccess: (data) {
+                              return CategoriesFilterRow(
+                                categories: data,
+                                onSelectIndex: (index) {
+                                  context
+                                      .read<SearchCubit>()
+                                      .onCategorySelected(index);
+                                },
+                                selectedIndex: context
+                                    .read<SearchCubit>()
+                                    .state
+                                    .selectedCategoryIndex,
+                              );
+                            },
+                            onError: (domainError) {
+                              return ErrorMessage(
+                                message: domainError.getMessage(context),
+                                onTryAgain: () {},
+                              );
+                            },
+                          ),
+                          state.searchResult.when(
+                            onInitial: () {
+                              return Text("Search for something to get the result"
+                                  .tr(context));
+                            },
+                            onLoading: () {
+                              return const Loading();
+                            },
+                            onSuccess: (data) {
+                              if (data.stores.isEmpty && data.products.isEmpty) {
+                                return NoResultMessage(
+                                  messageLabel:
+                                      context.read<SearchCubit>().getProductsOrStoresFoundForThisKeywordInThisCategory(context),
+                                  buttonLabel: "Try Again".tr(context),
+                                  onButtonClicked: () {
+                                    context.read<SearchCubit>().search();
+                                  },
+                                );
+                              }
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  StoreListRow(stores: data.stores),
+                                  ProductListRow(products: data.products)
+                                ],
+                              );
+                            },
+                            onError: (domainError) {
+                              return ErrorMessage(
+                                message: domainError.getMessage(context),
+                                onTryAgain: () {
+                                  context.read<SearchCubit>().search();
+                                },
+                              );
+                            },
+                          )
+                        ],
+                      ));
+                },
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -37,12 +37,18 @@ class _TabbedCartListState extends State<TabbedCartList> {
           },
           onSuccess: (data) {
             if (data.isEmpty) {
-              return NoResultMessage(
-                messageLabel: "No products found in the cart!".tr(context),
-                buttonLabel: "Try Again".tr(context),
-                onButtonClicked: () {
-                  context.read<CartCubit>().fetchCartContent();
-                },
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  NoResultMessage(
+                    messageLabel: "No products found in the cart!".tr(context),
+                    buttonLabel: "Try Again".tr(context),
+                    onButtonClicked: () {
+                      context.read<CartCubit>().fetchCartContent();
+                    },
+                  ),
+                  const Flexible(child: SizedBox(height: 100))
+                ],
               );
             }
             final price =

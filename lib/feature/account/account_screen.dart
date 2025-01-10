@@ -20,7 +20,7 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("User Account".tr(context)), backgroundColor: Theme.of(context).colorScheme.inversePrimary),
+      appBar: AppBar(title: Text("User Account".tr(context))),
       body: Column(
         children: [
           SafeArea(

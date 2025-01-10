@@ -13,10 +13,10 @@ class BrokenImage extends StatelessWidget {
       child: Container(
         width: 60,
         height: 60,
-        color: Colors.grey[300], // Placeholder background color
+        color: Colors.transparent, // Placeholder background color
         child: Icon(
           Icons.broken_image,
-          color: DelishopColors.primary,
+          color: Colors.grey[700],
           size: 30,
         ),
       ),

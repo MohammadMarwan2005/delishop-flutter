@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ItemsLazyRow<T> extends StatelessWidget {
   final double? size;
   final List<T> items;
-  final Widget Function(T item) cardBuilder;
+  final Widget Function(T item, int index) cardBuilder;
 
 
   const ItemsLazyRow({super.key, required this.items, required this.cardBuilder, this.size});
@@ -16,7 +16,7 @@ class ItemsLazyRow<T> extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
           itemCount: items.length,
-          itemBuilder: (context, index) => cardBuilder(items[index])),
+          itemBuilder: (context, index) => cardBuilder(items[index], index)),
     );
   }
 }

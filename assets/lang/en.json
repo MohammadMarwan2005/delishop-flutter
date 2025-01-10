@@ -110,6 +110,11 @@
   "Your order has been cancelled by you.": "Your order has been cancelled by you.",
   "Your order has been rejected by the mall.": "Your order has been rejected by the mall.",
   "An unexpected error occurred with your order.": "An unexpected error occurred with your order.",
-  "Products from": "Products from"
-
+  "Products from": "Products from",
+  "Deleted Location": "Deleted Location",
+  "Mall": "Mall",
+  "Search for something to get the result": "Search for something to see the results",
+  "Search for products and malls": "Search for products or malls",
+  "No products or stores found for the keyword": "No products or stores found for the keyword",
+  "in category": "in category"
 }

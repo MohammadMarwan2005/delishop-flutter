@@ -45,18 +45,7 @@ class _OrderInfoScreenState extends State<OrderInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Order Info".tr(context)),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
-              child: widget.order.status.getChip(context),
-            )
-          ],
-        ),
+        title: Text("Order Info".tr(context)),
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w).copyWith(bottom: 24),
@@ -133,7 +122,7 @@ class _OrderInfoScreenState extends State<OrderInfoScreen> {
               SizedBox(height: 16.h),
               Row(
                 children: [
-                  Text("Malls".tr(context),
+                  Text("Mall".tr(context),
                       style: Theme.of(context).textTheme.headlineSmall)
                 ],
               ),

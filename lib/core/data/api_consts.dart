@@ -21,6 +21,7 @@ abstract class ApiConsts {
   static String createOrder = "$baseUrl/order/createOrder";
   static String updateOrder = "$baseUrl/order/updateStatusOrder";
   static String getMyOrdersUrl = "$baseUrl/order/getUserOrders";
+  static String searchUrl = "$baseUrl/categories/search";
 }
 
 abstract class StatusCodes {

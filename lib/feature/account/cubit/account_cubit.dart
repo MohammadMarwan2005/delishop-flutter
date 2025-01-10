@@ -14,7 +14,7 @@ part 'account_cubit.freezed.dart';
 class AccountCubit extends Cubit<AccountState> {
   final UserDataRepo _userDataRepo;
   final GARepo _gaRepo;
-  DBService _dbService;
+  final DBService _dbService;
 
   AccountCubit(
       {required UserDataRepo userDataRepo,

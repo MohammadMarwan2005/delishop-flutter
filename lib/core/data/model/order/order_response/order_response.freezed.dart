@@ -24,14 +24,13 @@ mixin _$OrderResponse {
   @JsonKey(name: "store")
   Store get store => throw _privateConstructorUsedError;
   @JsonKey(name: "location")
-  Location get location => throw _privateConstructorUsedError;
+  Location? get location => throw _privateConstructorUsedError;
   @JsonKey(name: "total_amount")
   double get totalAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "order_date")
   String get orderDate => throw _privateConstructorUsedError;
   @JsonKey(name: "status")
-  OrderStatus get status =>
-      throw _privateConstructorUsedError; // the status should
+  OrderStatus get status => throw _privateConstructorUsedError;
   @JsonKey(name: "description")
   String? get description => throw _privateConstructorUsedError;
   @JsonKey(name: "products_order")
@@ -56,7 +55,7 @@ abstract class $OrderResponseCopyWith<$Res> {
   $Res call(
       {int id,
       @JsonKey(name: "store") Store store,
-      @JsonKey(name: "location") Location location,
+      @JsonKey(name: "location") Location? location,
       @JsonKey(name: "total_amount") double totalAmount,
       @JsonKey(name: "order_date") String orderDate,
       @JsonKey(name: "status") OrderStatus status,
@@ -64,7 +63,7 @@ abstract class $OrderResponseCopyWith<$Res> {
       @JsonKey(name: "products_order") List<ProductOrder> productOrders});
 
   $StoreCopyWith<$Res> get store;
-  $LocationCopyWith<$Res> get location;
+  $LocationCopyWith<$Res>? get location;
 }
 
 /// @nodoc
@@ -84,7 +83,7 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
   $Res call({
     Object? id = null,
     Object? store = null,
-    Object? location = null,
+    Object? location = freezed,
     Object? totalAmount = null,
     Object? orderDate = null,
     Object? status = null,
@@ -100,10 +99,10 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as Store,
-      location: null == location
+      location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as Location,
+              as Location?,
       totalAmount: null == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
@@ -141,8 +140,12 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $LocationCopyWith<$Res> get location {
-    return $LocationCopyWith<$Res>(_value.location, (value) {
+  $LocationCopyWith<$Res>? get location {
+    if (_value.location == null) {
+      return null;
+    }
+
+    return $LocationCopyWith<$Res>(_value.location!, (value) {
       return _then(_value.copyWith(location: value) as $Val);
     });
   }
@@ -159,7 +162,7 @@ abstract class _$$OrderResponseImplCopyWith<$Res>
   $Res call(
       {int id,
       @JsonKey(name: "store") Store store,
-      @JsonKey(name: "location") Location location,
+      @JsonKey(name: "location") Location? location,
       @JsonKey(name: "total_amount") double totalAmount,
       @JsonKey(name: "order_date") String orderDate,
       @JsonKey(name: "status") OrderStatus status,
@@ -169,7 +172,7 @@ abstract class _$$OrderResponseImplCopyWith<$Res>
   @override
   $StoreCopyWith<$Res> get store;
   @override
-  $LocationCopyWith<$Res> get location;
+  $LocationCopyWith<$Res>? get location;
 }
 
 /// @nodoc
@@ -187,7 +190,7 @@ class __$$OrderResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? store = null,
-    Object? location = null,
+    Object? location = freezed,
     Object? totalAmount = null,
     Object? orderDate = null,
     Object? status = null,
@@ -203,10 +206,10 @@ class __$$OrderResponseImplCopyWithImpl<$Res>
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as Store,
-      location: null == location
+      location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as Location,
+              as Location?,
       totalAmount: null == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
@@ -256,7 +259,7 @@ class _$OrderResponseImpl implements _OrderResponse {
   final Store store;
   @override
   @JsonKey(name: "location")
-  final Location location;
+  final Location? location;
   @override
   @JsonKey(name: "total_amount")
   final double totalAmount;
@@ -266,7 +269,6 @@ class _$OrderResponseImpl implements _OrderResponse {
   @override
   @JsonKey(name: "status")
   final OrderStatus status;
-// the status should
   @override
   @JsonKey(name: "description")
   final String? description;
@@ -337,7 +339,7 @@ abstract class _OrderResponse implements OrderResponse {
   const factory _OrderResponse(
       {required final int id,
       @JsonKey(name: "store") required final Store store,
-      @JsonKey(name: "location") required final Location location,
+      @JsonKey(name: "location") required final Location? location,
       @JsonKey(name: "total_amount") required final double totalAmount,
       @JsonKey(name: "order_date") required final String orderDate,
       @JsonKey(name: "status") required final OrderStatus status,
@@ -355,7 +357,7 @@ abstract class _OrderResponse implements OrderResponse {
   Store get store;
   @override
   @JsonKey(name: "location")
-  Location get location;
+  Location? get location;
   @override
   @JsonKey(name: "total_amount")
   double get totalAmount;
@@ -364,7 +366,7 @@ abstract class _OrderResponse implements OrderResponse {
   String get orderDate;
   @override
   @JsonKey(name: "status")
-  OrderStatus get status; // the status should
+  OrderStatus get status;
   @override
   @JsonKey(name: "description")
   String? get description;

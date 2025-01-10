@@ -6,6 +6,7 @@ import 'package:delishop/core/data/model/location/location.dart';
 import 'package:delishop/core/data/model/order/create_order_request/create_order_request.dart';
 import 'package:delishop/core/data/model/order/order_response/order_response.dart';
 import 'package:delishop/core/data/model/product/product.dart';
+import 'package:delishop/core/data/model/search/search_response.dart';
 import 'package:delishop/core/data/model/store/store_list_response_model.dart';
 import 'package:delishop/core/data/model/wallet/wallet_balance_response.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
@@ -277,11 +278,10 @@ class ApiService {
   }
 
   Future<ResponseResult<OrderListResponse>> getMyOrders() async {
-    final http.Response httpResponse = await _httpClient
-        .get(
-          Uri.parse(ApiConsts.getMyOrdersUrl),
-          headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
-        );
+    final http.Response httpResponse = await _httpClient.get(
+      Uri.parse(ApiConsts.getMyOrdersUrl),
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+    );
     print(httpResponse.body);
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
@@ -290,29 +290,44 @@ class ApiService {
     );
   }
 
-  Future<ResponseResult<int>> updateOrderStatus(int orderId, OrderStatus newStatus) async {
-    print('Status: ' + newStatus.stringValue);
+  Future<ResponseResult<int>> updateOrderStatus(
+      int orderId, OrderStatus newStatus) async {
     final http.Response httpResponse = await _httpClient
         .post(Uri.parse(ApiConsts.updateOrder),
-        headers:
-        CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
-        body: jsonEncode({
-          "order_id": orderId,
-          "status": newStatus.stringValue
-        }))
+            headers:
+                CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+            body: jsonEncode(
+                {"order_id": orderId, "status": newStatus.stringValue}))
         .then((value) => value.getDataResponse());
-    print(httpResponse.body);
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
         return jsonMap["id"];
       },
     );
   }
+
+  Future<ResponseResult<SearchResponse>> search(
+      {required int? categoryId, required String keyWord}) async {
+    final http.Response httpResponse = await _httpClient
+        .post(Uri.parse(ApiConsts.searchUrl),
+            headers:
+                CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+            body: jsonEncode(
+                {"category_id": categoryId, "keyword": keyWord}))
+        .then((value) => value.getDataResponse());
+    print(httpResponse.body);
+    return httpResponse.handle(
+      jsonToModel: (jsonMap) {
+        return SearchResponse.fromJson(jsonMap);
+      },
+    );
+  }
 }
 
+// Failed...
 extension HttpHelper on http.Client {
   Future<http.Response> postEncoded(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
-    return post(url, headers:  headers, body:  body, encoding: utf8);
+    return post(url, headers: headers, body: body, encoding: utf8);
   }
 }

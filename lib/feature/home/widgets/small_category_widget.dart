@@ -19,27 +19,33 @@ class SmallCategoryWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        InkWell(
-          borderRadius: BorderRadius.circular(8.0),
-          onTap: () {
-            context.push(BlocProvider<CategoryCubit>(
-              create: (context) =>
-                  CategoryCubit(storeRepo: getIt(), category: category),
-              child: const CategoryFullScreen(),
-            ));
-          },
-          child: ClipOval(
-            child: category.categoryPicture.isNotNullOrEmpty()
-                ? Image.network(
-                    category.categoryPicture!,
-                    width: 60, // Adjust size as needed
-                    height: 60,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const BrokenImage();
-                    },
-                  )
-                : const BrokenImage(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(100),
+            onTap: () {
+              context.push(BlocProvider<CategoryCubit>(
+                create: (context) =>
+                    CategoryCubit(storeRepo: getIt(), category: category),
+                child: const CategoryFullScreen(),
+              ));
+            },
+            child: ClipOval(
+              child: Container(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.35),
+                child: category.categoryPicture.isNotNullOrEmpty()
+                    ? Image.network(
+                        category.categoryPicture!,
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const BrokenImage();
+                        },
+                      )
+                    : const BrokenImage(),
+              ),
+            ),
           ),
         ),
         const SizedBox(height: 8), // Spacing between image and text

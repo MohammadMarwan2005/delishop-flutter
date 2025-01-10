@@ -110,5 +110,11 @@
   "Your order has been cancelled by you.": "لقد قمت بإلغاء طلبك.",
   "Your order has been rejected by the mall.": "تم رفض طلبك من قبل المركز التجاري.",
   "An unexpected error occurred with your order.": "حدث خطأ غير متوقع في طلبك.",
-  "Products from": "منتجات من"
+  "Products from": "منتجات من",
+  "Deleted Location": "موقع محذوف",
+  "Mall": "المتجر",
+  "Search for something to get the result": "ابحث عن شيء لعرض النتائج",
+  "Search for products and malls": "ابحث عن منتجات أو متاجر",
+  "No products or stores found for the keyword": "لم يتم العثور على منتجات أو متاجر للكلمة المفتاحية",
+  "in category": "في الفئة"
 }

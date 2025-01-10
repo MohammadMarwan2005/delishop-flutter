@@ -9,8 +9,14 @@ class NoResultMessage extends StatelessWidget {
   final String messageLabel;
   final String buttonLabel;
   final Function() onButtonClicked;
+  final double? height;
 
-  const NoResultMessage({super.key, required this.messageLabel, required this.buttonLabel, required this.onButtonClicked});
+  const NoResultMessage(
+      {super.key,
+      required this.messageLabel,
+      required this.buttonLabel,
+      required this.onButtonClicked,
+      this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +27,21 @@ class NoResultMessage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Lottie.asset(
-              height: 200.h,
-              width: 200.h,
+              height: height ?? 200.h,
+              width: height ?? 200.h,
               "assets/animation/an_no_result.json",
               repeat: true,
             ),
-            Text(messageLabel, style: DelishopTextStyles.font18SemiBoldBlack),
-            Flexible(child: SizedBox(height: 8.h,)),
+            Text(
+              messageLabel,
+              style: DelishopTextStyles.font18SemiBoldBlack,
+              textAlign: TextAlign.center,
+            ),
+            Flexible(
+                child: SizedBox(
+              height: 8.h,
+            )),
             DelishopTextButton(onClick: onButtonClicked, label: buttonLabel),
-            Flexible(child: SizedBox(height: 300.h,)),
           ],
         ),
       ),
