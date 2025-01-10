@@ -31,7 +31,7 @@ class OrderEntity extends Equatable {
   double getOrderPrice(Map<int, int> quants) {
     double value = 0;
     for (int index = 0; index < products.length; index++) {
-      value += double.parse(products[index].price) *
+      value += products[index].price *
           (quants[products[index].id] ?? 1);
     }
     return value;

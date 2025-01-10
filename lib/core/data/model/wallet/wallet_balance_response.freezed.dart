@@ -21,7 +21,7 @@ WalletBalanceResponse _$WalletBalanceResponseFromJson(
 
 /// @nodoc
 mixin _$WalletBalanceResponse {
-  String get balance => throw _privateConstructorUsedError;
+  double get balance => throw _privateConstructorUsedError;
 
   /// Serializes this WalletBalanceResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $WalletBalanceResponseCopyWith<$Res> {
           $Res Function(WalletBalanceResponse) then) =
       _$WalletBalanceResponseCopyWithImpl<$Res, WalletBalanceResponse>;
   @useResult
-  $Res call({String balance});
+  $Res call({double balance});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$WalletBalanceResponseCopyWithImpl<$Res,
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
     ) as $Val);
   }
 }
@@ -78,7 +78,7 @@ abstract class _$$WalletBalanceResponseImplCopyWith<$Res>
       __$$WalletBalanceResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String balance});
+  $Res call({double balance});
 }
 
 /// @nodoc
@@ -101,7 +101,7 @@ class __$$WalletBalanceResponseImplCopyWithImpl<$Res>
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
     ));
   }
 }
@@ -115,7 +115,7 @@ class _$WalletBalanceResponseImpl implements _WalletBalanceResponse {
       _$$WalletBalanceResponseImplFromJson(json);
 
   @override
-  final String balance;
+  final double balance;
 
   @override
   String toString() {
@@ -152,14 +152,14 @@ class _$WalletBalanceResponseImpl implements _WalletBalanceResponse {
 }
 
 abstract class _WalletBalanceResponse implements WalletBalanceResponse {
-  const factory _WalletBalanceResponse({required final String balance}) =
+  const factory _WalletBalanceResponse({required final double balance}) =
       _$WalletBalanceResponseImpl;
 
   factory _WalletBalanceResponse.fromJson(Map<String, dynamic> json) =
       _$WalletBalanceResponseImpl.fromJson;
 
   @override
-  String get balance;
+  double get balance;
 
   /// Create a copy of WalletBalanceResponse
   /// with the given fields replaced by the non-null parameter values.

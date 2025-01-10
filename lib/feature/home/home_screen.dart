@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ),
                           ItemsLazyRow<Category>(
-                            size: 100.w,
+                            size: 140,
                             items: dataList,
                             cardBuilder: (item) =>
                                 SmallCategoryWidget(category: item),
@@ -140,20 +140,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-                  DelishopTextButton(
-                      onClick: () {
-                        context.push(BlocProvider<AccountCubit>(
-                            create: (context) => getIt(),
-                            child: const AccountScreen()));
-                      },
-                      label: "Go to your Account".tr(context)),
-                  DelishopTextButton(
-                      onClick: () {
-                        context.push(BlocProvider<FavoriteCubit>(
-                            create: (context) => getIt(),
-                            child: const FavoriteScreen()));
-                      },
-                      label: "Go to your Favorites".tr(context)),
                 ],
               );
             },

@@ -5,9 +5,8 @@ import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/theme/delishop_colors.dart';
 import 'package:delishop/feature/bottom_nav_host/wallet_label.dart';
 import 'package:delishop/feature/cart/cart_screen.dart';
+import 'package:delishop/feature/global/global_cubit.dart';
 import 'package:delishop/feature/order/cubit/order_cubit.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,128 +16,115 @@ import '../cart/cubit/cart_cubit.dart';
 import '../favorite/favorite_screen.dart';
 import '../home/home_screen.dart';
 import '../order/my_orders_screen.dart';
+import '../search/search_screen.dart';
 
-class BottomNavHost extends StatefulWidget {
+class BottomNavHost extends StatelessWidget {
   const BottomNavHost({super.key});
 
   @override
-  _BottomNavHostState createState() => _BottomNavHostState();
-}
-
-//🔳 Bottom Nav Bar (Home-Orders-Search-Favorites-Profile)
-class _BottomNavHostState extends State<BottomNavHost> {
-  int currentIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CartCubit>().reloadAllData();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: BlocBuilder<CartCubit, CartState>(
-          builder: (context, state) {
-            return Directionality(
-              textDirection: TextDirection.ltr,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Delishop",
-                    style: DelishopTextStyles.font32OrangeBold,
-                    textDirection: TextDirection.ltr,
-                  ),
-                  WalletLabel(),
-                  Row(
-                    children: [
-                      // CircleAvatar(
-                      // backgroundColor: const Color(0xFF979797).withOpacity(0.1),
-                      // child:
-                      IconButton(
-                          tooltip: "Notifications".tr(context),
-                          onPressed: () {},
-                          color: Colors.black,
-                          icon: const Icon(Icons.notifications_none)
-                              .getBadged(1)),
-                      // ),
-                      IconButton(
-                        tooltip: "Cart".tr(context),
-                        onPressed: () {
-                          context.push(const CartScreen());
-                          context.read<CartCubit>().clearBadge();
-                        },
-                        icon: const Icon(Icons.shopping_basket_outlined)
-                            .getBadged(
-                                context.read<CartCubit>().state.badgeCount),
-                      ),
-                    ],
-                  )
-                ],
+    return BlocBuilder<GlobalCubit, GlobalState>(builder: (context, state) {
+      return Scaffold(
+        appBar: AppBar(
+          title: BlocBuilder<CartCubit, CartState>(
+            builder: (context, state) {
+              return Directionality(
+                textDirection: TextDirection.ltr,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Delishop",
+                      style: DelishopTextStyles.font32OrangeBold,
+                      textDirection: TextDirection.ltr,
+                    ),
+                    const WalletLabel(),
+                    Row(
+                      children: [
+                        // CircleAvatar(
+                        // backgroundColor: const Color(0xFF979797).withOpacity(0.1),
+                        // child:
+                        IconButton(
+                            tooltip: "Notifications".tr(context),
+                            onPressed: () {},
+                            color: Colors.black,
+                            icon: const Icon(Icons.notifications_none)
+                                .getBadged(1)),
+                        // ),
+                        IconButton(
+                          tooltip: "Cart".tr(context),
+                          onPressed: () {
+                            context.push(const CartScreen());
+                            context.read<CartCubit>().clearBadge();
+                          },
+                          icon: const Icon(Icons.shopping_basket_outlined)
+                              .getBadged(
+                              context.read<CartCubit>().state.badgeCount),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+        body: views[state.selectedBottomNavBarIndex],
+        bottomNavigationBar:
+        Container(
+          color: DelishopColors.imageBackground,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: BottomNavyBar(
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            selectedIndex: state.selectedBottomNavBarIndex,
+            showElevation: true,
+            itemCornerRadius: 8,
+            curve: Curves.easeInBack,
+            containerHeight: 80,
+            itemPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
+            onItemSelected: (index) {
+              context.read<GlobalCubit>().changeSelectedBottomNavBarIndexIndex(index);
+            },
+            items: [
+              BottomNavyBarItem(
+                icon: Icon(state.selectedBottomNavBarIndex == 0 ? Icons.home : Icons.home_outlined),
+                title: Text("Home".tr(context)),
+                activeColor: DelishopColors.primary,
+                inactiveColor: DelishopColors.grey,
               ),
-            );
-          },
+              BottomNavyBarItem(
+                icon: Icon(state.selectedBottomNavBarIndex == 1
+                    ? Icons.shopping_bag
+                    : Icons.shopping_bag_outlined),
+                title: Text("Orders".tr(context)),
+                activeColor: DelishopColors.primary,
+                inactiveColor: DelishopColors.grey,
+              ),
+              BottomNavyBarItem(
+                icon: const Icon(Icons.search),
+                title: Text("Search".tr(context)),
+                activeColor: DelishopColors.primary,
+                inactiveColor: DelishopColors.grey,
+              ),
+              BottomNavyBarItem(
+                icon: Icon(
+                    state.selectedBottomNavBarIndex == 3 ? Icons.favorite : Icons.favorite_outline),
+                title: Text("Favorite".tr(context)),
+                activeColor: DelishopColors.primary,
+                inactiveColor: DelishopColors.grey,
+              ),
+              BottomNavyBarItem(
+                icon: Icon(state.selectedBottomNavBarIndex == 4 ? Icons.person : Icons.person_outline),
+                title: Text("Profile".tr(context)),
+                activeColor: DelishopColors.primary,
+                inactiveColor: DelishopColors.grey,
+              ),
+            ],
+          ),
         ),
-      ),
-      body: views[currentIndex],
-      bottomNavigationBar:
-      Container(
-        color: DelishopColors.imageBackground,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: BottomNavyBar(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          selectedIndex: currentIndex,
-          showElevation: true,
-          itemCornerRadius: 8,
-          curve: Curves.easeInBack,
-          containerHeight: 80,
-          itemPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
-          onItemSelected: (index) => setState(() {
-            currentIndex = index;
-          }),
-          items: [
-            BottomNavyBarItem(
-              icon: Icon(currentIndex == 0 ? Icons.home : Icons.home_outlined),
-              title: Text("Home".tr(context)),
-              activeColor: DelishopColors.primary,
-              inactiveColor: DelishopColors.grey,
-            ),
-            BottomNavyBarItem(
-              icon: Icon(currentIndex == 1
-                  ? Icons.shopping_bag
-                  : Icons.shopping_bag_outlined),
-              title: Text("Orders".tr(context)),
-              activeColor: DelishopColors.primary,
-              inactiveColor: DelishopColors.grey,
-            ),
-            BottomNavyBarItem(
-              icon: const Icon(Icons.search),
-              title: Text("Search".tr(context)),
-              activeColor: DelishopColors.primary,
-              inactiveColor: DelishopColors.grey,
-            ),
-            BottomNavyBarItem(
-              icon: Icon(
-                  currentIndex == 3 ? Icons.favorite : Icons.favorite_outline),
-              title: Text("Favorite".tr(context)),
-              activeColor: DelishopColors.primary,
-              inactiveColor: DelishopColors.grey,
-            ),
-            BottomNavyBarItem(
-              icon: Icon(currentIndex == 4 ? Icons.person : Icons.person_outline),
-              title: Text("Profile".tr(context)),
-              activeColor: DelishopColors.primary,
-              inactiveColor: DelishopColors.grey,
-            ),
-          ],
-        ),
-      ),
-    );
+      );
+    },);
   }
 }
 
@@ -150,18 +136,6 @@ List<Widget> views = [
   const AccountScreen()
 ];
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Search"),
-      ),
-    );
-  }
-}
 
 extension BadgeWidgetHelper on Icon {
   Widget getBadged(int label) {

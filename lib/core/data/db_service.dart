@@ -60,8 +60,8 @@ class ProductDataModel {
   final String name;
   final String description;
   final String? productPicture;
-  final String price;
-  final String discount;
+  final double price;
+  final double discount;
   final int quantity;
 
   ProductDataModel(

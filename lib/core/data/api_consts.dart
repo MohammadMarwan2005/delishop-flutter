@@ -19,6 +19,7 @@ abstract class ApiConsts {
   static const String getUserLocations = "$baseUrl/location/getUserLocations";
   static const String deleteLocation = "$baseUrl/location/deleteLocation";
   static String createOrder = "$baseUrl/order/createOrder";
+  static String updateOrder = "$baseUrl/order/updateStatusOrder";
   static String getMyOrdersUrl = "$baseUrl/order/getUserOrders";
 }
 

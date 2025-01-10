@@ -61,8 +61,10 @@ class _DelishopTextFieldState extends State<DelishopTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final obscureText = widget.isPassword && !isTextVisible;
+
     return TextFormField(
-      maxLines: widget.maxLines,
+      maxLines: (obscureText) ? 1 : widget.maxLines,
       minLines: widget.minLines,
       cursorOpacityAnimates: true,
       focusNode: _focusNode,
@@ -88,7 +90,7 @@ class _DelishopTextFieldState extends State<DelishopTextField> {
       validator: widget.validator,
       controller: widget.textEditingController,
       keyboardType: widget.keyboardType,
-      obscureText: widget.isPassword && !isTextVisible,
+      obscureText: obscureText,
       decoration: InputDecoration(
         isDense: true,
         fillColor: DelishopColors.veryLightGrey,

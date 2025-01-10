@@ -1,4 +1,5 @@
 import 'package:delishop/core/data/model/domain_error_model.dart';
+import 'package:delishop/core/data/model/location/location.dart';
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/helpers/image_string_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/theme/delishop_colors.dart';
 import '../../core/theme/delishop_text_styles.dart';
 import '../../core/widgets/broken_image.dart';
+import '../../core/widgets/location_label.dart';
 
 class StoreFullScreen extends StatelessWidget {
   const StoreFullScreen({super.key});
@@ -64,23 +66,8 @@ class StoreFullScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                // Store Location
-                                Row(
-                                  children: [
-                                    const Icon(Icons.location_on,
-                                        color: Colors.grey),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      store.locationName,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: DelishopColors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                LocationLabel(location: Location(name: store.locationName, url: store.locationUrl)),
                                 const SizedBox(height: 16),
-                                // Store Rating
                                 Row(
                                   children: [
                                     const Icon(Icons.star, color: Colors.amber),

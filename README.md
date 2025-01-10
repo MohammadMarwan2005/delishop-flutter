@@ -32,6 +32,7 @@
 🔳 Orders Feature
 ### ⭕ Super Admin:
 🔳 Add New Mall Screen (Phone Number and Password)
+🔳 Deposit Balance for a user
 
 
 ## 🟢🔳 Small Todo: 

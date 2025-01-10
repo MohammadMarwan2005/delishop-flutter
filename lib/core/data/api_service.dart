@@ -60,6 +60,7 @@ class ApiService {
       Uri.parse(ApiConsts.productSearchUrl),
       headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
     );
+    print("getAllProducts" + httpResponse.body);
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return ProductListResponseModel.fromJson(jsonMap);
     });
@@ -73,6 +74,7 @@ class ApiService {
           headers: CommonConsts.getTokenHeader(token),
         )
         .then((value) => value.getDataResponse());
+    print("getProductById" + httpResponse.body);
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return Product.fromJson(jsonMap);
     });
@@ -84,6 +86,7 @@ class ApiService {
       Uri.parse("${ApiConsts.getProductsByStoreIdUrl}/$storeId"),
       headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
     );
+    print("getProductByStoreId" + httpResponse.body);
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return ProductListResponseModel.fromJson(jsonMap);
     });
@@ -189,6 +192,7 @@ class ApiService {
           headers: CommonConsts.getTokenHeader(token),
         )
         .then((value) => value.getDataResponse());
+    print("getProductByStoreId" + httpResponse.body);
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return WalletBalanceResponse.fromJson(jsonMap);
     });
@@ -262,8 +266,9 @@ class ApiService {
         .post(Uri.parse(ApiConsts.createOrder),
             headers:
                 CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
-            body: jsonEncode(requestModel.toJson()))
+            body: utf8.encode(jsonEncode(requestModel.toJson())))
         .then((value) => value.getDataResponse());
+    print(httpResponse.body);
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
         return OrderResponse.fromJson(jsonMap);
@@ -283,5 +288,31 @@ class ApiService {
         return OrderListResponse.fromJson(jsonMap);
       },
     );
+  }
+
+  Future<ResponseResult<int>> updateOrderStatus(int orderId, OrderStatus newStatus) async {
+    print('Status: ' + newStatus.stringValue);
+    final http.Response httpResponse = await _httpClient
+        .post(Uri.parse(ApiConsts.updateOrder),
+        headers:
+        CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+        body: jsonEncode({
+          "order_id": orderId,
+          "status": newStatus.stringValue
+        }))
+        .then((value) => value.getDataResponse());
+    print(httpResponse.body);
+    return httpResponse.handle(
+      jsonToModel: (jsonMap) {
+        return jsonMap["id"];
+      },
+    );
+  }
+}
+
+extension HttpHelper on http.Client {
+  Future<http.Response> postEncoded(Uri url,
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
+    return post(url, headers:  headers, body:  body, encoding: utf8);
   }
 }

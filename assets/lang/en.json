@@ -90,5 +90,26 @@
   "Location URL": "Location URL",
   "Cancel": "Cancel",
   "Your Notes": "Your Notes",
-  "Ordered Successfully": "Ordered Successfully"
+  "Ordered Successfully": "Ordered Successfully",
+  "You have no orders yet.": "You have no orders yet.",
+  "Go to Cart!": "Go to Cart!",
+  "Order Info": "Order Info",
+  "OK": "OK",
+  "Cancel Order": "Cancel Order",
+  "Cancelled Successfully": "Cancelled Successfully",
+  "Notes": "Notes",
+  "Ordered on": "Ordered on",
+  "Pending": "Pending",
+  "Accepted": "Accepted",
+  "Delivered": "Delivered",
+  "Cancelled": "Cancelled",
+  "Rejected": "Cancelled",
+  "Your order is in the queue and awaiting review by the mall.": "Your order is in the queue and awaiting review by the mall.",
+  "Your order has been reviewed by the mall and will be delivered to you soon.": "Your order has been reviewed by the mall and will be delivered to you soon.",
+  "Your order has been delivered to you.": "Your order has been delivered to you.",
+  "Your order has been cancelled by you.": "Your order has been cancelled by you.",
+  "Your order has been rejected by the mall.": "Your order has been rejected by the mall.",
+  "An unexpected error occurred with your order.": "An unexpected error occurred with your order.",
+  "Products from": "Products from"
+
 }

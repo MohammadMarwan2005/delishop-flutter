@@ -47,7 +47,7 @@ class CartCubit extends Cubit<CartState> {
     response.when(
       onSuccess: (successData) {
         emit(state.copyWith(
-            currentBalance: UIState(data: double.parse(successData.balance))));
+            currentBalance: UIState(data: successData.balance)));
       },
       onError: (domainErrorModel) {
         emit(state.copyWith(currentBalance: UIState(error: domainErrorModel)));
@@ -79,11 +79,19 @@ class CartCubit extends Cubit<CartState> {
   void onQuantityChanged(int id, int newQuan) {
     var newMap = Map.of(state.productsQuants);
     newMap[id] = newQuan;
-    print(newMap);
     emit(state.copyWith(productsQuants: newMap));
   }
 
   void reloadAllData() {
     Future.wait([fetchCartContent(), fetchMyBalance()]);
+  }
+  void waitAndReloadAllData() {
+    Future.delayed(const Duration(seconds: 1), () {
+      reloadAllData();
+    },);
+  }
+
+  Future<bool> isProductInCart(int productId) async {
+    return await _dbService.isInDatabase(productId);
   }
 }

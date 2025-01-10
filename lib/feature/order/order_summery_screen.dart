@@ -8,6 +8,7 @@ import 'package:delishop/feature/cart/logic/order_entity.dart';
 import 'package:delishop/feature/cart/widgets/tabbed_cart_list.dart';
 import 'package:delishop/feature/order/cubit/order_cubit.dart';
 import 'package:delishop/feature/order/widgets/order_summery_product_card.dart';
+import 'package:delishop/feature/order_info_screen/order_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -86,6 +87,7 @@ class _OrderSummeryScreenState extends State<OrderSummeryScreen> {
                                   globalState.allLocations.data![
                                       selectedIndex!.getIndex(locations)],
                                   descriptionController.text);
+                              context.read<CartCubit>().waitAndReloadAllData();
                             }
                           : null,
                     );
@@ -94,31 +96,37 @@ class _OrderSummeryScreenState extends State<OrderSummeryScreen> {
                     state.createOrderResponse.when(
                       onLoading: () {},
                       onSuccess: (data) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return MyAlertDialog(
-                              title: "Ordered Successfully".tr(context),
-                              details: widget.order.products
-                                  .map(
-                                    (e) => e.name,
-                                  )
-                                  .toList(),
-                              isError: false,
-                              onGotItClicked: () {
-                                context
-                                    .read<CartCubit>()
-                                    .removeProductsFromDatabase(
-                                        widget.order.products
-                                            .map(
-                                              (e) => e.id,
-                                            )
-                                            .toList());
-                                context.pop();
-                              },
-                            );
-                          },
-                        );
+                        context
+                            .read<CartCubit>()
+                            .removeProductsFromDatabase(
+                            widget.order.products
+                                .map(
+                                  (e) => e.id,
+                            )
+                                .toList());
+                        context.pushReplacement(OrderInfoScreen(order: data, onPop: () {
+
+                        },
+                          showOk: true,
+                        ));
+                        // showDialog(
+                        //   context: context,
+                        //   builder: (context) {
+                        //     return MyAlertDialog(
+                        //       title: "Ordered Successfully".tr(context),
+                        //       details: widget.order.products
+                        //           .map(
+                        //             (e) => e.name,
+                        //           )
+                        //           .toList(),
+                        //       isError: false,
+                        //       onGotItClicked: () {
+                        //
+                        //         context.pop();
+                        //       },
+                        //     );
+                        //   },
+                        // );
                       },
                       onError: (domainError) {},
                     );
@@ -158,7 +166,7 @@ class _OrderSummeryScreenState extends State<OrderSummeryScreen> {
                 ],
               ),
               SizedBox(height: 16.h),
-              Text("Store".tr(context),
+              Text("Mall".tr(context),
                   style: Theme.of(context).textTheme.headlineSmall),
               SizedBox(height: 4.h),
               StoreInfo(store: widget.order.store),
@@ -170,7 +178,7 @@ class _OrderSummeryScreenState extends State<OrderSummeryScreen> {
                     quantity: widget.quants[product.id] ?? 1,
                   )),
               Padding(
-                padding: EdgeInsets.only(top: 48.h, bottom: 32.h),
+                padding: EdgeInsets.only(top: 32.h, bottom: 32.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,

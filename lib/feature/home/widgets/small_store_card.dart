@@ -24,8 +24,8 @@ class SmallStoreCard extends StatelessWidget {
         ));
       },
       child: SizedBox(
-        width: 150.w,
-        height: 150.w,
+        width: 200,
+        height: 200,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),

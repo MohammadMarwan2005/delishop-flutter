@@ -20,22 +20,22 @@ OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OrderResponse {
-  @JsonKey(name: "order_id")
   int get id => throw _privateConstructorUsedError;
-  @JsonKey(name: "store_id")
-  int get storeId => throw _privateConstructorUsedError;
-  @JsonKey(name: "location_id")
-  int get locationId => throw _privateConstructorUsedError;
+  @JsonKey(name: "store")
+  Store get store => throw _privateConstructorUsedError;
+  @JsonKey(name: "location")
+  Location get location => throw _privateConstructorUsedError;
   @JsonKey(name: "total_amount")
   double get totalAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "order_date")
   String get orderDate => throw _privateConstructorUsedError;
   @JsonKey(name: "status")
-  String get status => throw _privateConstructorUsedError;
+  OrderStatus get status =>
+      throw _privateConstructorUsedError; // the status should
   @JsonKey(name: "description")
   String? get description => throw _privateConstructorUsedError;
-  @JsonKey(name: "content")
-  List<ProductOrder> get productOrder => throw _privateConstructorUsedError;
+  @JsonKey(name: "products_order")
+  List<ProductOrder> get productOrders => throw _privateConstructorUsedError;
 
   /// Serializes this OrderResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,14 +54,17 @@ abstract class $OrderResponseCopyWith<$Res> {
       _$OrderResponseCopyWithImpl<$Res, OrderResponse>;
   @useResult
   $Res call(
-      {@JsonKey(name: "order_id") int id,
-      @JsonKey(name: "store_id") int storeId,
-      @JsonKey(name: "location_id") int locationId,
+      {int id,
+      @JsonKey(name: "store") Store store,
+      @JsonKey(name: "location") Location location,
       @JsonKey(name: "total_amount") double totalAmount,
       @JsonKey(name: "order_date") String orderDate,
-      @JsonKey(name: "status") String status,
+      @JsonKey(name: "status") OrderStatus status,
       @JsonKey(name: "description") String? description,
-      @JsonKey(name: "content") List<ProductOrder> productOrder});
+      @JsonKey(name: "products_order") List<ProductOrder> productOrders});
+
+  $StoreCopyWith<$Res> get store;
+  $LocationCopyWith<$Res> get location;
 }
 
 /// @nodoc
@@ -80,27 +83,27 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
   @override
   $Res call({
     Object? id = null,
-    Object? storeId = null,
-    Object? locationId = null,
+    Object? store = null,
+    Object? location = null,
     Object? totalAmount = null,
     Object? orderDate = null,
     Object? status = null,
     Object? description = freezed,
-    Object? productOrder = null,
+    Object? productOrders = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      storeId: null == storeId
-          ? _value.storeId
-          : storeId // ignore: cast_nullable_to_non_nullable
-              as int,
-      locationId: null == locationId
-          ? _value.locationId
-          : locationId // ignore: cast_nullable_to_non_nullable
-              as int,
+      store: null == store
+          ? _value.store
+          : store // ignore: cast_nullable_to_non_nullable
+              as Store,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as Location,
       totalAmount: null == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
@@ -112,16 +115,36 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as OrderStatus,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      productOrder: null == productOrder
-          ? _value.productOrder
-          : productOrder // ignore: cast_nullable_to_non_nullable
+      productOrders: null == productOrders
+          ? _value.productOrders
+          : productOrders // ignore: cast_nullable_to_non_nullable
               as List<ProductOrder>,
     ) as $Val);
+  }
+
+  /// Create a copy of OrderResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StoreCopyWith<$Res> get store {
+    return $StoreCopyWith<$Res>(_value.store, (value) {
+      return _then(_value.copyWith(store: value) as $Val);
+    });
+  }
+
+  /// Create a copy of OrderResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocationCopyWith<$Res> get location {
+    return $LocationCopyWith<$Res>(_value.location, (value) {
+      return _then(_value.copyWith(location: value) as $Val);
+    });
   }
 }
 
@@ -134,14 +157,19 @@ abstract class _$$OrderResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "order_id") int id,
-      @JsonKey(name: "store_id") int storeId,
-      @JsonKey(name: "location_id") int locationId,
+      {int id,
+      @JsonKey(name: "store") Store store,
+      @JsonKey(name: "location") Location location,
       @JsonKey(name: "total_amount") double totalAmount,
       @JsonKey(name: "order_date") String orderDate,
-      @JsonKey(name: "status") String status,
+      @JsonKey(name: "status") OrderStatus status,
       @JsonKey(name: "description") String? description,
-      @JsonKey(name: "content") List<ProductOrder> productOrder});
+      @JsonKey(name: "products_order") List<ProductOrder> productOrders});
+
+  @override
+  $StoreCopyWith<$Res> get store;
+  @override
+  $LocationCopyWith<$Res> get location;
 }
 
 /// @nodoc
@@ -158,27 +186,27 @@ class __$$OrderResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? storeId = null,
-    Object? locationId = null,
+    Object? store = null,
+    Object? location = null,
     Object? totalAmount = null,
     Object? orderDate = null,
     Object? status = null,
     Object? description = freezed,
-    Object? productOrder = null,
+    Object? productOrders = null,
   }) {
     return _then(_$OrderResponseImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      storeId: null == storeId
-          ? _value.storeId
-          : storeId // ignore: cast_nullable_to_non_nullable
-              as int,
-      locationId: null == locationId
-          ? _value.locationId
-          : locationId // ignore: cast_nullable_to_non_nullable
-              as int,
+      store: null == store
+          ? _value.store
+          : store // ignore: cast_nullable_to_non_nullable
+              as Store,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as Location,
       totalAmount: null == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
@@ -190,14 +218,14 @@ class __$$OrderResponseImplCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as OrderStatus,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      productOrder: null == productOrder
-          ? _value._productOrder
-          : productOrder // ignore: cast_nullable_to_non_nullable
+      productOrders: null == productOrders
+          ? _value._productOrders
+          : productOrders // ignore: cast_nullable_to_non_nullable
               as List<ProductOrder>,
     ));
   }
@@ -207,28 +235,28 @@ class __$$OrderResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OrderResponseImpl implements _OrderResponse {
   const _$OrderResponseImpl(
-      {@JsonKey(name: "order_id") required this.id,
-      @JsonKey(name: "store_id") required this.storeId,
-      @JsonKey(name: "location_id") required this.locationId,
+      {required this.id,
+      @JsonKey(name: "store") required this.store,
+      @JsonKey(name: "location") required this.location,
       @JsonKey(name: "total_amount") required this.totalAmount,
       @JsonKey(name: "order_date") required this.orderDate,
       @JsonKey(name: "status") required this.status,
       @JsonKey(name: "description") this.description,
-      @JsonKey(name: "content") required final List<ProductOrder> productOrder})
-      : _productOrder = productOrder;
+      @JsonKey(name: "products_order")
+      required final List<ProductOrder> productOrders})
+      : _productOrders = productOrders;
 
   factory _$OrderResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderResponseImplFromJson(json);
 
   @override
-  @JsonKey(name: "order_id")
   final int id;
   @override
-  @JsonKey(name: "store_id")
-  final int storeId;
+  @JsonKey(name: "store")
+  final Store store;
   @override
-  @JsonKey(name: "location_id")
-  final int locationId;
+  @JsonKey(name: "location")
+  final Location location;
   @override
   @JsonKey(name: "total_amount")
   final double totalAmount;
@@ -237,22 +265,23 @@ class _$OrderResponseImpl implements _OrderResponse {
   final String orderDate;
   @override
   @JsonKey(name: "status")
-  final String status;
+  final OrderStatus status;
+// the status should
   @override
   @JsonKey(name: "description")
   final String? description;
-  final List<ProductOrder> _productOrder;
+  final List<ProductOrder> _productOrders;
   @override
-  @JsonKey(name: "content")
-  List<ProductOrder> get productOrder {
-    if (_productOrder is EqualUnmodifiableListView) return _productOrder;
+  @JsonKey(name: "products_order")
+  List<ProductOrder> get productOrders {
+    if (_productOrders is EqualUnmodifiableListView) return _productOrders;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_productOrder);
+    return EqualUnmodifiableListView(_productOrders);
   }
 
   @override
   String toString() {
-    return 'OrderResponse(id: $id, storeId: $storeId, locationId: $locationId, totalAmount: $totalAmount, orderDate: $orderDate, status: $status, description: $description, productOrder: $productOrder)';
+    return 'OrderResponse(id: $id, store: $store, location: $location, totalAmount: $totalAmount, orderDate: $orderDate, status: $status, description: $description, productOrders: $productOrders)';
   }
 
   @override
@@ -261,9 +290,9 @@ class _$OrderResponseImpl implements _OrderResponse {
         (other.runtimeType == runtimeType &&
             other is _$OrderResponseImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.storeId, storeId) || other.storeId == storeId) &&
-            (identical(other.locationId, locationId) ||
-                other.locationId == locationId) &&
+            (identical(other.store, store) || other.store == store) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
             (identical(other.totalAmount, totalAmount) ||
                 other.totalAmount == totalAmount) &&
             (identical(other.orderDate, orderDate) ||
@@ -272,7 +301,7 @@ class _$OrderResponseImpl implements _OrderResponse {
             (identical(other.description, description) ||
                 other.description == description) &&
             const DeepCollectionEquality()
-                .equals(other._productOrder, _productOrder));
+                .equals(other._productOrders, _productOrders));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -280,13 +309,13 @@ class _$OrderResponseImpl implements _OrderResponse {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      storeId,
-      locationId,
+      store,
+      location,
       totalAmount,
       orderDate,
       status,
       description,
-      const DeepCollectionEquality().hash(_productOrder));
+      const DeepCollectionEquality().hash(_productOrders));
 
   /// Create a copy of OrderResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -306,28 +335,27 @@ class _$OrderResponseImpl implements _OrderResponse {
 
 abstract class _OrderResponse implements OrderResponse {
   const factory _OrderResponse(
-      {@JsonKey(name: "order_id") required final int id,
-      @JsonKey(name: "store_id") required final int storeId,
-      @JsonKey(name: "location_id") required final int locationId,
+      {required final int id,
+      @JsonKey(name: "store") required final Store store,
+      @JsonKey(name: "location") required final Location location,
       @JsonKey(name: "total_amount") required final double totalAmount,
       @JsonKey(name: "order_date") required final String orderDate,
-      @JsonKey(name: "status") required final String status,
+      @JsonKey(name: "status") required final OrderStatus status,
       @JsonKey(name: "description") final String? description,
-      @JsonKey(name: "content")
-      required final List<ProductOrder> productOrder}) = _$OrderResponseImpl;
+      @JsonKey(name: "products_order")
+      required final List<ProductOrder> productOrders}) = _$OrderResponseImpl;
 
   factory _OrderResponse.fromJson(Map<String, dynamic> json) =
       _$OrderResponseImpl.fromJson;
 
   @override
-  @JsonKey(name: "order_id")
   int get id;
   @override
-  @JsonKey(name: "store_id")
-  int get storeId;
+  @JsonKey(name: "store")
+  Store get store;
   @override
-  @JsonKey(name: "location_id")
-  int get locationId;
+  @JsonKey(name: "location")
+  Location get location;
   @override
   @JsonKey(name: "total_amount")
   double get totalAmount;
@@ -336,13 +364,13 @@ abstract class _OrderResponse implements OrderResponse {
   String get orderDate;
   @override
   @JsonKey(name: "status")
-  String get status;
+  OrderStatus get status; // the status should
   @override
   @JsonKey(name: "description")
   String? get description;
   @override
-  @JsonKey(name: "content")
-  List<ProductOrder> get productOrder;
+  @JsonKey(name: "products_order")
+  List<ProductOrder> get productOrders;
 
   /// Create a copy of OrderResponse
   /// with the given fields replaced by the non-null parameter values.

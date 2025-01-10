@@ -2,6 +2,7 @@ import 'package:delishop/core/helpers/alert_dialog_helper.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/feature/account/cubit/account_cubit.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
+import 'package:delishop/feature/cart/cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +22,7 @@ class LoginBlocListener extends StatelessWidget {
           state.when(
               initial: () {},
               success: (successResponseModel) {
+                context.read<CartCubit>().reloadAllData();
                 context.pushReplacement(MultiBlocProvider(providers: [
                   BlocProvider<HomeCubit>(create: (context) => getIt()),
                   BlocProvider<FavoriteCubit>(create: (context) => getIt()),

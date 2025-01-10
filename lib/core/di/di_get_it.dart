@@ -20,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../feature/cart/logic/get_order_entity_use_case.dart';
+import '../../feature/order/order_response_to_order_entity_use_case.dart';
 import '../data/api_service.dart';
 import '../data/db_service.dart';
 import '../data/repo/auth_repo.dart';
@@ -47,8 +48,8 @@ Future<void> initializeDependencies() async {
         'name TEXT, '
         'description TEXT, '
         'productPicture TEXT, '
-        'price TEXT, '
-        'discount TEXT, '
+        'price REAL, '
+        'discount REAL, '
         'quantity INTEGER)',
       );
     },
@@ -61,6 +62,7 @@ Future<void> initializeDependencies() async {
   getIt.registerFactory<CartCubit>(() => CartCubit(getIt(), getIt(), getIt()));
 
   getIt.registerLazySingleton<GARepo>(() => GARepo(analytics: analytics));
+  // getIt.registerLazySingleton<OrderResponseToOrderEntityUseCase>(() => OrderResponseToOrderEntityUseCase(getIt(), getIt()));
 
   final sharedPrefs = await SharedPreferences.getInstance();
   const storage = FlutterSecureStorage();

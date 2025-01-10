@@ -20,12 +20,17 @@ ProductOrder _$ProductOrderFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductOrder {
+  @JsonKey(name: "id")
+  int get id => throw _privateConstructorUsedError;
   @JsonKey(name: "product_id")
   int get productId => throw _privateConstructorUsedError;
+  @JsonKey(name: "order_id")
+  int get orderId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get price => throw _privateConstructorUsedError;
+  double get price => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
   double get subtotal => throw _privateConstructorUsedError;
+  Product get product => throw _privateConstructorUsedError;
 
   /// Serializes this ProductOrder to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,11 +49,16 @@ abstract class $ProductOrderCopyWith<$Res> {
       _$ProductOrderCopyWithImpl<$Res, ProductOrder>;
   @useResult
   $Res call(
-      {@JsonKey(name: "product_id") int productId,
+      {@JsonKey(name: "id") int id,
+      @JsonKey(name: "product_id") int productId,
+      @JsonKey(name: "order_id") int orderId,
       String name,
-      String price,
+      double price,
       int quantity,
-      double subtotal});
+      double subtotal,
+      Product product});
+
+  $ProductCopyWith<$Res> get product;
 }
 
 /// @nodoc
@@ -66,16 +76,27 @@ class _$ProductOrderCopyWithImpl<$Res, $Val extends ProductOrder>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? productId = null,
+    Object? orderId = null,
     Object? name = null,
     Object? price = null,
     Object? quantity = null,
     Object? subtotal = null,
+    Object? product = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       productId: null == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
+              as int,
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _value.name
@@ -84,7 +105,7 @@ class _$ProductOrderCopyWithImpl<$Res, $Val extends ProductOrder>
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -93,7 +114,21 @@ class _$ProductOrderCopyWithImpl<$Res, $Val extends ProductOrder>
           ? _value.subtotal
           : subtotal // ignore: cast_nullable_to_non_nullable
               as double,
+      product: null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as Product,
     ) as $Val);
+  }
+
+  /// Create a copy of ProductOrder
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProductCopyWith<$Res> get product {
+    return $ProductCopyWith<$Res>(_value.product, (value) {
+      return _then(_value.copyWith(product: value) as $Val);
+    });
   }
 }
 
@@ -106,11 +141,17 @@ abstract class _$$ProductOrderImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "product_id") int productId,
+      {@JsonKey(name: "id") int id,
+      @JsonKey(name: "product_id") int productId,
+      @JsonKey(name: "order_id") int orderId,
       String name,
-      String price,
+      double price,
       int quantity,
-      double subtotal});
+      double subtotal,
+      Product product});
+
+  @override
+  $ProductCopyWith<$Res> get product;
 }
 
 /// @nodoc
@@ -126,16 +167,27 @@ class __$$ProductOrderImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? productId = null,
+    Object? orderId = null,
     Object? name = null,
     Object? price = null,
     Object? quantity = null,
     Object? subtotal = null,
+    Object? product = null,
   }) {
     return _then(_$ProductOrderImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       productId: null == productId
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
+              as int,
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
               as int,
       name: null == name
           ? _value.name
@@ -144,7 +196,7 @@ class __$$ProductOrderImplCopyWithImpl<$Res>
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -153,6 +205,10 @@ class __$$ProductOrderImplCopyWithImpl<$Res>
           ? _value.subtotal
           : subtotal // ignore: cast_nullable_to_non_nullable
               as double,
+      product: null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as Product,
     ));
   }
 }
@@ -161,30 +217,41 @@ class __$$ProductOrderImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProductOrderImpl implements _ProductOrder {
   const _$ProductOrderImpl(
-      {@JsonKey(name: "product_id") required this.productId,
+      {@JsonKey(name: "id") required this.id,
+      @JsonKey(name: "product_id") required this.productId,
+      @JsonKey(name: "order_id") required this.orderId,
       required this.name,
       required this.price,
       required this.quantity,
-      required this.subtotal});
+      required this.subtotal,
+      required this.product});
 
   factory _$ProductOrderImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductOrderImplFromJson(json);
 
   @override
+  @JsonKey(name: "id")
+  final int id;
+  @override
   @JsonKey(name: "product_id")
   final int productId;
   @override
+  @JsonKey(name: "order_id")
+  final int orderId;
+  @override
   final String name;
   @override
-  final String price;
+  final double price;
   @override
   final int quantity;
   @override
   final double subtotal;
+  @override
+  final Product product;
 
   @override
   String toString() {
-    return 'ProductOrder(productId: $productId, name: $name, price: $price, quantity: $quantity, subtotal: $subtotal)';
+    return 'ProductOrder(id: $id, productId: $productId, orderId: $orderId, name: $name, price: $price, quantity: $quantity, subtotal: $subtotal, product: $product)';
   }
 
   @override
@@ -192,20 +259,23 @@ class _$ProductOrderImpl implements _ProductOrder {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProductOrderImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.productId, productId) ||
                 other.productId == productId) &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
             (identical(other.subtotal, subtotal) ||
-                other.subtotal == subtotal));
+                other.subtotal == subtotal) &&
+            (identical(other.product, product) || other.product == product));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, productId, name, price, quantity, subtotal);
+  int get hashCode => Object.hash(runtimeType, id, productId, orderId, name,
+      price, quantity, subtotal, product);
 
   /// Create a copy of ProductOrder
   /// with the given fields replaced by the non-null parameter values.
@@ -225,26 +295,37 @@ class _$ProductOrderImpl implements _ProductOrder {
 
 abstract class _ProductOrder implements ProductOrder {
   const factory _ProductOrder(
-      {@JsonKey(name: "product_id") required final int productId,
+      {@JsonKey(name: "id") required final int id,
+      @JsonKey(name: "product_id") required final int productId,
+      @JsonKey(name: "order_id") required final int orderId,
       required final String name,
-      required final String price,
+      required final double price,
       required final int quantity,
-      required final double subtotal}) = _$ProductOrderImpl;
+      required final double subtotal,
+      required final Product product}) = _$ProductOrderImpl;
 
   factory _ProductOrder.fromJson(Map<String, dynamic> json) =
       _$ProductOrderImpl.fromJson;
 
   @override
+  @JsonKey(name: "id")
+  int get id;
+  @override
   @JsonKey(name: "product_id")
   int get productId;
   @override
+  @JsonKey(name: "order_id")
+  int get orderId;
+  @override
   String get name;
   @override
-  String get price;
+  double get price;
   @override
   int get quantity;
   @override
   double get subtotal;
+  @override
+  Product get product;
 
   /// Create a copy of ProductOrder
   /// with the given fields replaced by the non-null parameter values.

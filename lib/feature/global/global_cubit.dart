@@ -84,4 +84,8 @@ class GlobalCubit extends Cubit<GlobalState> {
       fetchAllLocations()
     ]);
   }
+
+  void changeSelectedBottomNavBarIndexIndex(int newValue) {
+    emit(state.copyWith(selectedBottomNavBarIndex: newValue));
+  }
 }

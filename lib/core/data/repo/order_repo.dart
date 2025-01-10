@@ -29,6 +29,12 @@ class OrderRepo {
         return _apiService.getMyOrders();
       },
     );
-
+  }
+  Future<ResponseResult<int>> cancelOrder(int orderId) async {
+    return _connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return _apiService.updateOrderStatus(orderId, OrderStatus.cancelled);
+      },
+    );
   }
 }

@@ -5,7 +5,7 @@ part 'wallet_balance_response.g.dart';
 @freezed
 class WalletBalanceResponse with _$WalletBalanceResponse {
   const factory WalletBalanceResponse({
-    required String balance
+    required double balance
   }) = _WalletBalanceResponse;
 
   factory WalletBalanceResponse.fromJson(Map<String, Object?> json)

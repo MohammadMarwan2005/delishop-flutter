@@ -1,24 +1,26 @@
+import 'package:delishop/core/data/api_consts.dart';
 
 import 'model/domain_error_model.dart';
 
 sealed class ResponseResult<T> {
   const ResponseResult();
 
-  void when({
-    required Function(T successData) onSuccess,
-    required Function(DomainErrorModel domainErrorModel) onError,
+  R when<R>({
+    required R Function(T successData) onSuccess,
+    required R Function(DomainErrorModel domainErrorModel) onError,
   }) {
     switch (this) {
       case Success<T> _:
-        onSuccess((this as Success<T>).data);
+        return onSuccess((this as Success<T>).data);
       case Error<T> _:
-        onError((this as Error<T>).data);
+        return onError((this as Error<T>).data);
     }
   }
 }
 
 class Success<T> extends ResponseResult<T> {
   final T data;
+
   const Success(this.data);
 }
 

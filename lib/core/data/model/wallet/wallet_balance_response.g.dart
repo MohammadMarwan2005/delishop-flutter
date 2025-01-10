@@ -9,7 +9,7 @@ part of 'wallet_balance_response.dart';
 _$WalletBalanceResponseImpl _$$WalletBalanceResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$WalletBalanceResponseImpl(
-      balance: json['balance'] as String,
+      balance: (json['balance'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$WalletBalanceResponseImplToJson(

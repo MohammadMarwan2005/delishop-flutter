@@ -12,7 +12,7 @@ class ItemsLazyRow<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: size?? 150.w,
+      height: size?? 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
           itemCount: items.length,

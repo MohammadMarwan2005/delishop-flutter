@@ -49,9 +49,6 @@ class AccountScreen extends StatelessWidget {
             }),
           ),
           DelishopTextButton(onClick: () {
-            context.removeAndPush(BlocProvider<HomeCubit>(create: (context) => getIt(), child: const HomeScreen()));
-          }, label: "Go to Home".tr(context)),
-          DelishopTextButton(onClick: () {
             context.read<AccountCubit>().logout();
             context.removeAndPush(LoginScreen());
           }, label: "Logout".tr(context)),
