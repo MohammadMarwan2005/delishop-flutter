@@ -111,7 +111,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 messageLabel:
                                     "Search for something to get the result"
                                         .tr(context),
-                                buttonLabel: "Search",
+                                buttonLabel: "Search(v)".tr(context),
                                 onButtonClicked: () {
                                   context.read<SearchCubit>().search();
                                 },

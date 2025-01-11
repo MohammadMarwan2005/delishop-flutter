@@ -16,15 +16,15 @@
 ## ⭕🔳 Big Todo:
 ### ⭕ User:
 ✅ Cart Feature
-✅ Checkout Order Screen (back-end todo: checkout order && your account money)
-✅ My Orders Screen (back-end todo: ensure that the order feature stable)
-✅ Edit/Delete Order Screen (back-end todo: ensure that the order feature stable)
+✅ Checkout Order Screen
+✅ My Orders Screen 
+✅ Edit/Delete Order Screen 
 🔳 Notification Screen (back-end todo: ensure that the order feature stable)
-🔳 Sending Notification using Firebase (back-end todo: setup firebase in back-end)
-🔳 Search Screen (for a mall or a category or a product)
-🔳 Add/Edit Rating Screen (back-end: ensure that the Rating feature is stable)
-🔳 Professional Profile Screen (ensure that the profile editing is stable)
-🔳 Splash Screen
+🔳 Sending Notification using Firebase
+✅ Search Screen
+🔳 Add/Edit/Remove Rating Screen 
+✅ Professional Profile Screen 
+✅ Splash Screen
 ✅ Onboarding Screens (using lottie)
 ### ⭕ Mall:
 🔳 My Mall Profile Screen

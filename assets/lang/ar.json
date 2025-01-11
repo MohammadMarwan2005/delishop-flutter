@@ -116,5 +116,8 @@
   "Search for something to get the result": "ابحث عن شيء لعرض النتائج",
   "Search for products and malls": "ابحث عن منتجات أو متاجر",
   "No products or stores found for the keyword": "لم يتم العثور على منتجات أو متاجر للكلمة المفتاحية",
-  "in category": "في الفئة"
+  "in category": "في الفئة",
+  "Save": "حفظ",
+  "Search(v)": "ابحث",
+  "Failed to open this link!": "لا يمكن فتح هذا الرابط!"
 }

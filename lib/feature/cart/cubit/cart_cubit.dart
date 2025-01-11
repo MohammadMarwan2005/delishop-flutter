@@ -50,7 +50,11 @@ class CartCubit extends Cubit<CartState> {
             currentBalance: UIState(data: successData.balance)));
       },
       onError: (domainErrorModel) {
-        emit(state.copyWith(currentBalance: UIState(error: domainErrorModel)));
+        if (domainErrorModel.code == 500 && domainErrorModel.message == "Attempt to read property \"balance\" on null") {
+          fetchMyBalance();
+        } else {
+          emit(state.copyWith(currentBalance: UIState(error: domainErrorModel)));
+        }
       },
     );
   }

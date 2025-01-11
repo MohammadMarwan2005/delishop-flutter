@@ -59,6 +59,7 @@ class ProfileScreen extends StatelessWidget {
                                             width: 200.h,
                                             height: 200.h,
                                             fit: BoxFit.cover,
+                                            loadingBuilder: reusableLoadingBuilder,
                                           )
                                         : Image.asset(
                                             "assets/images/profile_image_placeholder.jpeg",
@@ -105,7 +106,7 @@ class ProfileScreen extends StatelessWidget {
                           onPressed: () {
                             cubit.updateProfile();
                           },
-                          text: "Save"),
+                          text: "Save".tr(context)),
                       SizedBox(height: 48.h),
                       const ToggleLangButton(),
                       SizedBox(height: 8.h),
@@ -132,5 +133,13 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Widget reusableLoadingBuilder(BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+  if (loadingProgress == null) {
+    return child;
+  } else {
+    return const Loading();
   }
 }

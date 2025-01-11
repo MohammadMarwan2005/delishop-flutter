@@ -5,9 +5,9 @@
     <application
         android:usesCleartextTraffic="true"
         android:enableOnBackInvokedCallback="true"
-        android:label="delishop"
+        android:label="Delishop"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@drawable/ic_delishop">
         <activity
             android:name=".MainActivity"
             android:exported="true"

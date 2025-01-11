@@ -78,7 +78,6 @@ class ApiService {
           headers: CommonConsts.getTokenHeader(token),
         )
         .then((value) => value.getDataResponse());
-    print("getProductById" + httpResponse.body);
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return Product.fromJson(jsonMap);
     });
@@ -196,13 +195,11 @@ class ApiService {
           headers: CommonConsts.getTokenHeader(token),
         )
         .then((value) => value.getDataResponse());
-    print("getProductByStoreId" + httpResponse.body);
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return WalletBalanceResponse.fromJson(jsonMap);
     });
   }
 
-  // locations: List<Location> get, getDefaultLocation, add, delete
   Future<ResponseResult<Location>> getDefaultLocation() async {
     final token = await _userDataRepo.getToken();
     final http.Response httpResponse = await _httpClient

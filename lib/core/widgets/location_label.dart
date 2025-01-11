@@ -18,7 +18,7 @@ class LocationLabel extends StatelessWidget {
           location?.url ?? "",
               () {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Failed to open this link!")),
+              SnackBar(content: Text("Failed to open this link!".tr(context))),
             );
           },
         );
