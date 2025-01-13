@@ -20,6 +20,7 @@ extension UpdateProfileRequestJson on Profile {
   Map<String, String> toJsonWithoutPictureField() {
     final Map<String, dynamic> currentMap = toJson();
     currentMap.remove('profile_picture');
+    print("currentMap" + currentMap.toString());
     return currentMap.map((key, value) => MapEntry(key, value.toString()));
   }
 }

@@ -1,11 +1,22 @@
 import 'package:delishop/core/data/model/product/product.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DBService {
+
+abstract class DBService {
+  Future<List<ProductDataModel>> getCartProducts();
+  Future<void> addProductToDatabase(ProductDataModel product);
+  Future<void> removeProductFromDatabase(int productId);
+  Future<void> removeProductsFromDatabase(List<int> productsIds);
+  Future<bool> isInDatabase(int productId);
+  Future<void> clearAllData();
+}
+
+class MobileDBService extends DBService {
   final Database _database;
 
-  DBService(this._database);
+  MobileDBService(this._database);
 
+  @override
   Future<List<ProductDataModel>> getCartProducts() async {
     List<Map<String, dynamic>> productsMap = await _database.query("cart");
     List<ProductDataModel> result = productsMap.map(
@@ -16,15 +27,18 @@ class DBService {
     return result;
   }
 
+  @override
   Future<void> addProductToDatabase(ProductDataModel product) async {
     await _database.insert("cart", product.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
+  @override
   Future<void> removeProductFromDatabase(int productId) async {
     await _database.delete("cart", where: "id = ?", whereArgs: [productId]);
   }
 
+  @override
   Future<void> removeProductsFromDatabase(List<int> productsIds) async {
     if (productsIds.isNotEmpty) {
       final ids = productsIds.join(',');
@@ -32,6 +46,7 @@ class DBService {
     }
   }
 
+  @override
   Future<bool> isInDatabase(int productId) async {
     final result = await _database.query(
       "cart",
@@ -41,8 +56,8 @@ class DBService {
     return result.isNotEmpty;
   }
 
+  @override
   Future<void> clearAllData() async {
-    // Get all tables in the database
     final tables = await _database.rawQuery(
         "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';"
     );
@@ -53,6 +68,43 @@ class DBService {
     }
   }
 }
+
+class WebDBService implements DBService {
+  final Map<int, ProductDataModel> _cart = {};
+
+  @override
+  Future<List<ProductDataModel>> getCartProducts() async {
+    return _cart.values.toList();
+  }
+
+  @override
+  Future<void> addProductToDatabase(ProductDataModel product) async {
+    _cart[product.id] = product;
+  }
+
+  @override
+  Future<void> removeProductFromDatabase(int productId) async {
+    _cart.remove(productId);
+  }
+
+  @override
+  Future<void> removeProductsFromDatabase(List<int> productsIds) async {
+    for (var id in productsIds) {
+      _cart.remove(id);
+    }
+  }
+
+  @override
+  Future<bool> isInDatabase(int productId) async {
+    return _cart.containsKey(productId);
+  }
+
+  @override
+  Future<void> clearAllData() async {
+    _cart.clear();
+  }
+}
+
 
 class ProductDataModel {
   final int id;
@@ -114,3 +166,5 @@ class ProductDataModel {
     );
   }
 }
+
+

@@ -21,8 +21,8 @@
 ✅ Edit/Delete Order Screen 
 🔳 Notification Screen (back-end todo: ensure that the order feature stable)
 🔳 Sending Notification using Firebase
-✅ Search Screen
 🔳 Add/Edit/Remove Rating Screen 
+✅ Search Screen
 ✅ Professional Profile Screen 
 ✅ Splash Screen
 ✅ Onboarding Screens (using lottie)
@@ -43,7 +43,7 @@
 ✅ Adding no products in the favorite message
 ✅ Add time limit for loading
 ✅ Make Try Again Feature reloading every empty state in the Cubit 
-
+🔳 Add a new status "rejected" to the enum and add the MallMessage feild to the rejected order ui
 
 ## 🐞🔳 Bug Fixes: 
 ✅ ProductScreen, Try Again Bug

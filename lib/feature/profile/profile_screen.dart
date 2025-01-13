@@ -59,7 +59,8 @@ class ProfileScreen extends StatelessWidget {
                                             width: 200.h,
                                             height: 200.h,
                                             fit: BoxFit.cover,
-                                            loadingBuilder: reusableLoadingBuilder,
+                                            loadingBuilder:
+                                                reusableLoadingBuilder,
                                           )
                                         : Image.asset(
                                             "assets/images/profile_image_placeholder.jpeg",
@@ -121,7 +122,8 @@ class ProfileScreen extends StatelessWidget {
                 },
                 onError: (domainError) {
                   return ErrorMessage(
-                    message: domainError.getMessage(context),
+                    message:
+                        "${domainError.getMessage(context)}\n${domainError.details.firstOrNull ?? ""}",
                     onTryAgain: () {
                       context.read<ProfileCubit>().fetchProfile();
                     },
@@ -136,7 +138,8 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-Widget reusableLoadingBuilder(BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+Widget reusableLoadingBuilder(
+    BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
   if (loadingProgress == null) {
     return child;
   } else {

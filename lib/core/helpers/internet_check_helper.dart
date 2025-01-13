@@ -12,17 +12,21 @@ ResponseResult<T> getNoInternetDomainError<T>() => const Error(DomainErrorModel(
 
 extension InternetCheckHelper on Connectivity {
   Future<ResponseResult<T>> checkInternetBefore<T>(
-      {required Future<ResponseResult<T>> Function()
-          onInternetConnected}) async {
+      {required Future<ResponseResult<T>> Function() onInternetConnected,
+      bool withTimeout = true}) async {
     try {
       final result = await checkConnectivity();
       if (result.isNotEmpty) {
-        return await onInternetConnected().timeout(
-          const Duration(seconds: 7),
-          onTimeout: () {
-            return getNoInternetDomainError<T>();
-          },
-        );
+        if (withTimeout) {
+          return await onInternetConnected().timeout(
+            const Duration(seconds: 7),
+            onTimeout: () {
+              return getNoInternetDomainError<T>();
+            },
+          );
+        } else {
+          return await onInternetConnected();
+        }
       }
       return getNoInternetDomainError<T>();
     } on HandshakeException {

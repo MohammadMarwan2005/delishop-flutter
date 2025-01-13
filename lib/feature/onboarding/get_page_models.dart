@@ -10,7 +10,7 @@ List<PageViewModel> getPageModels(BuildContext context) {
     PageViewModel(
         title: "Welcome to Delishop".tr(context),
         bodyWidget:
-            "Start your journey with Delishop and enjoy the ultimate shopping experience!"
+            "Explore a world of products at your fingertips. Search, shop, and enjoy endless possibilities!"
                 .tr(context)
                 .getBodyWithToggleLangButton(context),
         image: Lottie.asset(

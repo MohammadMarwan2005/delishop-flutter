@@ -27,6 +27,7 @@ class ProfileRepo {
       onInternetConnected: () {
         return _apiService.updateProfile(profile, image);
       },
+      withTimeout: false
     );
   }
 }

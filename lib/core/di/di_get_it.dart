@@ -16,6 +16,7 @@ import 'package:delishop/feature/profile/cubit/profile_cubit.dart';
 import 'package:delishop/feature/search/cubit/search_cubit.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -24,6 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../feature/cart/logic/get_order_entity_use_case.dart';
+import '../../firebase_options.dart';
 import '../data/api_service.dart';
 import '../data/db_service.dart';
 import '../data/repo/auth_repo.dart';
@@ -37,28 +39,36 @@ import '../data/repo/store_repo.dart';
 final getIt = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-  await Firebase.initializeApp();
+
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   getIt.registerLazySingleton<FirebaseAnalytics>(() => analytics);
 
-  final database = await openDatabase(
-    'delishop.db',
-    version: 1,
-    onCreate: (db, version) {
-      return db.execute(
-        'CREATE TABLE cart('
-        'id INTEGER PRIMARY KEY, '
-        'storeId INTEGER, '
-        'name TEXT, '
-        'description TEXT, '
-        'productPicture TEXT, '
-        'price REAL, '
-        'discount REAL, '
-        'quantity INTEGER)',
-      );
-    },
-  );
-  getIt.registerLazySingleton<DBService>(() => DBService(database));
+  if (kIsWeb) {
+    getIt.registerLazySingleton<DBService>(() => WebDBService());
+  } else {
+    final database = await openDatabase(
+      'delishop.db',
+      version: 1,
+      onCreate: (db, version) {
+        return db.execute(
+          'CREATE TABLE cart('
+              'id INTEGER PRIMARY KEY, '
+              'storeId INTEGER, '
+              'name TEXT, '
+              'description TEXT, '
+              'productPicture TEXT, '
+              'price REAL, '
+              'discount REAL, '
+              'quantity INTEGER)',
+        );
+      },
+    );
+
+    getIt.registerLazySingleton<DBService>(() => MobileDBService(database));
+  }
+
 
   getIt.registerLazySingleton<GetOrderEntitiesUseCase>(
       () => GetOrderEntitiesUseCase(getIt()));

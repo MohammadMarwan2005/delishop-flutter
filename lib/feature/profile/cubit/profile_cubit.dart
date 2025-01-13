@@ -52,7 +52,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       onSuccess: (successData) {
         emit(state.copyWith(profile: UIState(data: successData)));
         firstNameController.text = successData.firstName;
-        lastNameController.text = successData.firstName;
+        lastNameController.text = successData.lastName;
         phoneNumberController.text = successData.phoneNumber;
       },
       onError: (domainErrorModel) {
