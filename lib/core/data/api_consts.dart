@@ -32,6 +32,9 @@ abstract class ApiConsts {
   static const String deleteMyProductReview = "$baseUrl/productRating/deleteRating";
   static const String getStoreReviews = "$baseUrl/storeRating/getRatings";
   static const String getProductReviews = "$baseUrl/productRating/getRatings";
+  static const String depositMoneyUrl = "$baseUrl/wallet/deposit";
+  static const String createUserUrl = "$baseUrl/user/creatUser";
+  static const String getTransactionsUrl = "$baseUrl/wallet/getTransactionsDeposit";
 }
 
 abstract class StatusCodes {
@@ -41,6 +44,7 @@ abstract class StatusCodes {
   static const int unknown = 520;
   static const int conflict = 409;
   static const int notFound = 404;
+  static const int invalidInput = 440; // we don't need this custom code...
 }
 
 abstract class CommonConsts {
@@ -61,3 +65,29 @@ abstract class CommonConsts {
 extension UriHelper on String {
   Uri getUri() => Uri.parse(this);
 }
+
+abstract class RoleIds {
+  static const superAdmin = 1;
+  static const mall = 2;
+  static const user = 3;
+}
+
+extension RoleIdExtensions on int {
+  T whenRole<T>({
+    required T Function() superAdmin,
+    required T Function() mall,
+    required T Function() user,
+  }) {
+    switch (this) {
+      case RoleIds.superAdmin:
+        return superAdmin();
+      case RoleIds.mall:
+        return mall();
+      case RoleIds.user:
+        return user();
+      default:
+        throw ArgumentError('Invalid role ID: $this');
+    }
+  }
+}
+

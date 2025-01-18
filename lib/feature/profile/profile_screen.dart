@@ -7,6 +7,7 @@ import 'package:delishop/core/widgets/delishop_button.dart';
 import 'package:delishop/core/widgets/delishop_text_field.dart';
 import 'package:delishop/core/widgets/error_message.dart';
 import 'package:delishop/core/widgets/loading.dart';
+import 'package:delishop/core/widgets/logout_button.dart';
 import 'package:delishop/core/widgets/toggle_lang_button.dart';
 import 'package:delishop/feature/profile/cubit/profile_cubit.dart';
 import 'package:flutter/cupertino.dart';
@@ -111,12 +112,7 @@ class ProfileScreen extends StatelessWidget {
                       SizedBox(height: 48.h),
                       const ToggleLangButton(),
                       SizedBox(height: 8.h),
-                      DelishopTextButton(
-                          onClick: () {
-                            context.read<ProfileCubit>().logout();
-                            context.removeAndPush(LoginScreen());
-                          },
-                          label: "Logout".tr(context)),
+                      const LogoutButton(),
                     ],
                   );
                 },

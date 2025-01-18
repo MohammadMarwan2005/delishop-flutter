@@ -1,5 +1,7 @@
 import 'package:delishop/core/helpers/alert_dialog_helper.dart';
 import 'package:delishop/core/helpers/navigation_helper.dart';
+import 'package:delishop/delishop_app/delishop_app.dart';
+import 'package:delishop/delishop_app/first_route_helper.dart';
 import 'package:delishop/feature/account/cubit/account_cubit.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
 import 'package:delishop/feature/cart/cubit/cart_cubit.dart';
@@ -23,11 +25,7 @@ class LoginBlocListener extends StatelessWidget {
               initial: () {},
               success: (successResponseModel) {
                 context.read<CartCubit>().reloadAllData();
-                context.pushReplacement(MultiBlocProvider(providers: [
-                  BlocProvider<HomeCubit>(create: (context) => getIt()),
-                  BlocProvider<FavoriteCubit>(create: (context) => getIt()),
-                  BlocProvider<AccountCubit>(create: (context) => getIt()),
-                ], child: const BottomNavHost()));
+                context.pushReplacement(successResponseModel.data.roleId.getNavHost(/*context*/));
               },
               error: (error) {
                 context.setupErrorState(error); // this

@@ -39,7 +39,7 @@ class ProductFullScreen extends StatelessWidget {
                     builder: (context) {
                       return MyAlertDialog(
                           title: state.productState.data!.isFavorite
-                              .getMessage(context),
+                              .getFavoriteMessage(context),
                           details: [data.message],
                           isError: false);
                     },
@@ -305,7 +305,7 @@ class StoreInfo extends StatelessWidget {
 // 3. make it ready for add/removing it from favorites
 
 extension MessageHelper on bool? {
-  String getMessage(BuildContext context) {
+  String getFavoriteMessage(BuildContext context) {
     if (this == null) return "";
     return this! ? "Added".tr(context) : "Removed".tr(context);
   }

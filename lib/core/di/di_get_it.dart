@@ -6,6 +6,9 @@ import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:delishop/core/data/repo/wallet_repo.dart';
 import 'package:delishop/core/lang/lang_code_cubit.dart';
 import 'package:delishop/feature/account/cubit/account_cubit.dart';
+import 'package:delishop/feature/admin_role/add_store/cubit/add_store_cubit.dart';
+import 'package:delishop/feature/admin_role/deposit_money/cubit/deposit_money_cubit.dart';
+import 'package:delishop/feature/admin_role/history/cubit/history_cubit.dart';
 import 'package:delishop/feature/auth/cubit/auth_cubit.dart';
 import 'package:delishop/feature/cart/cubit/cart_cubit.dart';
 import 'package:delishop/feature/favorite/favorite_cubit.dart';
@@ -39,8 +42,7 @@ import '../data/repo/store_repo.dart';
 final getIt = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   getIt.registerLazySingleton<FirebaseAnalytics>(() => analytics);
@@ -54,21 +56,20 @@ Future<void> initializeDependencies() async {
       onCreate: (db, version) {
         return db.execute(
           'CREATE TABLE cart('
-              'id INTEGER PRIMARY KEY, '
-              'storeId INTEGER, '
-              'name TEXT, '
-              'description TEXT, '
-              'productPicture TEXT, '
-              'price REAL, '
-              'discount REAL, '
-              'quantity INTEGER)',
+          'id INTEGER PRIMARY KEY, '
+          'storeId INTEGER, '
+          'name TEXT, '
+          'description TEXT, '
+          'productPicture TEXT, '
+          'price REAL, '
+          'discount REAL, '
+          'quantity INTEGER)',
         );
       },
     );
 
     getIt.registerLazySingleton<DBService>(() => MobileDBService(database));
   }
-
 
   getIt.registerLazySingleton<GetOrderEntitiesUseCase>(
       () => GetOrderEntitiesUseCase(getIt()));
@@ -92,17 +93,23 @@ Future<void> initializeDependencies() async {
   // Auth
   getIt.registerLazySingleton<AuthRepo>(
       () => AuthRepo(apiService: getIt(), connectivity: getIt()));
-  getIt.registerLazySingleton<AuthCubit>(() =>
-      AuthCubit(authRepo: getIt(), userDataRepo: getIt(), gaRepo: getIt()));
+  getIt.registerLazySingleton<AuthCubit>(() => AuthCubit(
+      authRepo: getIt(),
+      userDataRepo: getIt(),
+      gaRepo: getIt(),
+      dbService: getIt()));
 
   getIt.registerLazySingleton<LocationRepo>(
       () => LocationRepo(getIt(), getIt()));
 
-  // I want to create a new object when I call getIt(), is this correct?
   getIt.registerFactory<OrderRepo>(() => OrderRepo(getIt(), getIt()));
 
   getIt.registerFactory<OrderCubit>(() => OrderCubit(getIt()));
   getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt(), getIt()));
+
+  getIt.registerFactory<DepositMoneyCubit>(() => DepositMoneyCubit(getIt()));
+  getIt.registerFactory<AddStoreCubit>(() => AddStoreCubit(getIt()));
+  getIt.registerFactory<HistoryCubit>(() => HistoryCubit(getIt()));
 
   getIt.registerLazySingleton<LangCodeCubit>(
       () => LangCodeCubit(getIt(), getIt()));

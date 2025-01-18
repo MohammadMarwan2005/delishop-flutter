@@ -1,6 +1,7 @@
 import 'package:delishop/core/data/model/domain_error_model.dart';
 import 'package:delishop/core/helpers/validation_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
+import 'package:delishop/feature/admin_role/add_store/cubit/add_store_cubit.dart';
 import 'package:delishop/feature/auth/register/password_validation_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,14 +11,15 @@ import '../cubit/auth_cubit.dart';
 
 class RegisterForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
-  const RegisterForm({super.key, required this.formKey});
+  final bool isAdmin;
+
+  const RegisterForm({super.key, required this.formKey, this.isAdmin = false});
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  // late final _formKey;
   late bool hasLowerCase;
   late bool hasUpperCase;
   late bool hasNumber;
@@ -27,14 +29,15 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   void initState() {
     super.initState();
-    // _formKey =
-    // context.read<AuthCubit>().registerFormKey;
     validate();
   }
 
   void validate() {
     setState(() {
-      String currentValue = context.read<AuthCubit>().passwordController.text;
+      final RegisterAble cubit = (widget.isAdmin)
+          ? context.read<AddStoreCubit>()
+          : context.read<AuthCubit>();
+      String currentValue = cubit.getPasswordController().text;
       hasLowerCase = currentValue.hasLowerCase();
       hasUpperCase = currentValue.hasUpperCase();
       hasNumber = currentValue.hasNumber();
@@ -45,106 +48,101 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) {
-        return Form(
-            key: widget.formKey,
-            child: Column(
-              children: [
-                DelishopTextField(
-                  textEditingController:
-                      context.read<AuthCubit>().firstNameController,
-                  labelText: "First Name".tr(context),
-                  keyboardType: TextInputType.name,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter a valid name.".tr(context);
-                    }
-                    return null;
-                  },
-                  validate: () => widget.formKey.currentState!.validate(),
-                ),
-                SizedBox(height: 16.h),
-                DelishopTextField(
-                  textEditingController:
-                      context.read<AuthCubit>().lastNameController,
-                  labelText: "Last Name".tr(context),
-                  keyboardType: TextInputType.name,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter a valid name.".tr(context);
-                    }
-                    return null;
-                  },
-                  validate: () => widget.formKey.currentState!.validate(),
-                ),
-                SizedBox(height: 16.h),
-                DelishopTextField(
-                  textEditingController:
-                      context.read<AuthCubit>().phoneNumberController,
-                  labelText: "Phone Number".tr(context),
-                  keyboardType: TextInputType.phone,
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        !value.isPhoneNumberValid()) {
-                      return "Please enter a valid phone number.".tr(context);
-                    }
-                    return null;
-                  },
-                  validate: () => widget.formKey.currentState!.validate(),
-                ),
-                SizedBox(height: 16.h),
-                DelishopTextField(
-                  textEditingController:
-                      context.read<AuthCubit>().passwordController,
-                  labelText: "Password".tr(context),
-                  keyboardType: TextInputType.visiblePassword,
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        !value.isPasswordValid()) {
-                      return "Please enter a valid password".tr(context);
-                    }
-                    return null;
-                  },
-                  isPassword: true,
-                  onChanged: (value) {
-                    validate();
-                  },
-                  validate: () => widget.formKey.currentState!.validate(),
-                ),
-                SizedBox(height: 16.h),
-                // Validation
-                PasswordValidationInfo(
-                    hasLowerCase: hasLowerCase,
-                    hasUpperCase: hasUpperCase,
-                    hasNumber: hasNumber,
-                    hasSpecialCharacter: hasSpecialCharacter,
-                    hasMinLength: hasMinLength),
-                SizedBox(height: 16.h),
-                DelishopTextField(
-                  textEditingController:
-                      context.read<AuthCubit>().passwordConfirmationController,
-                  labelText: "Confirm Password".tr(context),
-                  keyboardType: TextInputType.visiblePassword,
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        value != context.read<AuthCubit>().passwordController.text) {
-                      return "Passwords don't match!".tr(context);
-                    }
-                    if (!value.isPasswordValid()) {
-                      return "Please enter a valid password".tr(context);
-                    }
-                    return null;
-                  },
-                  isPassword: true,
-                  validate: () => widget.formKey.currentState!.validate(),
-                ),
-              ],
-            ));
-      },
-    );
+    final RegisterAble cubit = (widget.isAdmin)
+        ? context.read<AddStoreCubit>()
+        : context.read<AuthCubit>();
+
+    return Form(
+        key: widget.formKey,
+        child: Column(
+          children: [
+            DelishopTextField(
+              textEditingController: cubit.getFirstNameController(),
+              labelText: "First Name".tr(context),
+              keyboardType: TextInputType.name,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please enter a valid name.".tr(context);
+                }
+                return null;
+              },
+              validate: () => widget.formKey.currentState!.validate(),
+            ),
+            SizedBox(height: 16.h),
+            DelishopTextField(
+              textEditingController: cubit.getLastNameController(),
+              labelText: "Last Name".tr(context),
+              keyboardType: TextInputType.name,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please enter a valid name.".tr(context);
+                }
+                return null;
+              },
+              validate: () => widget.formKey.currentState!.validate(),
+            ),
+            SizedBox(height: 16.h),
+            DelishopTextField(
+              textEditingController: cubit.getPhoneNumberController(),
+              labelText: "Phone Number".tr(context),
+              keyboardType: TextInputType.phone,
+              validator: (value) {
+                if (value == null ||
+                    value.isEmpty ||
+                    !value.isPhoneNumberValid()) {
+                  return "Please enter a valid phone number.".tr(context);
+                }
+                return null;
+              },
+              validate: () => widget.formKey.currentState!.validate(),
+            ),
+            SizedBox(height: 16.h),
+            DelishopTextField(
+              textEditingController: cubit.getPasswordController(),
+              labelText: "Password".tr(context),
+              keyboardType: TextInputType.visiblePassword,
+              validator: (value) {
+                if (value == null ||
+                    value.isEmpty ||
+                    !value.isPasswordValid()) {
+                  return "Please enter a valid password".tr(context);
+                }
+                return null;
+              },
+              isPassword: true,
+              onChanged: (value) {
+                validate();
+              },
+              validate: () => widget.formKey.currentState!.validate(),
+            ),
+            SizedBox(height: 16.h),
+            // Validation
+            PasswordValidationInfo(
+                hasLowerCase: hasLowerCase,
+                hasUpperCase: hasUpperCase,
+                hasNumber: hasNumber,
+                hasSpecialCharacter: hasSpecialCharacter,
+                hasMinLength: hasMinLength),
+            SizedBox(height: 16.h),
+            DelishopTextField(
+              textEditingController: cubit.getPasswordConfirmationController(),
+              labelText: "Confirm Password".tr(context),
+              keyboardType: TextInputType.visiblePassword,
+              validator: (value) {
+                if (value == null ||
+                    value.isEmpty ||
+                    value != cubit.getPasswordConfirmationController().text) {
+                  return "Passwords don't match!".tr(context);
+                }
+                if (!value.isPasswordValid()) {
+                  return "Please enter a valid password".tr(context);
+                }
+                return null;
+              },
+              isPassword: true,
+              validate: () => widget.formKey.currentState!.validate(),
+            ),
+          ],
+        ));
   }
 }

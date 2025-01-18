@@ -1,7 +1,7 @@
 extension ImageStringHelper on String {
   String validatePicture() {
-    // return this;
-    return "http://195.88.87.77:8008${substring(21)}";
+    final splits = split("/");
+    return "http://195.88.87.77:8008/storage/uploads/${splits.last}";
   }
 }
 

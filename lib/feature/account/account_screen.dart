@@ -1,17 +1,11 @@
-import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
-import 'package:delishop/core/lang/lang_code_cubit.dart';
-import 'package:delishop/core/widgets/delishop_text_button.dart';
-import 'package:delishop/feature/auth/login/login_screen.dart';
-import 'package:delishop/feature/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconly/iconly.dart';
 
-import '../../core/di/di_get_it.dart';
+import '../../core/widgets/logout_button.dart';
 import '../../core/widgets/toggle_lang_button.dart';
-import '../home/home_cubit.dart';
 import 'cubit/account_cubit.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -48,11 +42,8 @@ class AccountScreen extends StatelessWidget {
               );
             }),
           ),
-          DelishopTextButton(onClick: () {
-            context.read<AccountCubit>().logout();
-            context.removeAndPush(LoginScreen());
-          }, label: "Logout".tr(context)),
-          const ToggleLangButton()
+          LogoutButton(),
+          ToggleLangButton()
         ],
       ),
     );

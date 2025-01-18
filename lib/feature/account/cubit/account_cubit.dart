@@ -42,11 +42,4 @@ class AccountCubit extends Cubit<AccountState> {
     }
   }
 
-  Future<void> logout() async {
-    _gaRepo.logLogout(
-        _userDataRepo.getString(DataAccessKeys.phoneNumberKey) ?? "");
-    await _userDataRepo.clearAllData();
-    await _userDataRepo.deleteToken();
-    await _dbService.clearAllData();
-  }
 }

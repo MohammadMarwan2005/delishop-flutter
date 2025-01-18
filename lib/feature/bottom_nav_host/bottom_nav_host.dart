@@ -13,10 +13,7 @@ import 'package:delishop/feature/profile/profile_screen.dart';
 import 'package:delishop/feature/search/cubit/search_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
-
 import '../../core/theme/delishop_text_styles.dart';
-import '../account/account_screen.dart';
 import '../cart/cubit/cart_cubit.dart';
 import '../favorite/favorite_screen.dart';
 import '../home/home_screen.dart';
@@ -75,7 +72,7 @@ class BottomNavHost extends StatelessWidget {
               },
             ),
           ),
-          body: views[state.selectedBottomNavBarIndex],
+          body: userViews[state.selectedBottomNavBarIndex],
           bottomNavigationBar: Container(
             color: DelishopColors.imageBackground,
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -94,46 +91,7 @@ class BottomNavHost extends StatelessWidget {
                     .read<GlobalCubit>()
                     .changeSelectedBottomNavBarIndexIndex(index);
               },
-              items: [
-                BottomNavyBarItem(
-                  icon: Icon(state.selectedBottomNavBarIndex == 0
-                      ? Icons.home
-                      : Icons.home_outlined),
-                  title: Text("Home".tr(context)),
-                  activeColor: DelishopColors.primary,
-                  inactiveColor: DelishopColors.grey,
-                ),
-                BottomNavyBarItem(
-                  icon: Icon(state.selectedBottomNavBarIndex == 1
-                      ? Icons.shopping_bag
-                      : Icons.shopping_bag_outlined),
-                  title: Text("Orders".tr(context)),
-                  activeColor: DelishopColors.primary,
-                  inactiveColor: DelishopColors.grey,
-                ),
-                BottomNavyBarItem(
-                  icon: const Icon(Icons.search),
-                  title: Text("Search".tr(context)),
-                  activeColor: DelishopColors.primary,
-                  inactiveColor: DelishopColors.grey,
-                ),
-                BottomNavyBarItem(
-                  icon: Icon(state.selectedBottomNavBarIndex == 3
-                      ? Icons.favorite
-                      : Icons.favorite_outline),
-                  title: Text("Favorite".tr(context)),
-                  activeColor: DelishopColors.primary,
-                  inactiveColor: DelishopColors.grey,
-                ),
-                BottomNavyBarItem(
-                  icon: Icon(state.selectedBottomNavBarIndex == 4
-                      ? Icons.person
-                      : Icons.person_outline),
-                  title: Text("Profile".tr(context)),
-                  activeColor: DelishopColors.primary,
-                  inactiveColor: DelishopColors.grey,
-                ),
-              ],
+              items: getUserBottomItems(state.selectedBottomNavBarIndex, context),
             ),
           ),
         );
@@ -142,7 +100,20 @@ class BottomNavHost extends StatelessWidget {
   }
 }
 
-List<Widget> views = [
+extension BadgeWidgetHelper on Icon {
+  Widget getBadged(int label) {
+    if (label != 0) {
+      return Badge(
+        label: Text(label.toString()),
+        offset: const Offset(8, -10),
+        child: this,
+      );
+    }
+    return this;
+  }
+}
+
+List<Widget> userViews = [
   const HomeScreen(),
   BlocProvider<OrderCubit>(
     create: (context) => getIt(),
@@ -162,15 +133,44 @@ List<Widget> views = [
   )
 ];
 
-extension BadgeWidgetHelper on Icon {
-  Widget getBadged(int label) {
-    if (label != 0) {
-      return Badge(
-        label: Text(label.toString()),
-        offset: const Offset(8, -10),
-        child: this,
-      );
-    }
-    return this;
-  }
+List<BottomNavyBarItem> getUserBottomItems(
+    int selectedBottomNavBarIndex, BuildContext context) {
+  return [
+    BottomNavyBarItem(
+      icon: Icon(
+          selectedBottomNavBarIndex == 0 ? Icons.home : Icons.home_outlined),
+      title: Text("Home".tr(context)),
+      activeColor: DelishopColors.primary,
+      inactiveColor: DelishopColors.grey,
+    ),
+    BottomNavyBarItem(
+      icon: Icon(selectedBottomNavBarIndex == 1
+          ? Icons.shopping_bag
+          : Icons.shopping_bag_outlined),
+      title: Text("Orders".tr(context)),
+      activeColor: DelishopColors.primary,
+      inactiveColor: DelishopColors.grey,
+    ),
+    BottomNavyBarItem(
+      icon: const Icon(Icons.search),
+      title: Text("Search".tr(context)),
+      activeColor: DelishopColors.primary,
+      inactiveColor: DelishopColors.grey,
+    ),
+    BottomNavyBarItem(
+      icon: Icon(selectedBottomNavBarIndex == 3
+          ? Icons.favorite
+          : Icons.favorite_outline),
+      title: Text("Favorite".tr(context)),
+      activeColor: DelishopColors.primary,
+      inactiveColor: DelishopColors.grey,
+    ),
+    BottomNavyBarItem(
+      icon: Icon(
+          selectedBottomNavBarIndex == 4 ? Icons.person : Icons.person_outline),
+      title: Text("Profile".tr(context)),
+      activeColor: DelishopColors.primary,
+      inactiveColor: DelishopColors.grey,
+    ),
+  ];
 }

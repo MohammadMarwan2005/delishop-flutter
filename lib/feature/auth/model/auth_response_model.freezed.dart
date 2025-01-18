@@ -208,6 +208,8 @@ mixin _$SuccessAuthData {
   String get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: "last_name")
   String get lastName => throw _privateConstructorUsedError;
+  @JsonKey(name: "role_id")
+  int get roleId => throw _privateConstructorUsedError;
 
   /// Serializes this SuccessAuthData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -228,7 +230,8 @@ abstract class $SuccessAuthDataCopyWith<$Res> {
   $Res call(
       {String token,
       @JsonKey(name: "first_name") String firstName,
-      @JsonKey(name: "last_name") String lastName});
+      @JsonKey(name: "last_name") String lastName,
+      @JsonKey(name: "role_id") int roleId});
 }
 
 /// @nodoc
@@ -249,6 +252,7 @@ class _$SuccessAuthDataCopyWithImpl<$Res, $Val extends SuccessAuthData>
     Object? token = null,
     Object? firstName = null,
     Object? lastName = null,
+    Object? roleId = null,
   }) {
     return _then(_value.copyWith(
       token: null == token
@@ -263,6 +267,10 @@ class _$SuccessAuthDataCopyWithImpl<$Res, $Val extends SuccessAuthData>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
+      roleId: null == roleId
+          ? _value.roleId
+          : roleId // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -278,7 +286,8 @@ abstract class _$$SuccessAuthDataImplCopyWith<$Res>
   $Res call(
       {String token,
       @JsonKey(name: "first_name") String firstName,
-      @JsonKey(name: "last_name") String lastName});
+      @JsonKey(name: "last_name") String lastName,
+      @JsonKey(name: "role_id") int roleId});
 }
 
 /// @nodoc
@@ -297,6 +306,7 @@ class __$$SuccessAuthDataImplCopyWithImpl<$Res>
     Object? token = null,
     Object? firstName = null,
     Object? lastName = null,
+    Object? roleId = null,
   }) {
     return _then(_$SuccessAuthDataImpl(
       token: null == token
@@ -311,6 +321,10 @@ class __$$SuccessAuthDataImplCopyWithImpl<$Res>
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
+      roleId: null == roleId
+          ? _value.roleId
+          : roleId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -321,7 +335,8 @@ class _$SuccessAuthDataImpl implements _SuccessAuthData {
   const _$SuccessAuthDataImpl(
       {required this.token,
       @JsonKey(name: "first_name") required this.firstName,
-      @JsonKey(name: "last_name") required this.lastName});
+      @JsonKey(name: "last_name") required this.lastName,
+      @JsonKey(name: "role_id") required this.roleId});
 
   factory _$SuccessAuthDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$SuccessAuthDataImplFromJson(json);
@@ -334,10 +349,13 @@ class _$SuccessAuthDataImpl implements _SuccessAuthData {
   @override
   @JsonKey(name: "last_name")
   final String lastName;
+  @override
+  @JsonKey(name: "role_id")
+  final int roleId;
 
   @override
   String toString() {
-    return 'SuccessAuthData(token: $token, firstName: $firstName, lastName: $lastName)';
+    return 'SuccessAuthData(token: $token, firstName: $firstName, lastName: $lastName, roleId: $roleId)';
   }
 
   @override
@@ -349,12 +367,14 @@ class _$SuccessAuthDataImpl implements _SuccessAuthData {
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
-                other.lastName == lastName));
+                other.lastName == lastName) &&
+            (identical(other.roleId, roleId) || other.roleId == roleId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token, firstName, lastName);
+  int get hashCode =>
+      Object.hash(runtimeType, token, firstName, lastName, roleId);
 
   /// Create a copy of SuccessAuthData
   /// with the given fields replaced by the non-null parameter values.
@@ -377,7 +397,8 @@ abstract class _SuccessAuthData implements SuccessAuthData {
   const factory _SuccessAuthData(
           {required final String token,
           @JsonKey(name: "first_name") required final String firstName,
-          @JsonKey(name: "last_name") required final String lastName}) =
+          @JsonKey(name: "last_name") required final String lastName,
+          @JsonKey(name: "role_id") required final int roleId}) =
       _$SuccessAuthDataImpl;
 
   factory _SuccessAuthData.fromJson(Map<String, dynamic> json) =
@@ -391,6 +412,9 @@ abstract class _SuccessAuthData implements SuccessAuthData {
   @override
   @JsonKey(name: "last_name")
   String get lastName;
+  @override
+  @JsonKey(name: "role_id")
+  int get roleId;
 
   /// Create a copy of SuccessAuthData
   /// with the given fields replaced by the non-null parameter values.

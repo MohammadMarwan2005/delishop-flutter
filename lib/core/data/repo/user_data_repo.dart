@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserDataRepo {
   final SharedPreferences _sharedPrefs;
   final FlutterSecureStorage _storage;
-  // todo: apiService
 
   UserDataRepo(
       {required SharedPreferences sharedPrefs,
@@ -29,6 +28,14 @@ class UserDataRepo {
 
   deleteToken() async {
     await _storage.delete(key: DataAccessKeys.tokenKey);
+  }
+
+  setInt(int value, String key) async {
+    await _sharedPrefs.setInt(key, value);
+  }
+
+  int? getInt(String key) {
+    return _sharedPrefs.getInt(key);
   }
 
   setString(String value, String key) async {
@@ -57,6 +64,7 @@ class DataAccessKeys {
   static String phoneNumberKey = "phoneNumberKey";
   static String firstNameKey = "firstNameKey";
   static String lastNameKey = "lastNameKey";
+  static String roleIdKey = "roleKey";
   static String langCodeKey = "langCodeKey";
   static String hasOnboardedKey = "hasOnboardedKey";
 }

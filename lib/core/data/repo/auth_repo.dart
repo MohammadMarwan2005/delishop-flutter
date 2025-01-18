@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:delishop/core/data/model/user/user.dart';
 import 'package:delishop/core/data/response_result.dart';
 import 'package:delishop/core/helpers/internet_check_helper.dart';
 import 'package:delishop/feature/auth/model/auth_response_model.dart';
@@ -27,6 +28,15 @@ class AuthRepo {
     return await connectivity.checkInternetBefore(
       onInternetConnected: () {
         return apiService.login(requestBody);
+      },
+    );
+  }
+
+  Future<ResponseResult<AuthResponseModel>> createUser(
+      User user) async {
+    return await connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return apiService.createUser(user);
       },
     );
   }

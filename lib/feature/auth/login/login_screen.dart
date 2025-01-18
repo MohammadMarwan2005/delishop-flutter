@@ -27,47 +27,52 @@ class LoginScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: 50.h),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text("Welcome Back".tr(context),
-                      style: DelishopTextStyles.font24OrangeBold),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1000),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: 50.h),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text("Welcome Back".tr(context),
+                          style: DelishopTextStyles.font24OrangeBold),
+                    ),
+                    SizedBox(height: 8.h),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        "We're excited to have you back, can't wait to see what you've been up to since you last logged in.".tr(context),
+                        style: DelishopTextStyles.font14RegularGrey
+                            .copyWith(height: 1.7),
+                      ),
+                    ),
+                    SizedBox(height: 36.h),
+                    PhoneNumberAndPasswordForm(formKey: _formKey),
+                    SizedBox(height: 16.h),
+                    const ForgetPasswordRow(),
+                    SizedBox(height: 16.h),
+                    AuthButton(
+                        onClick: () {
+                          validateThenLogin(context, _formKey);
+                        },
+                        label: "Login".tr(context)),
+                    SizedBox(height: 32.h),
+                    SuggestionAndTextButton(
+                      suggestionText: "Don't have an account?".tr(context),
+                      buttonLabel: "Sign Up".tr(context),
+                      onClick: () {
+                        context.pushReplacement(RegisterScreen());
+                      },
+                    ),
+                    SizedBox(height: 16.h),
+                    const ToggleLangButton(),
+                    SizedBox(height: 32.h),
+                    const LoginBlocListener()
+                  ],
                 ),
-                SizedBox(height: 8.h),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    "We're excited to have you back, can't wait to see what you've been up to since you last logged in.".tr(context),
-                    style: DelishopTextStyles.font14RegularGrey
-                        .copyWith(height: 1.7),
-                  ),
-                ),
-                SizedBox(height: 36.h),
-                PhoneNumberAndPasswordForm(formKey: _formKey),
-                SizedBox(height: 16.h),
-                const ForgetPasswordRow(),
-                SizedBox(height: 16.h),
-                AuthButton(
-                    onClick: () {
-                      validateThenLogin(context, _formKey);
-                    },
-                    label: "Login".tr(context)),
-                SizedBox(height: 32.h),
-                SuggestionAndTextButton(
-                  suggestionText: "Don't have an account?".tr(context),
-                  buttonLabel: "Sign Up".tr(context),
-                  onClick: () {
-                    context.pushReplacement(RegisterScreen());
-                  },
-                ),
-                SizedBox(height: 16.h),
-                const ToggleLangButton(),
-                SizedBox(height: 32.h),
-                const LoginBlocListener()
-              ],
+              ),
             ),
           ),
         ),

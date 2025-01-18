@@ -88,4 +88,10 @@ class GlobalCubit extends Cubit<GlobalState> {
   void changeSelectedBottomNavBarIndexIndex(int newValue) {
     emit(state.copyWith(selectedBottomNavBarIndex: newValue));
   }
+
+  void resetBottomNavIndexIndex() {
+    print('Resetting the index');
+    changeSelectedBottomNavBarIndexIndex(0);
+    print('index: ${state.selectedBottomNavBarIndex}');
+  }
 }

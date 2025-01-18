@@ -182,9 +182,6 @@ class LocationCardContent extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
           color: DelishopColors.imageBackground),
-      // shape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.circular(10),
-      // ),
       child: PopupMenuButton<int>(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         onSelected: (value) {

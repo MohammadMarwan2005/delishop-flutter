@@ -3,6 +3,7 @@ import 'package:delishop/core/helpers/image_string_helper.dart';
 import 'package:delishop/feature/home/widgets/items_lazy_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../core/widgets/broken_image.dart';
 
@@ -52,6 +53,7 @@ class CategoryFilterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(category.categoryPicture?.validatePicture());
     final color = (selected)
         ? Theme.of(context).colorScheme.primary
         : Theme.of(context).colorScheme.primary.withOpacity(0.35);
@@ -66,14 +68,23 @@ class CategoryFilterCard extends StatelessWidget {
               radius: 35,
               child: ClipOval(
                 child: category.categoryPicture.isNotNullOrEmpty()
-                    ? Image.network(
-                        category.categoryPicture!,
+                    ? SvgPicture.network(
+                        category.categoryPicture!.validatePicture(),
                         width: 40,
                         height: 40,
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const BrokenImage();
-                        },
+                        colorFilter: selected
+                            ? ColorFilter.mode(
+                                Theme.of(context).colorScheme.onPrimary,
+                                BlendMode.srcIn)
+                            : ColorFilter.mode(
+                                Theme.of(context).colorScheme.primary,
+                                BlendMode.srcIn),
+
+                        // I want to make the color (selected) ? onPrimary : Primary
+                        // errorBuilder: (context, error, stackTrace) {
+                        //   return const BrokenImage();
+                        // },
                       )
                     : const BrokenImage(),
               ),

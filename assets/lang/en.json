@@ -119,5 +119,16 @@
   "in category": "in category",
   "Save": "Save",
   "Search(v)": "Search",
-  "Failed to open this link!": "Failed to open this link!"
+  "Failed to open this link!": "Failed to open this link!",
+  "Specify the amount to deposit into the user's account.": "Specify the amount to deposit into the user's account.",
+  "Deposit Money": "Deposit Money",
+  "Amount": "Amount",
+  "Please enter a valid amount.": "Please enter a valid amount.",
+  "Deposit": "Deposit",
+  "History": "History",
+  "DepositBottom": "Deposit",
+  "Add Mall": "Add Mall",
+  "User": "User",
+  "Deposited Successfully!": "Deposited Successfully!",
+  "As an admin, you can add a new user, mall, or another admin to the system. Use the form below to input the required details and manage your platform efficiently.": "As an admin, you can add a new user, mall, or another admin to the system. Use the form below to input the required details and manage your platform efficiently."
 }

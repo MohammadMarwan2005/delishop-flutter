@@ -43,7 +43,9 @@
 ✅ Adding no products in the favorite message
 ✅ Add time limit for loading
 ✅ Make Try Again Feature reloading every empty state in the Cubit 
-🔳 Add a new status "rejected" to the enum and add the MallMessage feild to the rejected order ui
+🔳 Add a new status "rejected" to the enum and add the MallMessage field to the rejected order ui
+🔳 Add a notify me button in search view
+🔳 Show a small SnackBar when the use logs in: ex: (You logged in as a User)
 
 ## 🐞🔳 Bug Fixes: 
 ✅ ProductScreen, Try Again Bug

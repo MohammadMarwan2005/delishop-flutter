@@ -21,6 +21,7 @@ class SuccessAuthData with _$SuccessAuthData {
     required String token,
     @JsonKey(name: "first_name") required String firstName,
     @JsonKey(name: "last_name") required String lastName,
+    @JsonKey(name: "role_id") required int roleId,
   }) = _SuccessAuthData;
 
   factory SuccessAuthData.fromJson(Map<String, Object?> json) =>

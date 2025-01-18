@@ -119,5 +119,17 @@
   "in category": "في الفئة",
   "Save": "حفظ",
   "Search(v)": "ابحث",
-  "Failed to open this link!": "لا يمكن فتح هذا الرابط!"
+  "Failed to open this link!": "لا يمكن فتح هذا الرابط!",
+  "Specify the amount to deposit into the user's account.": "حدد المبلغ لإيداعه في حساب المستخدم.",
+  "Deposit Money": "إيداع الأموال",
+  "Amount": "المبلغ",
+  "Please enter a valid amount.": "يرجى إدخال مبلغ صالح.",
+  "Deposit": "إيداع",
+  "DepositBottom": "الإيداع",
+  "History": "السجل",
+  "Add Mall": "أضف متجراً",
+  "User": "مستخدم",
+  "Deposited Successfully!": "تم الإيداع بنجاح!",
+  "As an admin, you can add a new user, mall, or another admin to the system. Use the form below to input the required details and manage your platform efficiently.": "كمسؤول، لديك القدرة على إضافة مستخدمين جدد أو مراكز تسوق أو مسؤولين آخرين إلى النظام. قم بملء النموذج أدناه بالمعلومات المطلوبة لإدارة وتوسيع منصتك بكفاءة.",
+  "Mall Info": "المتجر"
 }

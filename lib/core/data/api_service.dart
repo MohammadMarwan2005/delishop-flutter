@@ -10,6 +10,9 @@ import 'package:delishop/core/data/model/product/product.dart';
 import 'package:delishop/core/data/model/profile/profile.dart';
 import 'package:delishop/core/data/model/search/search_response.dart';
 import 'package:delishop/core/data/model/store/store_list_response_model.dart';
+import 'package:delishop/core/data/model/transaction/transaction_list_response.dart';
+import 'package:delishop/core/data/model/user/user.dart';
+import 'package:delishop/core/data/model/wallet/deposit_money_request.dart';
 import 'package:delishop/core/data/model/wallet/wallet_balance_response.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:delishop/core/data/response_result.dart';
@@ -24,7 +27,6 @@ import 'model/location/location_list_response_model.dart';
 import 'model/order/order_list/order_list_response.dart';
 import 'model/product/product_list_response_model.dart';
 import 'model/store/store.dart';
-import 'model/store_review/store_review.dart';
 
 class ApiService {
   final UserDataRepo _userDataRepo;
@@ -42,6 +44,7 @@ class ApiService {
       headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
       body: jsonEncode(body.toJson()),
     );
+    print(httpResponse.body);
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return AuthResponseModel.fromJson(jsonMap);
     });
@@ -200,6 +203,19 @@ class ApiService {
     });
   }
 
+  Future<ResponseResult<WalletBalanceResponse>> depositMoney(
+      DepositMoneyRequest request) async {
+    final token = await _userDataRepo.getToken();
+    final http.Response httpResponse = await _httpClient
+        .post(Uri.parse(ApiConsts.depositMoneyUrl),
+            headers: CommonConsts.getTokenHeader(token),
+            body: jsonEncode(request.toJson()))
+        .then((value) => value.getDataResponse());
+    return httpResponse.handle(jsonToModel: (jsonMap) {
+      return WalletBalanceResponse.fromJson(jsonMap);
+    });
+  }
+
   Future<ResponseResult<Location>> getDefaultLocation() async {
     final token = await _userDataRepo.getToken();
     final http.Response httpResponse = await _httpClient
@@ -329,11 +345,34 @@ class ApiService {
           headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
         )
         .then((value) => value.getDataResponse());
+    print(httpResponse.body);
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
         return Profile.fromJson(jsonMap);
       },
     );
+  }
+
+
+  Future<ResponseResult<AuthResponseModel>> createUser(User user) async {
+    final http.Response httpResponse = await _httpClient.post(
+      Uri.parse(ApiConsts.createUserUrl),
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+      body: jsonEncode(user.toJson()),
+    );
+    return httpResponse.handle(jsonToModel: (jsonMap) {
+      return AuthResponseModel.fromJson(jsonMap);
+    });
+  }
+  Future<ResponseResult<TransactionListResponse>> getTransactions() async {
+    final http.Response httpResponse = await _httpClient.get(
+      Uri.parse(ApiConsts.getTransactionsUrl),
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken())
+    );
+    print(httpResponse.body);
+    return httpResponse.handle(jsonToModel: (jsonMap) {
+      return TransactionListResponse.fromJson(jsonMap);
+    });
   }
 
   Future<ResponseResult<Profile>> updateProfile(
