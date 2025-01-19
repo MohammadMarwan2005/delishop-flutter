@@ -28,6 +28,10 @@ jobs:
       - name: Build Flutter Web
         run: flutter build web
 
+      - name: Copy Build Files to Public
+        run: cp -r build/web/* public/
+
+
       # Deploy to Firebase Hosting
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
