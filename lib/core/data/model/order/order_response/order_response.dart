@@ -23,6 +23,7 @@ class OrderResponse with _$OrderResponse {
     @JsonKey(name: "order_date") required String orderDate,
     @JsonKey(name: "status") required OrderStatus status,
     @JsonKey(name: "description") String? description,
+    @JsonKey(name: "message") String? message,
     @JsonKey(name: "products_order") required List<ProductOrder> productOrders,
   }) = _OrderResponse;
 
@@ -76,13 +77,30 @@ enum OrderStatus {
       case OrderStatus.cancelled:
         return "Cancelled".tr(context);
       case OrderStatus.rejected:
-        return "Cancelled".tr(context);
+        return "Rejected".tr(context);
       default:
         return "Cancelled".tr(context);
     }
   }
 
-  String getBody(BuildContext context) {
+  String getMessage(BuildContext context) {
+    switch (this) {
+      case OrderStatus.pending:
+        return "Pended Successfully!".tr(context);
+      case OrderStatus.completed:
+        return "Assigned Accepted!".tr(context);
+      case OrderStatus.sent:
+        return "Assigned Delivered!".tr(context);
+      case OrderStatus.cancelled:
+        return "Cancelled Successfully!".tr(context);
+      case OrderStatus.rejected:
+        return "Assigned Rejected!".tr(context);
+      default:
+        return "Unknown message...".tr(context);
+    }
+  }
+
+  String getUserMessageBody(BuildContext context) {
     switch (this) {
       case OrderStatus.pending:
         return "Your order is in the queue and awaiting review by the mall."
@@ -98,6 +116,25 @@ enum OrderStatus {
         return "Your order has been rejected by the mall.".tr(context);
       default:
         return "An unexpected error occurred with your order.".tr(context);
+    }
+  }
+
+  String getStoreMessageBody(BuildContext context) {
+    switch (this) {
+      case OrderStatus.pending:
+        return "A new order is in the queue and awaiting your review."
+            .tr(context);
+      case OrderStatus.completed:
+        return "You have reviewed the order. Please prepare it for delivery."
+            .tr(context);
+      case OrderStatus.sent:
+        return "The order has been delivered to the customer.".tr(context);
+      case OrderStatus.cancelled:
+        return "The order has been cancelled by the customer.".tr(context);
+      case OrderStatus.rejected:
+        return "You have rejected the customer's order.".tr(context);
+      default:
+        return "An unexpected error occurred with the order.".tr(context);
     }
   }
 
@@ -119,7 +156,7 @@ enum OrderStatus {
     }
   }
 
-  Widget getIcon(BuildContext context) {
+  Widget getIcon(BuildContext context, bool isStore) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -131,7 +168,7 @@ enum OrderStatus {
         const SizedBox(height: 4),
         Text(
           textAlign: TextAlign.center,
-          getBody(context),
+          (isStore) ? getStoreMessageBody(context) : getUserMessageBody(context),
           style: Theme.of(context).textTheme.bodyLarge,
         )
       ],
@@ -142,7 +179,7 @@ enum OrderStatus {
     return Chip(
       label: Text(
         getLabel(context).toUpperCase(),
-        style: const TextStyle(color: Colors.white).copyWith(fontSize: 12),
+        style: const TextStyle(color: Colors.white).copyWith(fontSize: 10),
       ),
       backgroundColor: getStatusColor(),
     );

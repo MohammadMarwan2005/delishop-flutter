@@ -1,4 +1,6 @@
 import 'package:delishop/core/lang/app_localization.dart';
+import 'package:delishop/core/theme/delishop_colors.dart';
+import 'package:delishop/core/widgets/delishop_button.dart';
 import 'package:delishop/core/widgets/error_message.dart';
 import 'package:delishop/core/widgets/lets_search_widget.dart';
 import 'package:delishop/core/widgets/loading.dart';
@@ -123,15 +125,33 @@ class _SearchScreenState extends State<SearchScreen> {
                             onSuccess: (data) {
                               if (data.stores.isEmpty &&
                                   data.products.isEmpty) {
-                                return NoResultMessage(
-                                  messageLabel: context
-                                      .read<SearchCubit>()
-                                      .getProductsOrStoresFoundForThisKeywordInThisCategory(
-                                          context),
-                                  buttonLabel: "Try Again".tr(context),
-                                  onButtonClicked: () {
-                                    context.read<SearchCubit>().search();
-                                  },
+                                return Column(
+                                  children: [
+                                    NoResultMessage(
+                                      messageLabel: context
+                                          .read<SearchCubit>()
+                                          .getProductsOrStoresFoundForThisKeywordInThisCategory(
+                                              context),
+                                      buttonLabel: "Try Again".tr(context),
+                                      onButtonClicked: () {
+                                        context.read<SearchCubit>().search();
+                                      },
+                                    ),
+                                    const SizedBox(height: 16),
+                                    DelishopButton(
+                                        onPressed: () {
+                                          // todo: notifyMe() function in Cubit, Repo and APIService
+                                        }, text: "Notify Me".tr(context)),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      "You'll be notified when a product or store matching your search is added.".tr(context),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall?.copyWith(color: DelishopColors.grey),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 16),
+                                  ],
                                 );
                               }
                               return Column(

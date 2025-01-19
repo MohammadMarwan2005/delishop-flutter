@@ -21,7 +21,7 @@ class AddUserScreen extends StatefulWidget {
 
 class _AddUserScreenState extends State<AddUserScreen> {
   final _formKey = GlobalKey<FormState>();
-  int roleId = 3;
+  int roleId = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +111,7 @@ class UserRoleSelector extends StatelessWidget {
     final roles = {
       RoleIds.superAdmin: 'Super Admin'.tr(context),
       RoleIds.mall: 'Mall'.tr(context),
-      RoleIds.user: 'User'.tr(context),
+      // RoleIds.user: 'User'.tr(context), // We don't want to create user now, because the back-end is not calling createProfile until now...
     };
 
     return Container(

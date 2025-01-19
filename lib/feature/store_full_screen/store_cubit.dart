@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:delishop/core/data/api_consts.dart';
 import 'package:delishop/core/data/model/product/product_list_response_model.dart';
 import 'package:delishop/core/data/repo/ga_repo.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
@@ -63,8 +64,7 @@ class StoreCubit extends Cubit<StoreState> {
     emit(state.copyWith(
         products: const UIState(
           isLoading: true,
-        ),
-        store: const UIState(isLoading: true)));
+        )));
     ResponseResult<ProductListResponseModel> productsResult =
         await _productRepo.getProductsByStoreId(storeId);
 

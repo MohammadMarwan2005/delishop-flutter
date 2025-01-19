@@ -1,6 +1,7 @@
-extension ImageStringHelper on String {
+extension ImageStringHelper on String? {
   String validatePicture() {
-    final splits = split("/");
+    if(this == null) return "";
+    final splits = this!.split("/");
     return "http://195.88.87.77:8008/storage/uploads/${splits.last}";
   }
 }

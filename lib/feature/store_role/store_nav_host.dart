@@ -1,4 +1,5 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:delishop/core/di/di_get_it.dart';
 import 'package:delishop/core/lang/app_localization.dart';
 import 'package:delishop/core/theme/delishop_colors.dart';
 import 'package:delishop/core/widgets/logout_button.dart';
@@ -6,11 +7,17 @@ import 'package:delishop/core/widgets/toggle_lang_button.dart';
 import 'package:delishop/feature/admin_role/admin_nav_host.dart';
 import 'package:delishop/feature/global/global_cubit.dart';
 import 'package:delishop/feature/product_full_screen/product_full_screen.dart';
+import 'package:delishop/feature/store_role/my_products/cubit/my_products_cubit.dart';
+import 'package:delishop/feature/store_role/my_store/cubit/my_store_cubit.dart';
+import 'package:delishop/feature/store_role/my_store/my_store_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/theme/delishop_text_styles.dart';
 import '../admin_role/history/history_screen.dart';
+import '../order/cubit/order_cubit.dart';
+import '../order/my_orders_screen.dart';
+import 'my_products/my_products_screen.dart';
 
 class StoreNavHost extends StatelessWidget {
   const StoreNavHost({super.key});
@@ -65,9 +72,18 @@ class StoreNavHost extends StatelessWidget {
 }
 
 List<Widget> mallViews = [
-  const StoreOrdersScreen(),
-  const StoreInfoScreen(),
-  const MyProductsScreen(),
+  BlocProvider<OrderCubit>(
+    create: (context) => getIt(),
+    child: const MyOrdersScreen(),
+  ),
+  BlocProvider<MyStoreCubit>(
+    create: (context) => getIt(),
+    child: const MyStoreScreen(),
+  ),
+  BlocProvider<MyProductsCubit>(
+    create: (context) => getIt(),
+    child: const MyProductsScreen(),
+  ),
 ];
 
 List<BottomNavyBarItem> getStoreBottomNavBarItems(
@@ -82,17 +98,15 @@ List<BottomNavyBarItem> getStoreBottomNavBarItems(
       inactiveColor: DelishopColors.grey,
     ),
     BottomNavyBarItem(
-      icon: Icon(selectedBottomNavBarIndex == 1
-          ? Icons.info
-          : Icons.info_outline),
+      icon: Icon(
+          selectedBottomNavBarIndex == 1 ? Icons.info : Icons.info_outline),
       title: Text("Mall Info".tr(context)),
       activeColor: DelishopColors.primary,
       inactiveColor: DelishopColors.grey,
     ),
     BottomNavyBarItem(
-      icon: Icon(selectedBottomNavBarIndex == 2
-          ? Icons.list
-          : Icons.list_outlined),
+      icon: Icon(
+          selectedBottomNavBarIndex == 2 ? Icons.list : Icons.list_outlined),
       title: Text("Products".tr(context)),
       activeColor: DelishopColors.primary,
       inactiveColor: DelishopColors.grey,
@@ -107,35 +121,6 @@ class StoreOrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Text("Mall Orders"),
-    );
-  }
-}
-
-class StoreInfoScreen extends StatelessWidget {
-  const StoreInfoScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text("StoreInfoScreen"),
-          LogoutButton(),
-          ToggleLangButton()
-        ],
-      ),
-    );
-  }
-}
-
-class MyProductsScreen extends StatelessWidget {
-  const MyProductsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text("MyProductsScreen"),
     );
   }
 }

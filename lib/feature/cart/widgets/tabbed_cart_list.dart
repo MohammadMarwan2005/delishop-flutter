@@ -61,7 +61,7 @@ class _TabbedCartListState extends State<TabbedCartList> {
                     onPressed: enabled
                         ? () {
                             context.push(BlocProvider<OrderCubit>(
-                              create: (context) => OrderCubit(getIt()),
+                              create: (context) => OrderCubit(getIt(), getIt()),
                               child: OrderSummeryScreen(
                                   order: data[selectedIndex.getIndex(data)],
                                   quants: state.productsQuants),

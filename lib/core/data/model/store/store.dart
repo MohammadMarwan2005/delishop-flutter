@@ -11,7 +11,7 @@ class Store with _$Store {
     @JsonKey(name: "user_id") required int userId,
     @JsonKey(name: "category_id") required int categoryId,
     required String name,
-    @JsonKey(name: "store_picture") required String storePicture,
+    @JsonKey(name: "store_picture") String? storePicture,
     @JsonKey(name: "location_name") required String locationName,
     @JsonKey(name: "location_url") required String locationUrl,
     required String description,

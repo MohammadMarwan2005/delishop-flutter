@@ -21,6 +21,7 @@ abstract class ApiConsts {
   static const String createOrder = "$baseUrl/order/createOrder";
   static const String updateOrder = "$baseUrl/order/updateStatusOrder";
   static const String getMyOrdersUrl = "$baseUrl/order/getUserOrders";
+  static const String getMyStoreOrdersUrl = "$baseUrl/order/getMyStoreOrders";
   static const String searchUrl = "$baseUrl/categories/search";
   static const String getProfileUrl = "$baseUrl/profile/getProfile";
   static const String updateProfileUrl = "$baseUrl/profile/updateProfile";
@@ -35,6 +36,11 @@ abstract class ApiConsts {
   static const String depositMoneyUrl = "$baseUrl/wallet/deposit";
   static const String createUserUrl = "$baseUrl/user/creatUser";
   static const String getTransactionsUrl = "$baseUrl/wallet/getTransactionsDeposit";
+  static const String getMyStoreUrl = "$baseUrl/store/getMyStore";
+  static const String updateMyStoreUrl = "$baseUrl/store/update";
+  static const String getMyProductsUrl = "$baseUrl/product/getProductsMyStore";
+  static const String createProductUrl = "$baseUrl/product/create";
+  static const String updateProductUrl = "$baseUrl/product/update";
 }
 
 abstract class StatusCodes {

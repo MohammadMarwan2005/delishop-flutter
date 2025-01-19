@@ -17,6 +17,8 @@ import 'package:delishop/feature/home/home_cubit.dart';
 import 'package:delishop/feature/order/cubit/order_cubit.dart';
 import 'package:delishop/feature/profile/cubit/profile_cubit.dart';
 import 'package:delishop/feature/search/cubit/search_cubit.dart';
+import 'package:delishop/feature/store_role/my_products/cubit/my_products_cubit.dart';
+import 'package:delishop/feature/store_role/my_store/cubit/my_store_cubit.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -104,12 +106,14 @@ Future<void> initializeDependencies() async {
 
   getIt.registerFactory<OrderRepo>(() => OrderRepo(getIt(), getIt()));
 
-  getIt.registerFactory<OrderCubit>(() => OrderCubit(getIt()));
+  getIt.registerFactory<OrderCubit>(() => OrderCubit(getIt(), getIt()));
   getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt(), getIt()));
 
   getIt.registerFactory<DepositMoneyCubit>(() => DepositMoneyCubit(getIt()));
   getIt.registerFactory<AddStoreCubit>(() => AddStoreCubit(getIt()));
   getIt.registerFactory<HistoryCubit>(() => HistoryCubit(getIt()));
+  getIt.registerFactory<MyProductsCubit>(() => MyProductsCubit(getIt()));
+  getIt.registerFactory<MyStoreCubit>(() => MyStoreCubit(getIt(), getIt(), getIt()));
 
   getIt.registerLazySingleton<LangCodeCubit>(
       () => LangCodeCubit(getIt(), getIt()));

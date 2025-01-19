@@ -134,6 +134,19 @@ class ApiService {
     });
   }
 
+  Future<ResponseResult<Store>> getMyStore() async {
+    final token = await _userDataRepo.getToken();
+    final http.Response httpResponse = await _httpClient
+        .get(
+          Uri.parse(ApiConsts.getMyStoreUrl),
+          headers: CommonConsts.getTokenHeader(token),
+        )
+        .then((value) => value.getDataResponse());
+    return httpResponse.handle(jsonToModel: (jsonMap) {
+      return Store.fromJson(jsonMap);
+    });
+  }
+
   Future<ResponseResult<StoreListResponseModel>> getStoresByCategoryId(
       int categoryId) async {
     final http.Response httpResponse = await _httpClient.get(
@@ -306,18 +319,35 @@ class ApiService {
     );
   }
 
-  Future<ResponseResult<int>> updateOrderStatus(
-      int orderId, OrderStatus newStatus) async {
+  Future<ResponseResult<OrderListResponse>> getMyStoreOrders() async {
+    final http.Response httpResponse = await _httpClient.get(
+      Uri.parse(ApiConsts.getMyStoreOrdersUrl),
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+    );
+    return httpResponse.handle(
+      jsonToModel: (jsonMap) {
+        return OrderListResponse.fromJson(jsonMap);
+      },
+    );
+  }
+
+  Future<ResponseResult<OrderResponse>> updateOrderStatus(
+      int orderId, OrderStatus newStatus,
+      {String? message}) async {
     final http.Response httpResponse = await _httpClient
         .post(Uri.parse(ApiConsts.updateOrder),
             headers:
                 CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
-            body: jsonEncode(
-                {"order_id": orderId, "status": newStatus.stringValue}))
+            body: jsonEncode({
+              "order_id": orderId,
+              "status": newStatus.stringValue,
+              "message": message
+            }))
         .then((value) => value.getDataResponse());
+    print("Change Status: ${httpResponse.body}");
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
-        return jsonMap["id"];
+        return OrderResponse.fromJson(jsonMap);
       },
     );
   }
@@ -353,7 +383,6 @@ class ApiService {
     );
   }
 
-
   Future<ResponseResult<AuthResponseModel>> createUser(User user) async {
     final http.Response httpResponse = await _httpClient.post(
       Uri.parse(ApiConsts.createUserUrl),
@@ -364,42 +393,120 @@ class ApiService {
       return AuthResponseModel.fromJson(jsonMap);
     });
   }
+
   Future<ResponseResult<TransactionListResponse>> getTransactions() async {
     final http.Response httpResponse = await _httpClient.get(
-      Uri.parse(ApiConsts.getTransactionsUrl),
-      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken())
-    );
+        Uri.parse(ApiConsts.getTransactionsUrl),
+        headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()));
     print(httpResponse.body);
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return TransactionListResponse.fromJson(jsonMap);
     });
   }
 
+  Future<ResponseResult<ProductListResponseModel>> getMyProducts() async {
+    final http.Response httpResponse = await _httpClient.get(
+      Uri.parse(ApiConsts.getMyProductsUrl),
+      headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+    );
+    print("getMyProducts" + httpResponse.body);
+    return httpResponse.handle(jsonToModel: (jsonMap) {
+      return ProductListResponseModel.fromJson(jsonMap);
+    });
+  }
+
   Future<ResponseResult<Profile>> updateProfile(
       Profile profile, File? image) async {
-    var request =
-        http.MultipartRequest("POST", ApiConsts.updateProfileUrl.getUri());
-    final token = await _userDataRepo.getToken();
+    return await updateWithImage(
+      url: ApiConsts.updateProfileUrl.getUri(),
+      body: profile.toJson(),
+      imageKey: "profile_picture",
+      image: image,
+      token: await _userDataRepo.getToken(),
+      jsonToModel: (jsonMap) {
+        return Profile.fromJson(jsonMap);
+      },
+    );
+  }
+
+  Future<ResponseResult<Product>> createProduct(
+      Product product, File? image) async {
+    return await updateWithImage(
+      url: ApiConsts.createProductUrl.getUri(),
+      body: product.toJson(),
+      imageKey: "product_picture",
+      image: image,
+      token: await _userDataRepo.getToken(),
+      jsonToModel: (jsonMap) {
+        return Product.fromJson(jsonMap);
+      },
+    );
+  }
+
+  Future<ResponseResult<Product>> updateProduct(
+      Product product, File? image) async {
+    return await updateWithImage(
+      url: ApiConsts.updateProductUrl.getUri(),
+      body: product.toJson()
+        ..remove('id')
+        ..['product_id'] = product.id,
+      imageKey: "product_picture",
+      image: image,
+      token: await _userDataRepo.getToken(),
+      jsonToModel: (jsonMap) {
+        return Product.fromJson(jsonMap);
+      },
+    );
+  }
+
+  Future<ResponseResult<Store>> updateMyStore(Store store, File? image) async {
+    return await updateWithImage(
+      url: ApiConsts.updateMyStoreUrl.getUri(),
+      body: store.toJson(),
+      imageKey: "store_picture",
+      image: image,
+      token: await _userDataRepo.getToken(),
+      jsonToModel: (jsonMap) {
+        return Store.fromJson(jsonMap);
+      },
+    );
+  }
+
+  Future<ResponseResult<T>> updateWithImage<T>(
+      {required Uri url,
+      required Map<String, dynamic> body,
+      required String imageKey,
+      required File? image,
+      required String token,
+      required T Function(Map<String, dynamic> jsonMap) jsonToModel}) async {
+    var request = http.MultipartRequest("POST", url);
     request.headers.addAll({
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${token}',
+      'Authorization': 'Bearer $token',
     });
-    request.fields.addAll(profile.toJsonWithoutPictureField());
 
+    body.remove(imageKey);
+    print("currentMap" + body.toString());
+    final bodyWithoutImageKey =
+        body.map((key, value) => MapEntry(key, value.toString()));
+
+    request.fields.addAll(bodyWithoutImageKey);
     if (image != null) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          "profile_picture",
+          imageKey,
           image.path,
         ),
       );
     }
+
     final streamedResponse = await request.send();
     final httpResponse = await http.Response.fromStream(streamedResponse)
         .then((value) => value.getDataResponse());
+    print(httpResponse.body);
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
-        return Profile.fromJson(jsonMap);
+        return jsonToModel(jsonMap);
       },
     );
   }

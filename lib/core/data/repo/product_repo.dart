@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:delishop/core/helpers/internet_check_helper.dart';
 
@@ -10,7 +12,10 @@ class ProductRepo {
   final ApiService _apiService;
   final Connectivity _connectivity;
 
-  ProductRepo({required ApiService apiService, required Connectivity connectivity}) : _connectivity = connectivity, _apiService = apiService;
+  ProductRepo(
+      {required ApiService apiService, required Connectivity connectivity})
+      : _connectivity = connectivity,
+        _apiService = apiService;
 
   Future<ResponseResult<ProductListResponseModel>> getAllProducts() async {
     return await _connectivity.checkInternetBefore(
@@ -19,6 +24,7 @@ class ProductRepo {
       },
     );
   }
+
   Future<ResponseResult<Product>> getProductById(int id) async {
     return await _connectivity.checkInternetBefore(
       onInternetConnected: () {
@@ -27,10 +33,37 @@ class ProductRepo {
     );
   }
 
-  Future<ResponseResult<ProductListResponseModel>> getProductsByStoreId(int storeId) async {
+  Future<ResponseResult<ProductListResponseModel>> getProductsByStoreId(
+      int storeId) async {
     return await _connectivity.checkInternetBefore(
       onInternetConnected: () {
         return _apiService.getProductsByStoreId(storeId);
+      },
+    );
+  }
+
+  /// a function for the store role...
+  Future<ResponseResult<ProductListResponseModel>> getMyProducts() async {
+    return await _connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return _apiService.getMyProducts();
+      },
+    );
+  }
+
+  Future<ResponseResult<Product>> createProduct(
+      Product product, File? image) async {
+    return await _connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return _apiService.createProduct(product, image);
+      },
+    );
+  }
+  Future<ResponseResult<Product>> updateProduct(
+      Product product, File? image) async {
+    return await _connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return _apiService.updateProduct(product, image);
       },
     );
   }

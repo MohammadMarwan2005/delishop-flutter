@@ -17,6 +17,7 @@ _$OrderResponseImpl _$$OrderResponseImplFromJson(Map<String, dynamic> json) =>
       orderDate: json['order_date'] as String,
       status: $enumDecode(_$OrderStatusEnumMap, json['status']),
       description: json['description'] as String?,
+      message: json['message'] as String?,
       productOrders: (json['products_order'] as List<dynamic>)
           .map((e) => ProductOrder.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -31,6 +32,7 @@ Map<String, dynamic> _$$OrderResponseImplToJson(_$OrderResponseImpl instance) =>
       'order_date': instance.orderDate,
       'status': _$OrderStatusEnumMap[instance.status]!,
       'description': instance.description,
+      'message': instance.message,
       'products_order': instance.productOrders,
     };
 

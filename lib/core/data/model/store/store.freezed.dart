@@ -27,7 +27,7 @@ mixin _$Store {
   int get categoryId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: "store_picture")
-  String get storePicture => throw _privateConstructorUsedError;
+  String? get storePicture => throw _privateConstructorUsedError;
   @JsonKey(name: "location_name")
   String get locationName => throw _privateConstructorUsedError;
   @JsonKey(name: "location_url")
@@ -59,7 +59,7 @@ abstract class $StoreCopyWith<$Res> {
       @JsonKey(name: "user_id") int userId,
       @JsonKey(name: "category_id") int categoryId,
       String name,
-      @JsonKey(name: "store_picture") String storePicture,
+      @JsonKey(name: "store_picture") String? storePicture,
       @JsonKey(name: "location_name") String locationName,
       @JsonKey(name: "location_url") String locationUrl,
       String description,
@@ -87,7 +87,7 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
     Object? userId = null,
     Object? categoryId = null,
     Object? name = null,
-    Object? storePicture = null,
+    Object? storePicture = freezed,
     Object? locationName = null,
     Object? locationUrl = null,
     Object? description = null,
@@ -112,10 +112,10 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      storePicture: null == storePicture
+      storePicture: freezed == storePicture
           ? _value.storePicture
           : storePicture // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       locationName: null == locationName
           ? _value.locationName
           : locationName // ignore: cast_nullable_to_non_nullable
@@ -156,7 +156,7 @@ abstract class _$$storeImplCopyWith<$Res> implements $StoreCopyWith<$Res> {
       @JsonKey(name: "user_id") int userId,
       @JsonKey(name: "category_id") int categoryId,
       String name,
-      @JsonKey(name: "store_picture") String storePicture,
+      @JsonKey(name: "store_picture") String? storePicture,
       @JsonKey(name: "location_name") String locationName,
       @JsonKey(name: "location_url") String locationUrl,
       String description,
@@ -182,7 +182,7 @@ class __$$storeImplCopyWithImpl<$Res>
     Object? userId = null,
     Object? categoryId = null,
     Object? name = null,
-    Object? storePicture = null,
+    Object? storePicture = freezed,
     Object? locationName = null,
     Object? locationUrl = null,
     Object? description = null,
@@ -207,10 +207,10 @@ class __$$storeImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      storePicture: null == storePicture
+      storePicture: freezed == storePicture
           ? _value.storePicture
           : storePicture // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       locationName: null == locationName
           ? _value.locationName
           : locationName // ignore: cast_nullable_to_non_nullable
@@ -247,7 +247,7 @@ class _$storeImpl implements _store {
       @JsonKey(name: "user_id") required this.userId,
       @JsonKey(name: "category_id") required this.categoryId,
       required this.name,
-      @JsonKey(name: "store_picture") required this.storePicture,
+      @JsonKey(name: "store_picture") this.storePicture,
       @JsonKey(name: "location_name") required this.locationName,
       @JsonKey(name: "location_url") required this.locationUrl,
       required this.description,
@@ -270,7 +270,7 @@ class _$storeImpl implements _store {
   final String name;
   @override
   @JsonKey(name: "store_picture")
-  final String storePicture;
+  final String? storePicture;
   @override
   @JsonKey(name: "location_name")
   final String locationName;
@@ -357,7 +357,7 @@ abstract class _store implements Store {
       @JsonKey(name: "user_id") required final int userId,
       @JsonKey(name: "category_id") required final int categoryId,
       required final String name,
-      @JsonKey(name: "store_picture") required final String storePicture,
+      @JsonKey(name: "store_picture") final String? storePicture,
       @JsonKey(name: "location_name") required final String locationName,
       @JsonKey(name: "location_url") required final String locationUrl,
       required final String description,
@@ -379,7 +379,7 @@ abstract class _store implements Store {
   String get name;
   @override
   @JsonKey(name: "store_picture")
-  String get storePicture;
+  String? get storePicture;
   @override
   @JsonKey(name: "location_name")
   String get locationName;

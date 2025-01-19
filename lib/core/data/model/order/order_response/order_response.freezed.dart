@@ -33,6 +33,8 @@ mixin _$OrderResponse {
   OrderStatus get status => throw _privateConstructorUsedError;
   @JsonKey(name: "description")
   String? get description => throw _privateConstructorUsedError;
+  @JsonKey(name: "message")
+  String? get message => throw _privateConstructorUsedError;
   @JsonKey(name: "products_order")
   List<ProductOrder> get productOrders => throw _privateConstructorUsedError;
 
@@ -60,6 +62,7 @@ abstract class $OrderResponseCopyWith<$Res> {
       @JsonKey(name: "order_date") String orderDate,
       @JsonKey(name: "status") OrderStatus status,
       @JsonKey(name: "description") String? description,
+      @JsonKey(name: "message") String? message,
       @JsonKey(name: "products_order") List<ProductOrder> productOrders});
 
   $StoreCopyWith<$Res> get store;
@@ -88,6 +91,7 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
     Object? orderDate = null,
     Object? status = null,
     Object? description = freezed,
+    Object? message = freezed,
     Object? productOrders = null,
   }) {
     return _then(_value.copyWith(
@@ -118,6 +122,10 @@ class _$OrderResponseCopyWithImpl<$Res, $Val extends OrderResponse>
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
               as String?,
       productOrders: null == productOrders
           ? _value.productOrders
@@ -167,6 +175,7 @@ abstract class _$$OrderResponseImplCopyWith<$Res>
       @JsonKey(name: "order_date") String orderDate,
       @JsonKey(name: "status") OrderStatus status,
       @JsonKey(name: "description") String? description,
+      @JsonKey(name: "message") String? message,
       @JsonKey(name: "products_order") List<ProductOrder> productOrders});
 
   @override
@@ -195,6 +204,7 @@ class __$$OrderResponseImplCopyWithImpl<$Res>
     Object? orderDate = null,
     Object? status = null,
     Object? description = freezed,
+    Object? message = freezed,
     Object? productOrders = null,
   }) {
     return _then(_$OrderResponseImpl(
@@ -226,6 +236,10 @@ class __$$OrderResponseImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
       productOrders: null == productOrders
           ? _value._productOrders
           : productOrders // ignore: cast_nullable_to_non_nullable
@@ -245,6 +259,7 @@ class _$OrderResponseImpl implements _OrderResponse {
       @JsonKey(name: "order_date") required this.orderDate,
       @JsonKey(name: "status") required this.status,
       @JsonKey(name: "description") this.description,
+      @JsonKey(name: "message") this.message,
       @JsonKey(name: "products_order")
       required final List<ProductOrder> productOrders})
       : _productOrders = productOrders;
@@ -272,6 +287,9 @@ class _$OrderResponseImpl implements _OrderResponse {
   @override
   @JsonKey(name: "description")
   final String? description;
+  @override
+  @JsonKey(name: "message")
+  final String? message;
   final List<ProductOrder> _productOrders;
   @override
   @JsonKey(name: "products_order")
@@ -283,7 +301,7 @@ class _$OrderResponseImpl implements _OrderResponse {
 
   @override
   String toString() {
-    return 'OrderResponse(id: $id, store: $store, location: $location, totalAmount: $totalAmount, orderDate: $orderDate, status: $status, description: $description, productOrders: $productOrders)';
+    return 'OrderResponse(id: $id, store: $store, location: $location, totalAmount: $totalAmount, orderDate: $orderDate, status: $status, description: $description, message: $message, productOrders: $productOrders)';
   }
 
   @override
@@ -302,6 +320,7 @@ class _$OrderResponseImpl implements _OrderResponse {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality()
                 .equals(other._productOrders, _productOrders));
   }
@@ -317,6 +336,7 @@ class _$OrderResponseImpl implements _OrderResponse {
       orderDate,
       status,
       description,
+      message,
       const DeepCollectionEquality().hash(_productOrders));
 
   /// Create a copy of OrderResponse
@@ -344,6 +364,7 @@ abstract class _OrderResponse implements OrderResponse {
       @JsonKey(name: "order_date") required final String orderDate,
       @JsonKey(name: "status") required final OrderStatus status,
       @JsonKey(name: "description") final String? description,
+      @JsonKey(name: "message") final String? message,
       @JsonKey(name: "products_order")
       required final List<ProductOrder> productOrders}) = _$OrderResponseImpl;
 
@@ -370,6 +391,9 @@ abstract class _OrderResponse implements OrderResponse {
   @override
   @JsonKey(name: "description")
   String? get description;
+  @override
+  @JsonKey(name: "message")
+  String? get message;
   @override
   @JsonKey(name: "products_order")
   List<ProductOrder> get productOrders;

@@ -1,45 +1,36 @@
-import 'package:delishop/core/data/model/domain_error_model.dart';
-import 'package:delishop/core/data/model/profile/profile.dart';
-import 'package:delishop/core/helpers/navigation_helper.dart';
 import 'package:delishop/core/lang/app_localization.dart';
-import 'package:delishop/core/widgets/condition_text.dart';
-import 'package:delishop/core/widgets/delishop_button.dart';
-import 'package:delishop/core/widgets/delishop_text_field.dart';
-import 'package:delishop/core/widgets/error_message.dart';
-import 'package:delishop/core/widgets/loading.dart';
-import 'package:delishop/core/widgets/logout_button.dart';
-import 'package:delishop/core/widgets/toggle_lang_button.dart';
-import 'package:delishop/feature/profile/cubit/profile_cubit.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:delishop/feature/store_role/add_update_product/cubit/add_update_product_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/widgets/delishop_button.dart';
+import '../../../core/widgets/delishop_text_field.dart';
+import '../../../core/widgets/error_message.dart';
+import '../../../core/widgets/loading.dart';
+import '../../profile/profile_screen.dart';
 
-import '../../core/widgets/delishop_text_button.dart';
-import '../auth/login/login_screen.dart';
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class AddUpdateProductScreen extends StatelessWidget {
+  const AddUpdateProductScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile".tr(context)),
+        title: Text("Add & Update Product".tr(context)),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
-              BlocBuilder<ProfileCubit, ProfileState>(
+              BlocBuilder<AddUpdateProductCubit, AddUpdateProductState>(
                 builder: (context, state) {
-                  return state.profile.when(
+                  return state.product.when(
                     onLoading: () {
                       return const Loading();
                     },
                     onSuccess: (data) {
-                      final cubit = context.read<ProfileCubit>();
+                      final cubit = context.read<AddUpdateProductCubit>();
                       return Column(
                         children: [
                           Stack(
@@ -56,9 +47,9 @@ class ProfileScreen extends StatelessWidget {
                                             height: 200.h,
                                             fit: BoxFit.cover,
                                           )
-                                        : (data.imageUrl != null)
+                                        : (data?.productPicture != null)
                                             ? Image.network(
-                                                data.imageUrl!,
+                                                data!.productPicture!,
                                                 width: 200.h,
                                                 height: 200.h,
                                                 fit: BoxFit.cover,
@@ -95,22 +86,32 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 32),
                           DelishopTextField(
-                              labelText: "First Name".tr(context),
-                              textEditingController: cubit.firstNameController),
+                              labelText: "Product Name".tr(context),
+                              textEditingController: cubit.nameController),
                           const SizedBox(height: 16),
                           DelishopTextField(
-                              labelText: "Last Name".tr(context),
-                              textEditingController: cubit.lastNameController),
+                              labelText: "Product Description".tr(context),
+                              textEditingController:
+                                  cubit.descriptionController),
                           const SizedBox(height: 16),
                           DelishopTextField(
-                              labelText: "Phone Number".tr(context),
-                              textEditingController: cubit.phoneNumberController),
+                              labelText: "Price".tr(context),
+                              textEditingController: cubit.priceController),
+                          const SizedBox(height: 16),
+                          DelishopTextField(
+                              labelText: "Discount".tr(context),
+                              textEditingController: cubit.discountController),
+                          const SizedBox(height: 16),
+                          DelishopTextField(
+                              labelText: "Quantity".tr(context),
+                              textEditingController: cubit.quantityController),
                           const SizedBox(height: 32),
                           DelishopButton(
                               onPressed: () {
-                                cubit.updateProfile();
+                                cubit.postProduct();
                               },
                               text: "Save".tr(context)),
+                          SizedBox(height: 48.h),
                         ],
                       );
                     },
@@ -119,30 +120,17 @@ class ProfileScreen extends StatelessWidget {
                         message:
                             "${domainError.getMessage(context)}\n${domainError.details.firstOrNull ?? ""}",
                         onTryAgain: () {
-                          context.read<ProfileCubit>().fetchProfile();
+                          context.read<AddUpdateProductCubit>().emitCachedData();
                         },
                       );
                     },
                   );
                 },
               ),
-              SizedBox(height: 48.h),
-              const ToggleLangButton(),
-              SizedBox(height: 8.h),
-              const LogoutButton(),
             ],
           ),
         ),
       ),
     );
-  }
-}
-
-Widget reusableLoadingBuilder(
-    BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-  if (loadingProgress == null) {
-    return child;
-  } else {
-    return const Loading();
   }
 }

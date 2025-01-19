@@ -11,7 +11,7 @@ _$storeImpl _$$storeImplFromJson(Map<String, dynamic> json) => _$storeImpl(
       userId: (json['user_id'] as num).toInt(),
       categoryId: (json['category_id'] as num).toInt(),
       name: json['name'] as String,
-      storePicture: json['store_picture'] as String,
+      storePicture: json['store_picture'] as String?,
       locationName: json['location_name'] as String,
       locationUrl: json['location_url'] as String,
       description: json['description'] as String,

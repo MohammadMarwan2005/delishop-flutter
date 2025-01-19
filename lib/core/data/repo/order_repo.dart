@@ -30,10 +30,27 @@ class OrderRepo {
       },
     );
   }
-  Future<ResponseResult<int>> cancelOrder(int orderId) async {
+
+  Future<ResponseResult<OrderListResponse>> getMyStoreOrders() async {
+    return _connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return _apiService.getMyStoreOrders();
+      },
+    );
+  }
+
+  Future<ResponseResult<OrderResponse>> cancelOrder(int orderId) async {
     return _connectivity.checkInternetBefore(
       onInternetConnected: () {
         return _apiService.updateOrderStatus(orderId, OrderStatus.cancelled);
+      },
+    );
+  }
+
+  Future<ResponseResult<OrderResponse>> updateOrderStatus(int orderId, OrderStatus orderStatus, {String? message}) async {
+    return _connectivity.checkInternetBefore(
+      onInternetConnected: () {
+        return _apiService.updateOrderStatus(orderId, orderStatus, message: message);
       },
     );
   }

@@ -44,16 +44,12 @@ class BottomNavHost extends StatelessWidget {
                       const WalletLabel(),
                       Row(
                         children: [
-                          // CircleAvatar(
-                          // backgroundColor: const Color(0xFF979797).withOpacity(0.1),
-                          // child:
                           IconButton(
                               tooltip: "Notifications".tr(context),
                               onPressed: () {},
                               color: Colors.black,
                               icon: const Icon(Icons.notifications_none)
                                   .getBadged(1)),
-                          // ),
                           IconButton(
                             tooltip: "Cart".tr(context),
                             onPressed: () {
@@ -91,7 +87,8 @@ class BottomNavHost extends StatelessWidget {
                     .read<GlobalCubit>()
                     .changeSelectedBottomNavBarIndexIndex(index);
               },
-              items: getUserBottomItems(state.selectedBottomNavBarIndex, context),
+              items:
+                  getUserBottomItems(state.selectedBottomNavBarIndex, context),
             ),
           ),
         );
