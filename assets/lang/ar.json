@@ -163,5 +163,8 @@
   "Please provide a reason for rejecting the order.": "الرجاء تقديم سبب رفض الطلب",
   "Rejection Reason": "سبب الرفض",
   "Are you sure you want to accept this order? This action cannot be undone.": "هل أنت متأكد أنك تريد قبول هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء.",
-  "Optional Notes": "ملاحظات (اختياري)"
+  "Optional Notes": "ملاحظات (اختياري)",
+  "Malls in ": "المتاجر في ",
+  "No products in the category ": "لا يوجد متاجر في الفئة ",
+  "Go Back": "ارحع"
 }

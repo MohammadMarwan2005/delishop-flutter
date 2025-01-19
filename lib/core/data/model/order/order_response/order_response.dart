@@ -177,9 +177,10 @@ enum OrderStatus {
 
   Widget getChip(BuildContext context) {
     return Chip(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2),
       label: Text(
         getLabel(context).toUpperCase(),
-        style: const TextStyle(color: Colors.white).copyWith(fontSize: 10),
+        style: const TextStyle(color: Colors.white).copyWith(fontSize: 9),
       ),
       backgroundColor: getStatusColor(),
     );

@@ -61,7 +61,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     final isUser = context.read<OrderCubit>().isUser();
-                    return OrderCard(orderResponse: data[index], isStore: !isUser);
+                    return OrderCard(
+                        orderResponse: data[index], isStore: !isUser);
                   },
                 ),
               );
@@ -114,8 +115,7 @@ class OrderCard extends StatelessWidget {
                 alignment: AlignmentDirectional.topEnd,
                 children: [
                   Padding(
-                    padding:
-                    const EdgeInsets.only(top: 16, left: 8, right: 8),
+                    padding: const EdgeInsets.only(top: 16, left: 8, right: 8),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -125,7 +125,7 @@ class OrderCard extends StatelessWidget {
                             clipBehavior: Clip.none,
                             children: List.generate(
                               3,
-                                  (index) {
+                              (index) {
                                 if (index >=
                                     orderResponse.productOrders.length) {
                                   return const SizedBox.shrink();
@@ -151,9 +151,7 @@ class OrderCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${orderResponse.productOrders
-                                    .length} ${"Products from".tr(
-                                    context)} ${orderResponse.store.name}",
+                                "${orderResponse.productOrders.length} ${"Products from".tr(context)} ${orderResponse.store.name}",
                                 style: const TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -161,29 +159,26 @@ class OrderCard extends StatelessWidget {
                               LocationLabel(location: orderResponse.location),
                               const SizedBox(height: 4),
                               Text(
-                                "${"Ordered on".tr(context)}: ${orderResponse
-                                    .orderDate}",
+                                "${"Ordered on".tr(context)}: ${orderResponse.orderDate}",
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.grey[600]),
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                "${"Total:".tr(context)}  \$${orderResponse
-                                    .totalAmount}",
+                                "${"Total:".tr(context)}  \$${orderResponse.totalAmount}",
                                 style: DelishopTextStyles.priceStyle,
                               ),
                               const SizedBox(height: 8),
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: orderResponse.status.getChip(context),
+                        )
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 8),
-                    child: orderResponse.status.getChip(context),
-                  )
                 ],
               ),
             ),

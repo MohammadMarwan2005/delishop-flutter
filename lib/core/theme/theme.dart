@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DelishopTheme {
   static ThemeData lightTheme = ThemeData(
+      textTheme: GoogleFonts.juaTextTheme(),
       colorScheme: lightScheme,
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: const AppBarTheme(backgroundColor: Colors.white));

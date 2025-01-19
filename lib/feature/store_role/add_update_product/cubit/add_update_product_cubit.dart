@@ -103,7 +103,7 @@ const constProduct = Product(
   name: "",
   description: "",
   productPicture: null,
-  price: 0,
+  price: 100,
   discount: 0,
   quantity: 5,
   isFavorite: null,

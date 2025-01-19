@@ -41,6 +41,7 @@ abstract class ApiConsts {
   static const String getMyProductsUrl = "$baseUrl/product/getProductsMyStore";
   static const String createProductUrl = "$baseUrl/product/create";
   static const String updateProductUrl = "$baseUrl/product/update";
+  static const String getUnreadNotificationsCount = "$baseUrl/notification/unreadCount";
 }
 
 abstract class StatusCodes {

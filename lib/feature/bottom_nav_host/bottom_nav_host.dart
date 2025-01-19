@@ -7,6 +7,7 @@ import 'package:delishop/feature/bottom_nav_host/wallet_label.dart';
 import 'package:delishop/feature/cart/cart_screen.dart';
 import 'package:delishop/feature/favorite/favorite_cubit.dart';
 import 'package:delishop/feature/global/global_cubit.dart';
+import 'package:delishop/feature/notifications/cubit/notifications_cubit.dart';
 import 'package:delishop/feature/order/cubit/order_cubit.dart';
 import 'package:delishop/feature/profile/cubit/profile_cubit.dart';
 import 'package:delishop/feature/profile/profile_screen.dart';
@@ -44,12 +45,24 @@ class BottomNavHost extends StatelessWidget {
                       const WalletLabel(),
                       Row(
                         children: [
-                          IconButton(
-                              tooltip: "Notifications".tr(context),
-                              onPressed: () {},
-                              color: Colors.black,
-                              icon: const Icon(Icons.notifications_none)
-                                  .getBadged(1)),
+                          BlocBuilder<NotificationsCubit, NotificationsState>(
+                            builder: (context, state) {
+                              final badges =
+                                  state.unreadNotificationsCount.when<int>(
+                                onLoading: () => 0,
+                                onSuccess: (data) => data,
+                                onError: (domainError) => 0,
+                              );
+                              return IconButton(
+                                  tooltip: "Notifications".tr(context),
+                                  onPressed: () {},
+                                  color: Colors.black,
+                                  icon: const Icon(Icons.notifications_none)
+                                      .getBadged(
+                                    badges ?? 0,
+                                  ));
+                            },
+                          ),
                           IconButton(
                             tooltip: "Cart".tr(context),
                             onPressed: () {

@@ -56,7 +56,7 @@ class MyStoreCubit extends Cubit<MyStoreState> {
         onSuccess: (successData) {
           emit(state.copyWith(
             myStore: UIState(data: successData),
-            selectedCategoryIndex: getSelectedCategoryIndex(successData.id),
+            selectedCategoryIndex: getSelectedCategoryIndex(successData.categoryId),
           ));
           storeNameController.text = successData.name;
           descriptionController.text = successData.description;
@@ -97,9 +97,18 @@ class MyStoreCubit extends Cubit<MyStoreState> {
           await _storeRepo.updateMyStore(request, state.storeUploadedImage);
       response.when(
         onSuccess: (successData) {
-          emit(state
-              .copyWith(myStore: UIState(data: successData))
-              .withoutImage());
+          emit(state.copyWith(
+            myStore: UIState(data: successData),
+            selectedCategoryIndex: getSelectedCategoryIndex(successData.categoryId),
+          ).withoutImage());
+          storeNameController.text = successData.name;
+          descriptionController.text = successData.description;
+          locationUrlController.text = successData.locationUrl;
+          locationNameController.text = successData.locationName;
+          locationUrlController.text = successData.locationUrl;
+          // emit(state
+          //     .copyWith(myStore: UIState(data: successData))
+          //     .withoutImage());
         },
         onError: (domainErrorModel) {
           emit(state.copyWith(myStore: UIState(error: domainErrorModel)));
@@ -142,13 +151,13 @@ class MyStoreCubit extends Cubit<MyStoreState> {
     emit(state.copyWith(selectedCategoryIndex: index));
   }
 
-  int? getSelectedCategoryIndex(int storeId) {
+  int? getSelectedCategoryIndex(int categoryId) {
     final categories = state.categories.data;
-    print(categories);
-    print(storeId);
+    print(categories?.map((e) => e.name,).toList().toString());
+    print(categoryId);
     if (categories != null) {
       for (int i = 0; i < categories.length; i++) {
-        if (categories[i].id == storeId) return i;
+        if (categories[i].id == categoryId) return i;
       }
     }
     return null;

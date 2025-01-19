@@ -344,7 +344,6 @@ class ApiService {
               "message": message
             }))
         .then((value) => value.getDataResponse());
-    print("Change Status: ${httpResponse.body}");
     return httpResponse.handle(
       jsonToModel: (jsonMap) {
         return OrderResponse.fromJson(jsonMap);
@@ -412,6 +411,19 @@ class ApiService {
     print("getMyProducts" + httpResponse.body);
     return httpResponse.handle(jsonToModel: (jsonMap) {
       return ProductListResponseModel.fromJson(jsonMap);
+    });
+  }
+
+  Future<ResponseResult<int>> getUnreadNotificationsCount() async {
+    final http.Response httpResponse = await _httpClient
+        .get(
+          Uri.parse(ApiConsts.getUnreadNotificationsCount),
+          headers: CommonConsts.getTokenHeader(await _userDataRepo.getToken()),
+        )
+        .then((value) => value.getDataResponse());
+    print("getUnreadNotificationsCount" + httpResponse.body);
+    return httpResponse.handle(jsonToModel: (jsonMap) {
+      return jsonMap["count"];
     });
   }
 

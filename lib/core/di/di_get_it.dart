@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:delishop/core/data/repo/categoy_repo.dart';
 import 'package:delishop/core/data/repo/ga_repo.dart';
+import 'package:delishop/core/data/repo/notifications_repo.dart';
 import 'package:delishop/core/data/repo/profile_repo.dart';
 import 'package:delishop/core/data/repo/user_data_repo.dart';
 import 'package:delishop/core/data/repo/wallet_repo.dart';
@@ -30,6 +31,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../feature/cart/logic/get_order_entity_use_case.dart';
+import '../../feature/notifications/cubit/notifications_cubit.dart';
 import '../../firebase_options.dart';
 import '../data/api_service.dart';
 import '../data/db_service.dart';
@@ -104,10 +106,14 @@ Future<void> initializeDependencies() async {
   getIt.registerLazySingleton<LocationRepo>(
       () => LocationRepo(getIt(), getIt()));
 
+  getIt.registerLazySingleton<NotificationsRepo>(
+      () => NotificationsRepo(getIt(), getIt()));
+
   getIt.registerFactory<OrderRepo>(() => OrderRepo(getIt(), getIt()));
 
   getIt.registerFactory<OrderCubit>(() => OrderCubit(getIt(), getIt()));
   getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt(), getIt()));
+  getIt.registerFactory<NotificationsCubit>(() => NotificationsCubit(getIt()));
 
   getIt.registerFactory<DepositMoneyCubit>(() => DepositMoneyCubit(getIt()));
   getIt.registerFactory<AddStoreCubit>(() => AddStoreCubit(getIt()));

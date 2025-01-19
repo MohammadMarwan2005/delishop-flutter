@@ -96,14 +96,17 @@ class AddUpdateProductScreen extends StatelessWidget {
                           const SizedBox(height: 16),
                           DelishopTextField(
                               labelText: "Price".tr(context),
+                              keyboardType: TextInputType.number,
                               textEditingController: cubit.priceController),
                           const SizedBox(height: 16),
                           DelishopTextField(
                               labelText: "Discount".tr(context),
+                              keyboardType: TextInputType.number,
                               textEditingController: cubit.discountController),
                           const SizedBox(height: 16),
                           DelishopTextField(
                               labelText: "Quantity".tr(context),
+                              keyboardType: TextInputType.number,
                               textEditingController: cubit.quantityController),
                           const SizedBox(height: 32),
                           DelishopButton(
